@@ -1,0 +1,4 @@
+#ifndef MINIGIMP_SEPIA_H
+#define MINIGIMP_SEPIA_H
+
+#endif //MINIGIMP_SEPIA_H

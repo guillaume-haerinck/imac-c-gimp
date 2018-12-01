@@ -1,6 +1,11 @@
+# Requirement
 cmake_minimum_required(VERSION 3.12)
-project(ImacImageEditor C)
-
 set(CMAKE_C_STANDARD 99)
 
-add_executable(ImacImageEditor src/main.c)
+# Project configuration
+project(minigimp C)
+file(GLOB_RECURSE source_files src/*)
+
+# Executable file
+set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
+add_executable(${PROJECT_NAME} ${source_files})
