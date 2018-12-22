@@ -14,6 +14,8 @@ int main(int argc, char *argv[]) {
         printf("%d\n", ppm.width);
         printf("%d\n", ppm.height);
         printf("%d\n", ppm.maxColor);
+        printf("First pixel red power: %d \n", ppm.data[1]);
+        free(ppm.data);
 
         /* Scan through args. */
         for(int i = 2; i < argc; i++) {

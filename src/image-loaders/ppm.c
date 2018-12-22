@@ -7,7 +7,7 @@ int ppm_load(char* path, PPMImage* img) {
     // TODO check null allocation
     FILE* fp;
     char buffer[255];
-    fp = fopen(path, "r");
+    fp = fopen(path, "rb");
 
     if (fp == NULL) {
         perror("Failed to open file");
@@ -35,6 +35,8 @@ int ppm_load(char* path, PPMImage* img) {
         sscanf(buffer, "%d", &img->maxColor);
     }
 
+    img->data = malloc(3 * img->width * img->height);
+    fread(img->data, 3 * img->width, img->height, fp);
 
     fclose(fp);
     return EXIT_SUCCESS;

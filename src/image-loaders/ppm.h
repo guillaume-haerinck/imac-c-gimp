@@ -6,7 +6,7 @@ typedef struct PPMImage {
     int width;
     int height;
     int maxColor;
-    char* data;
+    unsigned char* data;
 } PPMImage;
 
 int ppm_load(char* path, PPMImage* img);
