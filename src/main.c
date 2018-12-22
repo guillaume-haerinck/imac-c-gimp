@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
             if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "-histo") == 0) {
                 // printf("Histogram asked \n");
             } else if (strcmp(argv[i], "-o") == 0) {
-                // printf("Output name is: %s\n", argv[i + 1]);
+                ppm_save(argv[i + 1], &ppm);
             } else if (strcmp(argv[i], "ADDLUM") == 0) {
                 // printf("Add luminosity filter power is: %s\n", argv[i + 1]);
             } else if (strcmp(argv[i], "DIMLUM") == 0) {

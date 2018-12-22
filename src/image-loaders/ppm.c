@@ -63,6 +63,21 @@ Pixel ppm_getPixel(PPMImage* img, int x, int y) {
     return pix;
 }
 
-int ppm_save() {
+int ppm_save(char* path, PPMImage* img) {
+    FILE* fp = fopen(path, "wb");
+    if (fp == NULL) {
+        perror("ppm_save: cannot create new file");
+        return EXIT_FAILURE;
+    }
 
+    if (strcmp(img->format, "P1") != 0) {
+        fprintf(fp, "%s\n%d %d\n%d\n", img->format, img->width, img->height, img->maxColor);
+        fwrite(img->data, sizeof(unsigned char), 3 * img->width * img->height, fp);
+    } else {
+        fprintf(fp, "P1\n%d %d\n", img->width, img->height);
+        fputs(img->data, fp);
+    }
+
+    fclose(fp);
+    return EXIT_SUCCESS;
 }
