@@ -41,6 +41,7 @@ int ppm_load(char* path, PPMImage* img) {
 
     // TODO do not save the header (+ because of that last pixel blue color out of allocated memory)
     img->data = malloc(3 * img->width * img->height);
+    fseek(fp, 1, SEEK_CUR);
     fread(img->data, 3 * img->width, img->height, fp);
 
     fclose(fp);
@@ -48,13 +49,17 @@ int ppm_load(char* path, PPMImage* img) {
 }
 
 unsigned char ppm_getPixelColor(PPMImage* img, int x, int y, enum Color c) {
-    return img->data[y * img->width * 3 + x * 3 + c + 1];
+    if (y > img->height) { printf("Warning ppm_getPixelColor: y position superior to image height\n"); }
+    if (x > img->width) { printf("Warning ppm_getPixelColor: x position superior to image width\n"); }
+    return img->data[y * img->width * 3 + x * 3 + c];
 }
 
 Pixel ppm_getPixel(PPMImage* img, int x, int y) {
+    if (y > img->height) { printf("Warning ppm_getPixel: y position superior to image height\n"); }
+    if (x > img->width) { printf("Warning ppm_getPixel: x position superior to image width\n"); }
     Pixel pix;
-    pix.red = img->data[y * img->width * 3 + x * 3 + 1];
-    pix.green = img->data[y * img->width * 3 + x * 3 + 2];
-    pix.blue = img->data[y * img->width * 3 + x * 3 + 3];
+    pix.red = img->data[y * img->width * 3 + x * 3 + red];
+    pix.green = img->data[y * img->width * 3 + x * 3 + green];
+    pix.blue = img->data[y * img->width * 3 + x * 3 + blue];
     return pix;
 }
