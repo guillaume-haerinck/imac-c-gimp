@@ -2,31 +2,21 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include "image-loaders/ppm.h"
+
 // minigimp mon_image.ppm [-h] [-histo] [<code_lut>[_<param1>]*]* [-o image_sortie.ppm]
 
 int main(int argc, char *argv[]) {
     if (argc > 0) {
-        FILE* img;
-        int i, j, max;
-        char buf[255];
-        printf("Input file is: %s \n", argv[1]);
-        img = fopen(argv[1], "r");
-        if (img == NULL) {
-            perror("Failed to open file");
-            return EXIT_FAILURE;
-        }
-        fscanf(img, "%s", buf);
-        printf("file format : %s\n", buf );
-        fscanf(img, "%s", buf);
-        printf("width : %s\n", buf );
-        fscanf(img, "%s", buf);
-        printf("heigth : %s\n", buf );
-        fscanf(img, "%s", buf);
-        printf("max colour : %s\n", buf );
-        fclose(img);
+        PPMImage ppm;
+        ppm_load(argv[1], &ppm);
+        printf("%s\n", ppm.format);
+        printf("%d\n", ppm.width);
+        printf("%d\n", ppm.height);
+        printf("%d\n", ppm.maxColor);
 
         /* Scan through args. */
-        for(int i = 1; i < argc; i++) {
+        for(int i = 2; i < argc; i++) {
             if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "-histo") == 0) {
                 printf("Histogram asked \n");
             } else if (strcmp(argv[i], "-o") == 0) {
