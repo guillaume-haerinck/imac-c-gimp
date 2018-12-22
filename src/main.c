@@ -10,7 +10,11 @@ int main(int argc, char *argv[]) {
     if (argc > 0) {
         PPMImage ppm;
         ppm_load(argv[1], &ppm);
-        Pixel pix = ppm_getPixel(&ppm, 127, 64);
+        printf("%s\n", ppm.format);
+        printf("%d\n", ppm.width);
+        printf("%d\n", ppm.height);
+        printf("%d\n", ppm.maxColor);
+        Pixel pix = ppm_getPixel(&ppm, 0, 0);
         printf("r: %d, g: %d, b: %d \n", pix.red, pix.green, pix.blue);
 
         /* Scan through args. */

@@ -3,9 +3,11 @@
 #include <string.h>
 #include "ppm.h"
 
+#define HEADER_LINE_MAX_LENGTH 70
+
 int ppm_load(char* path, PPMImage* img) {
     FILE* fp;
-    char buffer[64];
+    char buffer[HEADER_LINE_MAX_LENGTH];
 
     if (img == NULL) {
         perror("ppm_load: Null img pointer");
@@ -17,33 +19,30 @@ int ppm_load(char* path, PPMImage* img) {
         return EXIT_FAILURE;
     }
 
-    // TODO check for P6
     fscanf(fp, "%s", buffer);
     img->format[0] = buffer[0];
     img->format[1] = buffer[1];
     img->format[2] = '\0';
 
-    // TODO pass check if comments
     fscanf(fp, "%s", buffer);
-    if (buffer[0] != '#') {
-        sscanf(buffer, "%d", &img->width);
-    }
+    while (buffer[0] == '#') { fgets(buffer, HEADER_LINE_MAX_LENGTH, fp); fscanf(fp, "%s", buffer);} // Go to newline while comment
+    sscanf(buffer, "%d", &img->width);
 
     fscanf(fp, "%s", buffer);
-    if (buffer[0] != '#') {
-        sscanf(buffer, "%d", &img->height);
-    }
+    while (buffer[0] == '#') { fgets(buffer, HEADER_LINE_MAX_LENGTH, fp); fscanf(fp, "%s", buffer);} // Go to newline while comment
+    sscanf(buffer, "%d", &img->height);
 
-    fscanf(fp, "%s", buffer);
-    if (buffer[0] != '#') {
+    if (strcmp(img->format, "P1") != 0) {
+        fscanf(fp, "%s", buffer);
+        while (buffer[0] == '#') { fgets(buffer, HEADER_LINE_MAX_LENGTH, fp); fscanf(fp, "%s", buffer);} // Go to newline while comment
         sscanf(buffer, "%d", &img->maxColor);
+    } else {
+        img->maxColor = 1;
     }
 
-    // TODO do not save the header (+ because of that last pixel blue color out of allocated memory)
     img->data = malloc(3 * img->width * img->height);
-    fseek(fp, 1, SEEK_CUR);
+    fseek(fp, 1, SEEK_CUR); // Skip newline char
     fread(img->data, 3 * img->width, img->height, fp);
-
     fclose(fp);
     return EXIT_SUCCESS;
 }
@@ -62,4 +61,8 @@ Pixel ppm_getPixel(PPMImage* img, int x, int y) {
     pix.green = img->data[y * img->width * 3 + x * 3 + green];
     pix.blue = img->data[y * img->width * 3 + x * 3 + blue];
     return pix;
+}
+
+int ppm_save() {
+
 }
