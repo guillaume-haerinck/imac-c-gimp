@@ -33,6 +33,8 @@ And an exemple
 
 ## Ressources
 
+### Books
+
 https://abhijitnathwani.github.io/blog/2017/12/20/First-C-Program-for-Image-Processing
 
 http://adaptiveart.eecs.umich.edu/2011/wp-content/uploads/2011/09/The-pocket-handbook-of-image-processing-algorithms-in-C.pdf
@@ -40,3 +42,14 @@ http://adaptiveart.eecs.umich.edu/2011/wp-content/uploads/2011/09/The-pocket-han
 http://adaptiveart.eecs.umich.edu/2011/wp-content/uploads/2011/09/The-pocket-handbook-of-image-processing-algorithms-in-C.pdf
 
 http://home.iitk.ac.in/~rksr/adisl/DIP_Programming_Fundamentals.pdf
+
+https://www.dreamincode.net/forums/topic/76816-image-processing-tutorial/
+
+### Already existing libraries
+
+https://github.com/ImageMagick/ImageMagick
+
+http://www.graphicsmagick.org/
+
+https://github.com/topics/image-processing?l=c&o=asc&s=forks
+

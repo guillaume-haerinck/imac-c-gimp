@@ -4,6 +4,7 @@
 
 #include "imac-img.h"
 #include "image-loaders/ppm.h"
+#include "luts/inversion.h"
 
 // minigimp mon_image.ppm [-h] [-histo] [<code_lut>[_<param1>]*]* [-o image_sortie.ppm]
 
@@ -41,7 +42,9 @@ int main(int argc, char *argv[]) {
             } else if (strcmp(argv[i], "DIMCON") == 0) {
                 // printf("Dim constrast filter power is: %s\n", argv[i + 1]);
             } else if (strcmp(argv[i], "INVERT") == 0) {
-                // printf("Invert filter activated\n");
+                printf("Invert filter activated\n");
+                printf("%d", getPixelValue(&img, 0, 0, 0));
+                invert(&img);
             } else if (strcmp(argv[i], "SEPIA") == 0) {
                 // printf("Sepia filter power is: %s\n", argv[i + 1]);
             }

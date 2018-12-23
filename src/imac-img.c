@@ -5,6 +5,10 @@ unsigned char getPixelValue(ImacImg* img, int x, int y, enum Color c) {
     return img->data[y * img->width * (3 + img->transparency) + x * (3 + img->transparency) + c];
 }
 
+void setPixelValue(ImacImg* img, int x, int y, enum Color c, unsigned char value) {
+    img->data[y * img->width * (3 + img->transparency) + x * (3 + img->transparency) + c] = value;
+}
+
 Pixel getPixel(ImacImg* img, int x, int y) {
     if (y > img->height) { printf("Warning ppm_getPixel: y position superior to image height\n"); }
     if (x > img->width) { printf("Warning ppm_getPixel: x position superior to image width\n"); }

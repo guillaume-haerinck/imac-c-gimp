@@ -77,4 +77,16 @@ unsigned char getPixelValue(ImacImg* img, int x, int y, enum Color c);
  */
 Pixel getPixel(ImacImg* img, int x, int y);
 
+/**
+ * @brief Set the value of the color of a pixel
+ * @note 0,0 is top left position
+ *
+ * @param img
+ * @param x
+ * @param y
+ * @param c
+ * @param value
+ */
+void setPixelValue(ImacImg* img, int x, int y, enum Color c, unsigned char value);
+
 #endif //MINIGIMP_IMAC_IMG_H
