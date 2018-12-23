@@ -2,8 +2,6 @@
 
 ## Getting started
 
-### Prerequisites
-
 ### Build project
 
 You need a c compiler for your system and cmake installed.
@@ -11,8 +9,24 @@ Then use the 'CMakeLists.txt' to create a makefile and build the project.
 
 ### Build documentation
 
-You need npm installed, then run `npm install gitbook-cli -g`.
-Then run `gitbook serve ./doc`.
+#### On linux
+
+##### Prerequisite
+```
+sudo apt-get install npm doxygen doxygen-gui doxygen-doc
+```
+
+```
+sudo npm install gitbook-cli -g
+```
+
+Then you must install doxybook with python3.
+
+##### Update doc
+
+You generate api xml files by running `doxygen`, then with `doxybook -i doc/_xml -o doc/api -s doc/SUMMARY.md -t gitbook
+` you transform xml to markdown.
+To read, and update markdown in live, run `gitbook serve ./doc`.
 
 ## Using the program
 
@@ -32,6 +46,14 @@ And an exemple
 * **Guillaume Haerinck**
 
 ## Ressources
+
+### Articles
+
+https://embeddedgurus.com/stack-overflow/2010/01/a-tutorial-on-lookup-tables-in-c/
+
+http://paulbourke.net/dataformats/ppm/
+
+https://www.tutorialspoint.com/cprogramming/c_file_io.htm
 
 ### Books
 

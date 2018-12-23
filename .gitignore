@@ -1,5 +1,6 @@
 # Gitbook
-doc/_book/**
+doc/_**
+_book
 
 # Prerequisites
 *.d
