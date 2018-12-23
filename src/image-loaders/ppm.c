@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "ppm.h"
 
 #define HEADER_LINE_MAX_LENGTH 70
 
-int ppm_load(char* path, PPMImage* img) {
+int ppm_load(char* path, ImacImg* img) {
     FILE* fp;
     char buffer[HEADER_LINE_MAX_LENGTH];
 
@@ -19,10 +20,28 @@ int ppm_load(char* path, PPMImage* img) {
         return EXIT_FAILURE;
     }
 
+    char ppmFormat[3];
     fscanf(fp, "%s", buffer);
-    img->format[0] = buffer[0];
-    img->format[1] = buffer[1];
-    img->format[2] = '\0';
+    ppmFormat[0] = buffer[0];
+    ppmFormat[1] = buffer[1];
+    ppmFormat[2] = '\0';
+    if (strcmp(ppmFormat, "P6") == 0) {
+        img->format = P6;
+    } else if (strcmp(ppmFormat, "P5") == 0) {
+        img->format = P5;
+    } else if (strcmp(ppmFormat, "P4") == 0) {
+        img->format = P4;
+    } else if (strcmp(ppmFormat, "P3") == 0) {
+        img->format = P3;
+    } else if (strcmp(ppmFormat, "P2") == 0) {
+        img->format = P2;
+    } else if (strcmp(ppmFormat, "P1") == 0) {
+        img->format = P1;
+    } else {
+        printf("Error ppm_load: Unknown extension");
+        return EXIT_FAILURE;
+    }
+    img->transparency = false;
 
     fscanf(fp, "%s", buffer);
     while (buffer[0] == '#') { fgets(buffer, HEADER_LINE_MAX_LENGTH, fp); fscanf(fp, "%s", buffer);} // Go to newline while comment
@@ -32,12 +51,9 @@ int ppm_load(char* path, PPMImage* img) {
     while (buffer[0] == '#') { fgets(buffer, HEADER_LINE_MAX_LENGTH, fp); fscanf(fp, "%s", buffer);} // Go to newline while comment
     sscanf(buffer, "%d", &img->height);
 
-    if (strcmp(img->format, "P1") != 0) {
+    if (img->format != P1) {
         fscanf(fp, "%s", buffer);
         while (buffer[0] == '#') { fgets(buffer, HEADER_LINE_MAX_LENGTH, fp); fscanf(fp, "%s", buffer);} // Go to newline while comment
-        sscanf(buffer, "%d", &img->maxColor);
-    } else {
-        img->maxColor = 1;
     }
 
     img->data = malloc(3 * img->width * img->height);
@@ -47,35 +63,28 @@ int ppm_load(char* path, PPMImage* img) {
     return EXIT_SUCCESS;
 }
 
-unsigned char ppm_getPixelColor(PPMImage* img, int x, int y, enum Color c) {
-    if (y > img->height) { printf("Warning ppm_getPixelColor: y position superior to image height\n"); }
-    if (x > img->width) { printf("Warning ppm_getPixelColor: x position superior to image width\n"); }
-    return img->data[y * img->width * 3 + x * 3 + c];
-}
-
-Pixel ppm_getPixel(PPMImage* img, int x, int y) {
-    if (y > img->height) { printf("Warning ppm_getPixel: y position superior to image height\n"); }
-    if (x > img->width) { printf("Warning ppm_getPixel: x position superior to image width\n"); }
-    Pixel pix;
-    pix.red = img->data[y * img->width * 3 + x * 3 + red];
-    pix.green = img->data[y * img->width * 3 + x * 3 + green];
-    pix.blue = img->data[y * img->width * 3 + x * 3 + blue];
-    return pix;
-}
-
-int ppm_save(char* path, PPMImage* img) {
+int ppm_save(char* path, ImacImg* img) {
     FILE* fp = fopen(path, "wb");
     if (fp == NULL) {
         perror("ppm_save: cannot create new file");
         return EXIT_FAILURE;
     }
 
-    if (strcmp(img->format, "P1") != 0) {
-        fprintf(fp, "%s\n%d %d\n%d\n", img->format, img->width, img->height, img->maxColor);
-        fwrite(img->data, sizeof(unsigned char), 3 * img->width * img->height, fp);
-    } else {
-        fprintf(fp, "P1\n%d %d\n", img->width, img->height);
-        fputs(img->data, fp);
+    switch (img->format) {
+        case P6:
+        case P5:
+        case P4:
+        case P3:
+        case P2:
+        case P1:
+            fprintf(fp, "P6\n%d %d\n%d\n", img->width, img->height, 255);
+            fwrite(img->data, sizeof(unsigned char), 3 * img->width * img->height, fp);
+            break;
+
+        default:
+            printf("Error ppm_save: invalid format");
+            fclose(fp);
+            return EXIT_FAILURE;
     }
 
     fclose(fp);

@@ -2,27 +2,36 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include "imac-img.h"
 #include "image-loaders/ppm.h"
 
 // minigimp mon_image.ppm [-h] [-histo] [<code_lut>[_<param1>]*]* [-o image_sortie.ppm]
 
+const char *getFilenameExtension(const char *filename) {
+    const char *dot = strrchr(filename, '.');
+    if(!dot || dot == filename) return "";
+    return dot + 1;
+}
+
 int main(int argc, char *argv[]) {
     if (argc > 0) {
-        PPMImage ppm;
-        ppm_load(argv[1], &ppm);
-        printf("%s\n", ppm.format);
-        printf("%d\n", ppm.width);
-        printf("%d\n", ppm.height);
-        printf("%d\n", ppm.maxColor);
-        Pixel pix = ppm_getPixel(&ppm, 0, 0);
-        printf("r: %d, g: %d, b: %d \n", pix.red, pix.green, pix.blue);
+        ImacImg img;
+        int imagePathIndex = -1;
 
-        /* Scan through args. */
+        /* Handle filetype */
+        if (strcmp("ppm", getFilenameExtension(argv[1])) == 0) {
+            ppm_load(argv[1], &img);
+        } else {
+            printf("Error in main: unknown file extension");
+            return EXIT_FAILURE;
+        }
+
+        /* Handle args */
         for(int i = 2; i < argc; i++) {
             if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "-histo") == 0) {
                 // printf("Histogram asked \n");
             } else if (strcmp(argv[i], "-o") == 0) {
-                ppm_save(argv[i + 1], &ppm);
+                imagePathIndex = i + 1;
             } else if (strcmp(argv[i], "ADDLUM") == 0) {
                 // printf("Add luminosity filter power is: %s\n", argv[i + 1]);
             } else if (strcmp(argv[i], "DIMLUM") == 0) {
@@ -37,7 +46,15 @@ int main(int argc, char *argv[]) {
                 // printf("Sepia filter power is: %s\n", argv[i + 1]);
             }
         }
-        free(ppm.data);
+
+        /* Save result */
+        // TODO save histogram if asked
+        if (imagePathIndex != -1) {
+            ppm_save(argv[imagePathIndex], &img);
+        } else {
+            ppm_save("output.ppm", &img);
+        }
+        free(img.data);
     } else {
         printf("No input file provided ! \n");
         return EXIT_FAILURE;

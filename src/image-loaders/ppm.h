@@ -7,34 +7,7 @@
 #ifndef MINIGIMP_PPM_H
 #define MINIGIMP_PPM_H
 
-/**
- * PPMImage
- */
-typedef struct PPMImage {
-    char format[3];
-    int width;
-    int height;
-    int maxColor;
-    unsigned char* data;
-} PPMImage;
-
-/**
- * Pixel
- */
-typedef struct Pixel {
-    unsigned char red;
-    unsigned char green;
-    unsigned char blue;
-} Pixel;
-
-/**
- * Pixel Color
- */
-enum Color {
-    red = 0,
-    green = 1,
-    blue = 2,
-};
+#include "../imac-img.h"
 
 /**
  * @brief Load a ppm image file and init the PPMImage pointer with it.
@@ -44,30 +17,7 @@ enum Color {
  * @param[out] img - Empty pointer with allocated memory
  * @return EXIT_FAILURE or EXIT_SUCCESS.
  */
-int ppm_load(char* path, PPMImage* img);
-
-/**
- * @brief Get the pixel brightness value for given color.
- * @note 0,0 position is top left corner.
- *
- * @param img
- * @param x
- * @param y
- * @param c
- * @return Brightness value contained between 0 and 255.
- */
-unsigned char ppm_getPixelColor(PPMImage* img, int x, int y, enum Color c);
-
-/**
- * @brief Get a pixel from x y position.
- * @note 0, 0 position is top left corner.
- *
- * @param img
- * @param x
- * @param y
- * @return Pixel with red, green, blue color values
- */
-Pixel ppm_getPixel(PPMImage* img, int x, int y);
+int ppm_load(char* path, ImacImg* img);
 
 /**
  * @brief Save the given ppmImage to a file
@@ -76,6 +26,6 @@ Pixel ppm_getPixel(PPMImage* img, int x, int y);
  * @param img - PPMImage to save
  * @return EXIT_SUCCESS or EXIT_FAILURE
  */
-int ppm_save(char* path, PPMImage* img);
+int ppm_save(char* path, ImacImg* img);
 
 #endif //MINIGIMP_PPM_H
