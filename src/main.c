@@ -32,7 +32,11 @@ int main(int argc, char *argv[]) {
         /* Handle args */
         for(int i = 2; i < argc; i++) {
             if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "-histo") == 0) {
-                hist_rgb(&img);
+                ImacImg histogram;
+                img_new(&histogram, 256, 150);
+                hist_rgb(&img, &histogram);
+                ppm_save("./histogram.ppm", &histogram);
+                img_delete(&histogram);
             } else if (strcmp(argv[i], "-o") == 0) {
                 imagePathIndex = i + 1;
             } else if (strcmp(argv[i], "ADDLUM") == 0) {

@@ -10,6 +10,6 @@
  * @param[out] histogram
  * @return EXIT_FAILURE or EXIT_SUCCESS
  */
-int hist_rgb(ImacImg* imgToAnalyse);
+int hist_rgb(ImacImg* imgToAnalyse, ImacImg* histogram);
 
 #endif //MINIGIMP_HISTOGRAM_H

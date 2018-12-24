@@ -26,6 +26,13 @@ int img_delete(ImacImg* img) {
 }
 
 unsigned char img_getPixelChannel(ImacImg* img, int x, int y, enum img_Channel c) {
+    if (x > img->width) {
+        printf("Error img_getPixelChannel: x superior to img width\n");
+        exit(EXIT_FAILURE);
+    } else if (y > img->height) {
+        printf("Error img_getPixelChannel: y superior to img height\n");
+        exit(EXIT_FAILURE);
+    }
     return img->data[y * img->width * 3 + x * 3 + c];
 }
 
@@ -38,10 +45,24 @@ void img_setImageToWhite(ImacImg* img) {
 }
 
 void img_setPixelChannel(ImacImg* img, int x, int y, unsigned char value, enum img_Channel c) {
+    if (x > img->width) {
+        printf("Error img_setPixelChannel: x superior to img width\n");
+        exit(EXIT_FAILURE);
+    } else if (y > img->height) {
+        printf("Error img_setPixelChannel: y superior to img height\n");
+        exit(EXIT_FAILURE);
+    }
     img->data[y * img->width * 3 + x * 3 + c] = value;
 }
 
 void img_setPixelChannels(ImacImg* img, int x, int y, unsigned char value) {
+    if (x > img->width) {
+        printf("Error img_setPixelChannels: x superior to img width\n");
+        exit(EXIT_FAILURE);
+    } else if (y > img->height) {
+        printf("Error img_setPixelChannels: y superior to img height\n");
+        exit(EXIT_FAILURE);
+    }
     img->data[y * img->width * 3 + x * 3 + red] = value;
     img->data[y * img->width * 3 + x * 3 + green] = value;
     img->data[y * img->width * 3 + x * 3 + blue] = value;
