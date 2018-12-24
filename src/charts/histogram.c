@@ -28,8 +28,11 @@ int hist_rgb(ImacImg* imgToAnalyse, ImacImg* histogram) {
     img_setImageToWhite(histogram);
     for (int x = 0; x < histogram->width; x++) {
         int columnHeight = linearMapping(imgBrightnessSpectrum[x], 0, maxPixelsForBrightness, 0, histogram->height);
+        if (columnHeight > histogram->height) {
+            printf("linearMapping not working \n");
+        }
         for (int y = 0; y < columnHeight; y++) {
-            // img_setPixelChannels(histogram, x, y, 0);
+            img_setPixelChannels(histogram, x, y, 0);
         }
     }
     return EXIT_SUCCESS;

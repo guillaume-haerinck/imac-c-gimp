@@ -9,6 +9,7 @@ const char* getFilenameExtension(const char *filename) {
 }
 
 /* Maths */
+// FIXME return value depasse stop2
 int linearMapping(int value, int start1, int stop1, int start2, int stop2) {
     return (value - start1) * (stop2 - start2) / (stop1 - stop2) + start1;
 }
