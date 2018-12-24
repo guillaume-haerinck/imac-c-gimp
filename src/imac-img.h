@@ -9,11 +9,24 @@
 
 #include <stdbool.h>
 
+// ------------------------------------- STRUCTS & ENUMS
+
 /**
- * @enum ImageFormat
+ * @enum img_Channel
+ * The channel of the pixels
+ *
+ */
+enum img_Channel {
+    red = 0,
+    green = 1,
+    blue = 2,
+};
+
+/**
+ * @enum img_Format
  * Image File Format working with this software
  */
-enum ImageFormat {
+enum img_Format {
     P6,
     P5,
     P4,
@@ -24,37 +37,39 @@ enum ImageFormat {
 
 /**
  * @struct ImacImg
- * Abstract image format used for modifications
+ * @brief Abstract image format used for modifications
+ * @note You need to use img_new or an image loader to init it
  */
 typedef struct ImacImg {
-    enum ImageFormat format;
     unsigned int width;
     unsigned int height;
-    bool transparency;
     unsigned char* data;
 } ImacImg;
 
-/**
- * @enum Color
- */
-enum Color {
-    red = 0,
-    green = 1,
-    blue = 2,
-    alpha = 3,
-};
+// ------------------------------------- CONSTRUCTOR & DESTRUCTOR
 
 /**
- * @struct Image Pixel
- * @note Use to debug and not in production because slower than direct array manipulation
+ * @brief Constructor for ImacImg
+ * @note If you use an image loader, you do not need it
+ * @note Don't forget to call img_delete once you are done with the image
+ * @note Width and height are READONLY, because the data array has been allocated with it
  *
+ * @param img
+ * @param width
+ * @param height
+ * @return EXIT_FAILURE or EXIT_SUCCESS
  */
-typedef struct Pixel {
-    unsigned char red;
-    unsigned char green;
-    unsigned char blue;
-    unsigned char alpha;
-} Pixel;
+int img_new(ImacImg* img, unsigned int width, unsigned int height);
+
+/**
+ * @brief Destructor for ImacImg
+ *
+ * @param img
+ * @return
+ */
+int img_delete(ImacImg* img);
+
+// ------------------------------------- GETTERS
 
 /**
  * @brief Get the pixel value for given color.
@@ -63,32 +78,36 @@ typedef struct Pixel {
  * @param img
  * @param x
  * @param y
- * @param c - Color enum value
+ * @param c - Channel color enum
  * @return Brightness value contained between 0 and 255.
  */
-unsigned char getPixelValue(ImacImg* img, int x, int y, enum Color c);
+unsigned char img_getPixelChannel(ImacImg* img, int x, int y, enum img_Channel c);
+
+// ------------------------------------- SETTERS
+
+void img_setImageToWhite(ImacImg* img);
 
 /**
- * @brief Get a pixel from x y position. Debug-only purpose.
- * @note 0, 0 position is top left corner.
- *
- * @param img
- * @param x
- * @param y
- * @return Pixel with red, green, blue color values (and alpha if available)
- */
-Pixel getPixel(ImacImg* img, int x, int y);
-
-/**
- * @brief Set the value of the color of a pixel
+ * @brief Set the value of a color of a pixel
  * @note 0,0 is top left position
  *
  * @param img
  * @param x
  * @param y
- * @param c
+ * @param value
+ * @param c - color channel
+ */
+void img_setPixelChannel(ImacImg* img, int x, int y, unsigned char value, enum img_Channel c);
+
+/**
+ * @brief Set each colors of the pixel with the value
+ * @note 0,0 is top left position
+ *
+ * @param img
+ * @param x
+ * @param y
  * @param value
  */
-void setPixelValue(ImacImg* img, int x, int y, enum Color c, unsigned char value);
+void img_setPixelChannels(ImacImg* img, int x, int y, unsigned char value);
 
 #endif //MINIGIMP_IMAC_IMG_H

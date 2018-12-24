@@ -4,6 +4,7 @@
 #include <time.h>
 
 #include "imac-img.h"
+#include "charts/histogram.h"
 #include "image-loaders/ppm.h"
 #include "luts/inversion.h"
 #include "luts/luminosity.h"
@@ -36,7 +37,7 @@ int main(int argc, char *argv[]) {
         /* Handle args */
         for(int i = 2; i < argc; i++) {
             if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "-histo") == 0) {
-                // printf("Histogram asked \n");
+                hist_rgb(&img);
             } else if (strcmp(argv[i], "-o") == 0) {
                 imagePathIndex = i + 1;
             } else if (strcmp(argv[i], "ADDLUM") == 0) {
@@ -57,13 +58,14 @@ int main(int argc, char *argv[]) {
         }
 
         /* Save result */
-        // TODO save histogram if asked
         if (imagePathIndex != -1) {
             ppm_save(argv[imagePathIndex], &img);
         } else {
             ppm_save("output.ppm", &img);
         }
-        free(img.data);
+
+        /* Clean memory */
+        img_delete(&img);
     } else {
         printf("No input file provided ! \n");
         return EXIT_FAILURE;
