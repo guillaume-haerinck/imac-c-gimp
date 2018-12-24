@@ -24,9 +24,9 @@ Then you must install doxybook with python3.
 
 ##### Update doc
 
-You generate api xml files by running `doxygen`, then with `doxybook -i doc/_xml -o doc/api -s doc/SUMMARY.md -t gitbook
+You generate api xml files by running `doxygen`, then with `doxybook -i doc/_xml -o doc/api -s SUMMARY.md -t gitbook
 ` you transform xml to markdown.
-To read, and update markdown in live, run `gitbook serve ./doc`.
+To read, and update markdown in live, run `gitbook serve`.
 
 ## Using the program
 
@@ -54,6 +54,10 @@ https://embeddedgurus.com/stack-overflow/2010/01/a-tutorial-on-lookup-tables-in-
 http://paulbourke.net/dataformats/ppm/
 
 https://www.tutorialspoint.com/cprogramming/c_file_io.htm
+
+https://www.mochima.com/articles/LUT/LUT.html
+
+https://docs.opencv.org/2.4/doc/tutorials/core/basic_linear_transform/basic_linear_transform.html
 
 ### Books
 

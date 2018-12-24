@@ -1,5 +1,6 @@
 #include "inversion.h"
 
+// TODO use a LUT and not a direct manipulation
 void invert(ImacImg* img) {
     unsigned char brightness = 0;
     for (int y = 0; y < img->height; y++) {

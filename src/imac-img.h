@@ -24,7 +24,7 @@ enum ImageFormat {
 
 /**
  * @struct ImacImg
- * Image
+ * Abstract image format used for modifications
  */
 typedef struct ImacImg {
     enum ImageFormat format;
@@ -45,7 +45,9 @@ enum Color {
 };
 
 /**
- * Image Pixel
+ * @struct Image Pixel
+ * @note Use to debug and not in production because slower than direct array manipulation
+ *
  */
 typedef struct Pixel {
     unsigned char red;
@@ -61,7 +63,7 @@ typedef struct Pixel {
  * @param img
  * @param x
  * @param y
- * @param c
+ * @param c - Color enum value
  * @return Brightness value contained between 0 and 255.
  */
 unsigned char getPixelValue(ImacImg* img, int x, int y, enum Color c);

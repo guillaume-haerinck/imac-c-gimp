@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "imac-img.h"
 #include "image-loaders/ppm.h"
@@ -16,6 +17,10 @@ const char *getFilenameExtension(const char *filename) {
 }
 
 int main(int argc, char *argv[]) {
+    clock_t start, end;
+    double cpu_time_used;
+    start = clock();
+
     if (argc > 0) {
         ImacImg img;
         int imagePathIndex = -1;
@@ -63,5 +68,9 @@ int main(int argc, char *argv[]) {
         printf("No input file provided ! \n");
         return EXIT_FAILURE;
     }
+
+    end = clock();
+    cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+    printf("Cpu time used (in seconds): %f \n", cpu_time_used);
     return EXIT_SUCCESS;
 }
