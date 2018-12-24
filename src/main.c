@@ -4,18 +4,13 @@
 #include <time.h>
 
 #include "imac-img.h"
+#include "utils.h"
 #include "charts/histogram.h"
 #include "image-loaders/ppm.h"
 #include "luts/inversion.h"
 #include "luts/luminosity.h"
 
 // minigimp mon_image.ppm [-h] [-histo] [<code_lut>[_<param1>]*]* [-o image_sortie.ppm]
-
-const char *getFilenameExtension(const char *filename) {
-    const char *dot = strrchr(filename, '.');
-    if(!dot || dot == filename) return "";
-    return dot + 1;
-}
 
 int main(int argc, char *argv[]) {
     clock_t start, end;
