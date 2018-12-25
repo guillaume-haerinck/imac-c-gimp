@@ -81,11 +81,11 @@ int img_delete(ImacImg* img);
  * @param c - Channel color enum
  * @return Brightness value contained between 0 and 255.
  */
-unsigned char img_getPixelChannel(ImacImg* img, int x, int y, enum img_Channel c);
+unsigned char img_getPixelChannel(ImacImg* img, unsigned int x, unsigned int y, enum img_Channel c);
 
 // ------------------------------------- SETTERS
 
-void img_setImageToWhite(ImacImg* img);
+void img_setToWhite(ImacImg* img);
 
 /**
  * @brief Set the value of a color of a pixel
@@ -97,7 +97,7 @@ void img_setImageToWhite(ImacImg* img);
  * @param value
  * @param c - color channel
  */
-void img_setPixelChannel(ImacImg* img, int x, int y, unsigned char value, enum img_Channel c);
+void img_setPixelChannel(ImacImg* img, unsigned int x, unsigned int y, unsigned char value, enum img_Channel c);
 
 /**
  * @brief Set each colors of the pixel with the value
@@ -108,6 +108,6 @@ void img_setPixelChannel(ImacImg* img, int x, int y, unsigned char value, enum i
  * @param y
  * @param value
  */
-void img_setPixelChannels(ImacImg* img, int x, int y, unsigned char value);
+void img_setPixelChannels(ImacImg* img, unsigned  int x, unsigned int y, unsigned char value);
 
 #endif //MINIGIMP_IMAC_IMG_H

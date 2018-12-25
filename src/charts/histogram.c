@@ -10,8 +10,8 @@ int hist_rgb(ImacImg* imgToAnalyse, ImacImg* histogram) {
     // Get values for histogram
     unsigned int pixelAvgBrightness = 0;
     unsigned int maxPixelsForBrightness = 0;
-    for (int x = 0; x < imgToAnalyse->width; x++) {
-        for (int y = 0; y < imgToAnalyse->height; y++) {
+    for (unsigned int x = 0; x < imgToAnalyse->width; x++) {
+        for (unsigned int y = 0; y < imgToAnalyse->height; y++) {
             for (int c = red; c <= blue; c++) {
                 pixelAvgBrightness += img_getPixelChannel(imgToAnalyse, x, y, c);
             }
@@ -24,14 +24,12 @@ int hist_rgb(ImacImg* imgToAnalyse, ImacImg* histogram) {
         }
     }
 
-    // TODO histogram is inverted, put top to bottom
-    img_setImageToWhite(histogram);
-    for (int x = 0; x < histogram->width; x++) {
-        int columnHeight = linearMapping(imgBrightnessSpectrum[x], 0, maxPixelsForBrightness, 0, histogram->height);
-        if (columnHeight > histogram->height) {
-            printf("linearMapping not working \n");
-        }
-        for (int y = 0; y < columnHeight; y++) {
+    // Print histogram to file
+    img_setToWhite(histogram);
+    for (unsigned int x = 0; x < histogram->width; x++) {
+        long columnHeight = linearMapping(imgBrightnessSpectrum[x], 0, maxPixelsForBrightness, 0, histogram->height);
+        long columnEnd = histogram->height - columnHeight;
+        for (unsigned int y = histogram->height - 1; y > columnEnd; y--) {
             img_setPixelChannels(histogram, x, y, 0);
         }
     }

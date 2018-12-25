@@ -25,7 +25,7 @@ int img_delete(ImacImg* img) {
     return EXIT_SUCCESS;
 }
 
-unsigned char img_getPixelChannel(ImacImg* img, int x, int y, enum img_Channel c) {
+unsigned char img_getPixelChannel(ImacImg* img, unsigned int x, unsigned int y, enum img_Channel c) {
     if (x > img->width) {
         printf("Error img_getPixelChannel: x superior to img width\n");
         exit(EXIT_FAILURE);
@@ -37,14 +37,14 @@ unsigned char img_getPixelChannel(ImacImg* img, int x, int y, enum img_Channel c
 }
 
 /* Setters */
-void img_setImageToWhite(ImacImg* img) {
+void img_setToWhite(ImacImg* img) {
     int dataSize = 3 * img->width * img->height;
     for (int i = 0; i < dataSize; i++) {
         img->data[i] = 255;
     }
 }
 
-void img_setPixelChannel(ImacImg* img, int x, int y, unsigned char value, enum img_Channel c) {
+void img_setPixelChannel(ImacImg* img, unsigned int x, unsigned int y, unsigned char value, enum img_Channel c) {
     if (x > img->width) {
         printf("Error img_setPixelChannel: x superior to img width\n");
         exit(EXIT_FAILURE);
@@ -55,7 +55,7 @@ void img_setPixelChannel(ImacImg* img, int x, int y, unsigned char value, enum i
     img->data[y * img->width * 3 + x * 3 + c] = value;
 }
 
-void img_setPixelChannels(ImacImg* img, int x, int y, unsigned char value) {
+void img_setPixelChannels(ImacImg* img, unsigned int x, unsigned int y, unsigned char value) {
     if (x > img->width) {
         printf("Error img_setPixelChannels: x superior to img width\n");
         exit(EXIT_FAILURE);

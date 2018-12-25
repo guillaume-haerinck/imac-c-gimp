@@ -22,6 +22,6 @@ const char* getFilenameExtension(const char *filename);
  * @param stop2
  * @return mappedValue
  */
-int linearMapping(int value, int start1, int stop1, int start2, int stop2);
+long linearMapping(int value, int start1, int stop1, int start2, int stop2);
 
 #endif //MINIGIMP_UTILS_H
