@@ -25,6 +25,7 @@ int img_delete(ImacImg* img) {
     return EXIT_SUCCESS;
 }
 
+/* Getters */
 unsigned char img_getPixelChannel(ImacImg* img, unsigned int x, unsigned int y, enum img_Channel c) {
     if (x > img->width) {
         printf("Error img_getPixelChannel: x superior to img width\n");

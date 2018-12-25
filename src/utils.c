@@ -9,6 +9,6 @@ const char* getFilenameExtension(const char *filename) {
 }
 
 /* Maths */
-long linearMapping(int val, int A, int B, int a, int b) {
-    return (val - A)*(b-a)/(B-A) + a;
+long linearMapping(int value, int start1, int stop1, int start2, int stop2) {
+    return (value - start1) * (stop2 - start2) / (stop1 - start1) + start2;
 }

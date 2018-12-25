@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
             } else if (strcmp(argv[i], "DIMCON") == 0) {
                 // printf("Dim constrast filter power is: %s\n", argv[i + 1]);
             } else if (strcmp(argv[i], "INVERT") == 0) {
-                invert(&img);
+                inv_lut(&img);
             } else if (strcmp(argv[i], "SEPIA") == 0) {
                 // printf("Sepia filter power is: %s\n", argv[i + 1]);
             }

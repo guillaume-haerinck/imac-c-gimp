@@ -5,7 +5,7 @@
 #include "../utils.h"
 
 int hist_rgb(ImacImg* imgToAnalyse, ImacImg* histogram) {
-    unsigned int imgBrightnessSpectrum[256] = { 0 };
+    unsigned int imgBrightnessSpectrum[MAX_BRIGHTNESS] = { 0 };
 
     // Get values for histogram
     unsigned int pixelAvgBrightness = 0;
@@ -25,13 +25,40 @@ int hist_rgb(ImacImg* imgToAnalyse, ImacImg* histogram) {
     }
 
     // Print histogram to file
-    img_setToWhite(histogram);
-    for (unsigned int x = 0; x < histogram->width; x++) {
-        long columnHeight = linearMapping(imgBrightnessSpectrum[x], 0, maxPixelsForBrightness, 0, histogram->height);
-        long columnEnd = histogram->height - columnHeight;
-        for (unsigned int y = histogram->height - 1; y > columnEnd; y--) {
-            img_setPixelChannels(histogram, x, y, 0);
-        }
-    }
+    _printHistogram(histogram, imgBrightnessSpectrum, maxPixelsForBrightness, 150);
     return EXIT_SUCCESS;
 };
+
+int hist_channel(ImacImg* imgToAnalyse, ImacImg* histogram, enum img_Channel c) {
+    unsigned int imgBrightnessSpectrum[MAX_BRIGHTNESS] = { 0 };
+
+    // Get values for histogram
+    unsigned int pixelBrightness = 0;
+    unsigned int maxPixelsForBrightness = 0;
+    for (unsigned int x = 0; x < imgToAnalyse->width; x++) {
+        for (unsigned int y = 0; y < imgToAnalyse->height; y++) {
+            pixelBrightness = img_getPixelChannel(imgToAnalyse, x, y, c);
+            imgBrightnessSpectrum[(unsigned char) pixelBrightness] += 1;
+            if (imgBrightnessSpectrum[(unsigned char) pixelBrightness] > maxPixelsForBrightness) {
+                maxPixelsForBrightness = imgBrightnessSpectrum[(unsigned char) pixelBrightness];
+            }
+            pixelBrightness = 0;
+        }
+    }
+
+    // Print histogram to file
+    _printHistogram(histogram, imgBrightnessSpectrum, maxPixelsForBrightness, 53);
+    return EXIT_SUCCESS;
+};
+
+// TODO size of histogramData, check it to be MAX_BRIGHTNESS
+static void _printHistogram(ImacImg* histogram, unsigned int* histogramData, unsigned int maxData, unsigned char printColor) {
+    img_setToWhite(histogram);
+    for (unsigned int x = 0; x < histogram->width; x++) {
+        long columnHeight = linearMapping(histogramData[x], 0, maxData, 0, histogram->height);
+        long columnEnd = histogram->height - columnHeight;
+        for (unsigned int y = histogram->height - 1; y > columnEnd; y--) {
+            img_setPixelChannels(histogram, x, y, printColor);
+        }
+    }
+}
