@@ -14,6 +14,7 @@ Source: `src/luts/luminosity.h`
     
     
     
+    
       
     
     
@@ -23,11 +24,16 @@ Source: `src/luts/luminosity.h`
 #ifndef MINIGIMP_LUMINOSITY_H
 #define MINIGIMP_LUMINOSITY_H
 
-#include "../imac-img.h"
+#include "imac-img.h"
+#include "imac-lut.h"
 
-void addLuminosity(ImacImg* img, unsigned char value);
+void lum_addToImg(ImacImg* img, unsigned char value);
 
-void dimLuminosity(ImacImg* img, unsigned char value);
+void lum_addToLut(ImacLut* lut, unsigned char value);
+
+void lum_dimToImg(ImacImg* img, unsigned char value);
+
+void lum_dimToLut(ImacLut* lut, unsigned char value);
 
 #endif //MINIGIMP_LUMINOSITY_H
 ```

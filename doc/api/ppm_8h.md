@@ -32,7 +32,7 @@ Load a ppm image file and init the PPMImage pointer with it.
 
 **Note:**
 
-You must free the img data yourself.
+You must call img\_delete once your done with the image
 
 
 
@@ -41,7 +41,7 @@ You must free the img data yourself.
 
 
 * **path** - Relative path to the ppm file 
-* **img** - Empty pointer with allocated memory 
+* **img** 
 
 
 
@@ -70,12 +70,13 @@ Save the given ppmImage to a file.
 
 * **path** - full path with filename 
 * **img** - PPMImage to save 
+* **format** 
 
 
 
 **Returns:**
 
-EXIT\_SUCCESS or EXIT\_FAILURE 
+EXIT\_FAILURE or EXIT\_SUCCESS 
 
 
 

@@ -1,6 +1,6 @@
 ---
 search:
-    keywords: ['imac-img.h', 'ImacImg', 'Pixel', 'ImageFormat', 'Color', 'ImacImg', 'Pixel', 'getPixelValue', 'getPixel', 'setPixelValue']
+    keywords: ['imac-img.h', 'ImacImg', 'img_Channel', 'img_Format', 'ImacImg', 'img_new', 'img_delete', 'img_getPixelChannel', 'img_setToWhite', 'img_setPixelChannel', 'img_setPixelChannels']
 ---
 
 # file imac-img.h
@@ -11,15 +11,14 @@ search:
 |Type|Name|
 |-----|-----|
 |struct|[**ImacImg**](struct_imac_img.md)|
-|struct|[**Pixel**](struct_pixel.md)|
 
 
 ## Enums
 
 |Type|Name|
 |-----|-----|
-|enum|[**ImageFormat**](imac-img_8h.md#1a22f6b18e781e3c412e7d243f7de6aa5c) { **P6**, **P5**, **P4**, **P3**, **P2**, **P1** } |
-|enum|[**Color**](imac-img_8h.md#1ab87bacfdad76e61b9412d7124be44c1c) { **red** = 0, **green** = 1, **blue** = 2, **alpha** = 3 } |
+|enum|[**img\_Channel**](imac-img_8h.md#1a415ca2e37928df0e87062550612407a1) { **red** = 0, **green** = 1, **blue** = 2 } |
+|enum|[**img\_Format**](imac-img_8h.md#1abe83871208f94af5ca8ef33a1c6f5a0a) { **P6**, **P5**, **P4**, **P3**, **P2**, **P1** } |
 
 
 ## Typedefs
@@ -27,24 +26,39 @@ search:
 |Type|Name|
 |-----|-----|
 |typedef struct **[ImacImg](struct_imac_img.md)**|[**ImacImg**](imac-img_8h.md#1a36f94e74c5010b84b5d637d783bbb750)|
-|typedef struct **[Pixel](struct_pixel.md)**|[**Pixel**](imac-img_8h.md#1a852667dea7b3568b4439cfa1609f9684)|
 
 
 ## Functions
 
 |Type|Name|
 |-----|-----|
-|unsigned char|[**getPixelValue**](imac-img_8h.md#1abe430dc04d7aa87969548d1318a9b803) (**[ImacImg](struct_imac_img.md)** \* img, int x, int y, enum **[Color](imac-img_8h.md#1ab87bacfdad76e61b9412d7124be44c1c)** c) <br>Get the pixel value for given color. |
-|**[Pixel](struct_pixel.md)**|[**getPixel**](imac-img_8h.md#1a89231b73106fcb3120d5f830194f2fb1) (**[ImacImg](struct_imac_img.md)** \* img, int x, int y) <br>Get a pixel from x y position. Debug-only purpose. |
-|void|[**setPixelValue**](imac-img_8h.md#1adf193e59f52b23b910222d44937b3bf4) (**[ImacImg](struct_imac_img.md)** \* img, int x, int y, enum **[Color](imac-img_8h.md#1ab87bacfdad76e61b9412d7124be44c1c)** c, unsigned char value) <br>Set the value of the color of a pixel. |
+|int|[**img\_new**](imac-img_8h.md#1a9d6e9f6384788fbcdace048c7327209f) (**[ImacImg](struct_imac_img.md)** \* img, unsigned int width, unsigned int height) <br>Constructor for **[ImacImg](struct_imac_img.md)**. |
+|int|[**img\_delete**](imac-img_8h.md#1aa00c1131cec1fae13895faba2f1f5cac) (**[ImacImg](struct_imac_img.md)** \* img) <br>Destructor for **[ImacImg](struct_imac_img.md)**. |
+|unsigned char|[**img\_getPixelChannel**](imac-img_8h.md#1a19bfc01604a78996551a46ee0a3eb9c3) (**[ImacImg](struct_imac_img.md)** \* img, unsigned int x, unsigned int y, enum **[img\_Channel](imac-img_8h.md#1a415ca2e37928df0e87062550612407a1)** c) <br>Get the pixel value for given color. |
+|void|[**img\_setToWhite**](imac-img_8h.md#1a8c88589c2eb9c42d7e7916c97f0c20de) (**[ImacImg](struct_imac_img.md)** \* img) |
+|void|[**img\_setPixelChannel**](imac-img_8h.md#1a8f7aa804b06a0df8eafa77e1a4d12805) (**[ImacImg](struct_imac_img.md)** \* img, unsigned int x, unsigned int y, unsigned char value, enum **[img\_Channel](imac-img_8h.md#1a415ca2e37928df0e87062550612407a1)** c) <br>Set the value of a color of a pixel. |
+|void|[**img\_setPixelChannels**](imac-img_8h.md#1a5b8f1a182c7c694217d09dcdce848308) (**[ImacImg](struct_imac_img.md)** \* img, unsigned int x, unsigned int y, unsigned char value) <br>Set each colors of the pixel with the value. |
 
 
 ## Enums Documentation
 
-### enum <a id="1a22f6b18e781e3c412e7d243f7de6aa5c" href="#1a22f6b18e781e3c412e7d243f7de6aa5c">ImageFormat</a>
+### enum <a id="1a415ca2e37928df0e87062550612407a1" href="#1a415ca2e37928df0e87062550612407a1">img\_Channel</a>
 
 ```cpp
-enum imac-img.h::ImageFormat {
+enum imac-img.h::img_Channel {
+    red = 0,
+    green = 1,
+    blue = 2,
+};
+```
+
+
+The channel of the pixels 
+
+### enum <a id="1abe83871208f94af5ca8ef33a1c6f5a0a" href="#1abe83871208f94af5ca8ef33a1c6f5a0a">img\_Format</a>
+
+```cpp
+enum imac-img.h::img_Format {
     P6,
     P5,
     P4,
@@ -57,19 +71,6 @@ enum imac-img.h::ImageFormat {
 
 Image File Format working with this software 
 
-### enum <a id="1ab87bacfdad76e61b9412d7124be44c1c" href="#1ab87bacfdad76e61b9412d7124be44c1c">Color</a>
-
-```cpp
-enum imac-img.h::Color {
-    red = 0,
-    green = 1,
-    blue = 2,
-    alpha = 3,
-};
-```
-
-
-
 ## Typedefs Documentation
 
 ### typedef <a id="1a36f94e74c5010b84b5d637d783bbb750" href="#1a36f94e74c5010b84b5d637d783bbb750">ImacImg</a>
@@ -80,25 +81,93 @@ typedef struct ImacImg  ImacImg;
 
 
 
-### typedef <a id="1a852667dea7b3568b4439cfa1609f9684" href="#1a852667dea7b3568b4439cfa1609f9684">Pixel</a>
-
-```cpp
-typedef struct Pixel  Pixel;
-```
-
-
-Image **[Pixel](struct_pixel.md)** 
-
 ## Functions Documentation
 
-### function <a id="1abe430dc04d7aa87969548d1318a9b803" href="#1abe430dc04d7aa87969548d1318a9b803">getPixelValue</a>
+### function <a id="1a9d6e9f6384788fbcdace048c7327209f" href="#1a9d6e9f6384788fbcdace048c7327209f">img\_new</a>
 
 ```cpp
-unsigned char imac-img.h::getPixelValue (
+int imac-img.h::img_new (
     ImacImg * img,
-    int x,
-    int y,
-    enum Color c
+    unsigned int width,
+    unsigned int height
+)
+```
+
+Constructor for **[ImacImg](struct_imac_img.md)**. 
+
+
+
+**Note:**
+
+If you use an image loader, you do not need it 
+
+
+
+
+**Note:**
+
+Don't forget to call img\_delete once you are done with the image 
+
+
+
+
+**Note:**
+
+Width and height are READONLY, because the data array has been allocated with it
+
+
+
+
+**Parameters:**
+
+
+* **img** 
+* **width** 
+* **height** 
+
+
+
+**Returns:**
+
+EXIT\_FAILURE or EXIT\_SUCCESS 
+
+
+
+
+### function <a id="1aa00c1131cec1fae13895faba2f1f5cac" href="#1aa00c1131cec1fae13895faba2f1f5cac">img\_delete</a>
+
+```cpp
+int imac-img.h::img_delete (
+    ImacImg * img
+)
+```
+
+Destructor for **[ImacImg](struct_imac_img.md)**. 
+
+
+
+**Parameters:**
+
+
+* **img** 
+
+
+
+**Returns:**
+
+
+
+
+
+
+### function <a id="1a19bfc01604a78996551a46ee0a3eb9c3" href="#1a19bfc01604a78996551a46ee0a3eb9c3">img\_getPixelChannel</a>
+
+```cpp
+unsigned char imac-img.h::img_getPixelChannel (
+    ImacImg * img,
+    unsigned int x,
+    unsigned int y,
+    enum img_Channel c
 )
 ```
 
@@ -119,7 +188,7 @@ Get the pixel value for given color.
 * **img** 
 * **x** 
 * **y** 
-* **c** 
+* **c** - Channel color enum 
 
 
 
@@ -130,56 +199,29 @@ Brightness value contained between 0 and 255.
 
 
 
-### function <a id="1a89231b73106fcb3120d5f830194f2fb1" href="#1a89231b73106fcb3120d5f830194f2fb1">getPixel</a>
+### function <a id="1a8c88589c2eb9c42d7e7916c97f0c20de" href="#1a8c88589c2eb9c42d7e7916c97f0c20de">img\_setToWhite</a>
 
 ```cpp
-Pixel imac-img.h::getPixel (
-    ImacImg * img,
-    int x,
-    int y
+void imac-img.h::img_setToWhite (
+    ImacImg * img
 )
 ```
 
-Get a pixel from x y position. Debug-only purpose. 
 
 
-
-**Note:**
-
-0, 0 position is top left corner.
-
-
-
-
-**Parameters:**
-
-
-* **img** 
-* **x** 
-* **y** 
-
-
-
-**Returns:**
-
-**[Pixel](struct_pixel.md)** with red, green, blue color values (and alpha if available) 
-
-
-
-
-### function <a id="1adf193e59f52b23b910222d44937b3bf4" href="#1adf193e59f52b23b910222d44937b3bf4">setPixelValue</a>
+### function <a id="1a8f7aa804b06a0df8eafa77e1a4d12805" href="#1a8f7aa804b06a0df8eafa77e1a4d12805">img\_setPixelChannel</a>
 
 ```cpp
-void imac-img.h::setPixelValue (
+void imac-img.h::img_setPixelChannel (
     ImacImg * img,
-    int x,
-    int y,
-    enum Color c,
-    unsigned char value
+    unsigned int x,
+    unsigned int y,
+    unsigned char value,
+    enum img_Channel c
 )
 ```
 
-Set the value of the color of a pixel. 
+Set the value of a color of a pixel. 
 
 
 
@@ -196,7 +238,39 @@ Set the value of the color of a pixel.
 * **img** 
 * **x** 
 * **y** 
-* **c** 
+* **value** 
+* **c** - color channel 
+
+
+
+### function <a id="1a5b8f1a182c7c694217d09dcdce848308" href="#1a5b8f1a182c7c694217d09dcdce848308">img\_setPixelChannels</a>
+
+```cpp
+void imac-img.h::img_setPixelChannels (
+    ImacImg * img,
+    unsigned int x,
+    unsigned int y,
+    unsigned char value
+)
+```
+
+Set each colors of the pixel with the value. 
+
+
+
+**Note:**
+
+0,0 is top left position
+
+
+
+
+**Parameters:**
+
+
+* **img** 
+* **x** 
+* **y** 
 * **value** 
 
 

@@ -11,7 +11,7 @@ int img_new(ImacImg* img, unsigned int width, unsigned int height) {
 
     img->width = width;
     img->height = height;
-    img->data = malloc(3 * img->width * img->height);
+    img->data = malloc(3 * img->width * img->height * sizeof(unsigned char));
     if (img->data == NULL) {
         perror("img_new: Data is null");
         exit(EXIT_FAILURE);

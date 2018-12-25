@@ -19,6 +19,7 @@ Source: `src/imac-img.h`
     
     
     
+    
       
       
       
@@ -32,7 +33,15 @@ Source: `src/imac-img.h`
 
 #include <stdbool.h>
 
-enum ImageFormat {
+// ------------------------------------- STRUCTS & ENUMS
+
+enum img_Channel {
+    red = 0,
+    green = 1,
+    blue = 2,
+};
+
+enum img_Format {
     P6,
     P5,
     P4,
@@ -42,32 +51,28 @@ enum ImageFormat {
 };
 
 typedef struct ImacImg {
-    enum ImageFormat format;
     unsigned int width;
     unsigned int height;
-    bool transparency;
     unsigned char* data;
 } ImacImg;
 
-enum Color {
-    red = 0,
-    green = 1,
-    blue = 2,
-    alpha = 3,
-};
+// ------------------------------------- CONSTRUCTOR & DESTRUCTOR
 
-typedef struct Pixel {
-    unsigned char red;
-    unsigned char green;
-    unsigned char blue;
-    unsigned char alpha;
-} Pixel;
+int img_new(ImacImg* img, unsigned int width, unsigned int height);
 
-unsigned char getPixelValue(ImacImg* img, int x, int y, enum Color c);
+int img_delete(ImacImg* img);
 
-Pixel getPixel(ImacImg* img, int x, int y);
+// ------------------------------------- GETTERS
 
-void setPixelValue(ImacImg* img, int x, int y, enum Color c, unsigned char value);
+unsigned char img_getPixelChannel(ImacImg* img, unsigned int x, unsigned int y, enum img_Channel c);
+
+// ------------------------------------- SETTERS
+
+void img_setToWhite(ImacImg* img);
+
+void img_setPixelChannel(ImacImg* img, unsigned int x, unsigned int y, unsigned char value, enum img_Channel c);
+
+void img_setPixelChannels(ImacImg* img, unsigned  int x, unsigned int y, unsigned char value);
 
 #endif //MINIGIMP_IMAC_IMG_H
 ```

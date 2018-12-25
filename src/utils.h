@@ -1,3 +1,8 @@
+/**
+ * @file utils.h
+ * @brief Utility library functions
+ */
+
 #ifndef MINIGIMP_UTILS_H
 #define MINIGIMP_UTILS_H
 

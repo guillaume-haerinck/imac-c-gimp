@@ -1,6 +1,6 @@
 ---
 search:
-    keywords: ['ImacImg', 'Pixel']
+    keywords: ['ImacImg', 'ImacLut']
 ---
 
 # Class Index
@@ -8,10 +8,6 @@ search:
 ## I
 
 * [**ImacImg**](struct_imac_img.md)
-
-
-## P
-
-* [**Pixel**](struct_pixel.md)
+* [**ImacLut**](struct_imac_lut.md)
 
 
