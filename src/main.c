@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <time.h>
 
 #include "imac-img.h"
@@ -15,10 +16,13 @@
 int main(int argc, char *argv[]) {
     clock_t start, end;
     double cpu_time_used;
+    bool bLutUsed = false;
     start = clock();
 
     if (argc > 0) {
         ImacImg img;
+        ImacLut lut;
+        lut_new(&lut);
         int imagePathIndex = -1;
 
         /* Handle filetype */
@@ -50,13 +54,17 @@ int main(int argc, char *argv[]) {
             } else if (strcmp(argv[i], "DIMCON") == 0) {
                 // printf("Dim constrast filter power is: %s\n", argv[i + 1]);
             } else if (strcmp(argv[i], "INVERT") == 0) {
-                inv_lut(&img);
+                inv_lut(&lut);
+                bLutUsed = true;
             } else if (strcmp(argv[i], "SEPIA") == 0) {
                 // printf("Sepia filter power is: %s\n", argv[i + 1]);
             }
         }
 
         /* Save result */
+        if (bLutUsed) {
+            lut_apply(&lut, &img);
+        }
         if (imagePathIndex != -1) {
             ppm_save(argv[imagePathIndex], &img);
         } else {
@@ -64,6 +72,7 @@ int main(int argc, char *argv[]) {
         }
 
         /* Clean memory */
+        lut_delete(&lut);
         img_delete(&img);
     } else {
         printf("No input file provided ! \n");

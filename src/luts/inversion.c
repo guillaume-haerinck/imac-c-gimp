@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "inversion.h"
 
-void inv_direct(ImacImg* img) {
+void inv_img(ImacImg* img) {
     unsigned char brightness = 0;
     for (unsigned int y = 0; y < img->height; y++) {
         for (unsigned int x = 0; x < img->width; x++) {
@@ -13,17 +13,8 @@ void inv_direct(ImacImg* img) {
     }
 }
 
-// TODO input lut pointer to do modification on the lut ?
-void inv_lut(ImacImg* img) {
-    unsigned char brightness = 0;
-    for (unsigned int y = 0; y < img->height; y++) {
-        for (unsigned int x = 0; x < img->width; x++) {
-            for (int c = red; c <= blue; c++) {
-                brightness = img_getPixelChannel(img, x, y, c);
-                brightness = _invertLookupTable[brightness];
-                img_setPixelChannel(img, x, y, brightness, c);
-
-            }
-        }
+void inv_lut(ImacLut* lut) {
+    for (unsigned char x = 0; x < lut->size; x++) {
+        lut->data[x] = _invertLookupTable[x];
     }
 }

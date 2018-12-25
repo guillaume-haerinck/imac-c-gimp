@@ -1,11 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "histogram.h"
-#include "../image-loaders/ppm.h"
-#include "../utils.h"
+#include "image-loaders/ppm.h"
+#include "utils.h"
 
 int hist_rgb(ImacImg* imgToAnalyse, ImacImg* histogram) {
-    unsigned int imgBrightnessSpectrum[MAX_BRIGHTNESS] = { 0 };
+    unsigned int imgBrightnessSpectrum[256] = { 0 };
 
     // Get values for histogram
     unsigned int pixelAvgBrightness = 0;
@@ -30,7 +30,7 @@ int hist_rgb(ImacImg* imgToAnalyse, ImacImg* histogram) {
 };
 
 int hist_channel(ImacImg* imgToAnalyse, ImacImg* histogram, enum img_Channel c) {
-    unsigned int imgBrightnessSpectrum[MAX_BRIGHTNESS] = { 0 };
+    unsigned int imgBrightnessSpectrum[255] = { 0 };
 
     // Get values for histogram
     unsigned int pixelBrightness = 0;
@@ -51,9 +51,14 @@ int hist_channel(ImacImg* imgToAnalyse, ImacImg* histogram, enum img_Channel c) 
     return EXIT_SUCCESS;
 };
 
-// TODO size of histogramData, check it to be MAX_BRIGHTNESS
 static void _printHistogram(ImacImg* histogram, unsigned int* histogramData, unsigned int maxData, unsigned char printColor) {
     img_setToWhite(histogram);
+
+    if (histogram->width != 256) {
+        printf("_printHistogram error: histogram not 256 width");
+        exit(EXIT_FAILURE);
+    }
+
     for (unsigned int x = 0; x < histogram->width; x++) {
         long columnHeight = linearMapping(histogramData[x], 0, maxData, 0, histogram->height);
         long columnEnd = histogram->height - columnHeight;

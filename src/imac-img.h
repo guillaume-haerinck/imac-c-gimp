@@ -9,10 +9,6 @@
 
 #include <stdbool.h>
 
-// ------------------------------------- CONSTANTS
-
-#define MAX_BRIGHTNESS 255
-
 // ------------------------------------- STRUCTS & ENUMS
 
 /**
