@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <time.h>
 
 #include "imac-img.h"
@@ -17,7 +16,7 @@
 int main(int argc, char *argv[]) {
     clock_t start, end;
     double cpuTimeUsed;
-    bool bLutUsed = false;
+    bool bHistogram = false;
     start = clock();
 
     if (argc > 0) {
@@ -41,31 +40,40 @@ int main(int argc, char *argv[]) {
                 img_new(&histogram, 256, 150);
                 hist_rgb(&img, &histogram);
                 // TODO append histogram to argv[1] name
-                ppm_save("./histogram.ppm", &histogram);
+                ppm_save("./original-histogram.ppm", &histogram);
                 img_delete(&histogram);
+                bHistogram = true;
             } else if (strcmp(argv[i], "-o") == 0) {
                 imagePathIndex = i + 1;
             } else if (strcmp(argv[i], "ADDLUM") == 0) {
                 long value = strtol(argv[i + 1], NULL, 10);
-                // TODO
+                if (value > 255) { value = 255; }
+                lum_addToLut(&lut, (unsigned char) value);
             } else if (strcmp(argv[i], "DIMLUM") == 0) {
                 long value = strtol(argv[i + 1], NULL, 10);
-                // TODO
+                if (value > 255) { value = 255; }
+                lum_dimToLut(&lut, (unsigned char) value);
             } else if (strcmp(argv[i], "ADDCON") == 0) {
                 // printf("Add constrast filter power is: %s\n", argv[i + 1]);
             } else if (strcmp(argv[i], "DIMCON") == 0) {
                 // printf("Dim constrast filter power is: %s\n", argv[i + 1]);
             } else if (strcmp(argv[i], "INVERT") == 0) {
                 inv_lut(&lut);
-                bLutUsed = true;
             } else if (strcmp(argv[i], "SEPIA") == 0) {
                 // printf("Sepia filter power is: %s\n", argv[i + 1]);
             }
         }
 
         /* Save result */
-        if (bLutUsed) {
-            lut_apply(&lut, &img);
+        lut_print(&lut);
+        lut_applyRgb(&lut, &img);
+        if (bHistogram) {
+            ImacImg histogram;
+            img_new(&histogram, 256, 150);
+            hist_rgb(&img, &histogram);
+            // TODO append histogram to argv[1] name
+            ppm_save("./output-histogram.ppm", &histogram);
+            img_delete(&histogram);
         }
         if (imagePathIndex != -1) {
             ppm_save(argv[imagePathIndex], &img);

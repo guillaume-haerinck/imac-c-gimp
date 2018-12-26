@@ -40,13 +40,42 @@ int lut_new(ImacLut* lut);
 int lut_delete(ImacLut* lut);
 
 // ---------------------- SETTERS
+
 /**
- * @brief Apply the lut to the image
+ * @brief Set the lut data with security
+ *
+ * @param lut
+ * @param index
+ * @param value
+ * @return brightness
+ */
+void lut_set(ImacLut* lut, unsigned int index, unsigned char value);
+
+/**
+ * @brief Apply the lut to the all the channels of the image
  *
  * @param lut
  * @param img
  * @return
  */
-int lut_apply(ImacLut* lut, ImacImg* img);
+int lut_applyRgb(ImacLut* lut, ImacImg* img);
+
+// ----------------------- GETTERS
+
+/**
+ * @brief Access the lut data with security
+ *
+ * @param lut
+ * @param index
+ * @return brightness
+ */
+unsigned char lut_get(ImacLut* lut, unsigned int index);
+
+/**
+ *
+ * @brief Print the lut on debug screen.
+ * @param lut
+ */
+void lut_print(ImacLut* lut);
 
 #endif //MINIGIMP_IMAC_LUT_H
