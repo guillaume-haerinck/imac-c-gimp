@@ -7,8 +7,8 @@
 #ifndef MINIGIMP_INVERSION_H
 #define MINIGIMP_INVERSION_H
 
-#include "imac-img.h"
-#include "imac-lut.h"
+#include "../imac-img.h"
+#include "../imac-lut.h"
 
 /**
  * @brief Invert color of the image on procedural calculation

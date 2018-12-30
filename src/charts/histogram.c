@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "histogram.h"
-#include "image-loaders/ppm.h"
-#include "utils.h"
+#include "../image-loaders/ppm.h"
+#include "../utils.h"
 
 // TODO parfois histogramme s'affiche mal, debugger
 int hist_rgb(ImacImg* imgToAnalyse, ImacImg* histogram) {

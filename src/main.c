@@ -10,6 +10,7 @@
 #include "image-loaders/ppm.h"
 #include "luts/inversion.h"
 #include "luts/luminosity.h"
+#include "luts/contrast.h"
 
 // minigimp mon_image.ppm [-h] [-histo] [<code_lut>[_<param1>]*]* [-o image_sortie.ppm]
 
@@ -54,8 +55,14 @@ int main(int argc, char *argv[]) {
                 if (value > 255) { value = 255; }
                 lum_dimToLut(&lut, (unsigned char) value);
             } else if (strcmp(argv[i], "ADDCON") == 0) {
+                long value = strtol(argv[i + 1], NULL, 10);
+                if (value > 255) { value = 255; }
+                contrast_addToLut(&lut, (unsigned char) value);
                 // printf("Add constrast filter power is: %s\n", argv[i + 1]);
             } else if (strcmp(argv[i], "DIMCON") == 0) {
+                long value = strtol(argv[i + 1], NULL, 10);
+                if (value > 255) { value = 255; }
+                contrast_dimToLut(&lut, (unsigned char) value);
                 // printf("Dim constrast filter power is: %s\n", argv[i + 1]);
             } else if (strcmp(argv[i], "INVERT") == 0) {
                 inv_lut(&lut);

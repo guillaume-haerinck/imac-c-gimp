@@ -5,8 +5,8 @@
 #ifndef MINIGIMP_LUMINOSITY_H
 #define MINIGIMP_LUMINOSITY_H
 
-#include "imac-img.h"
-#include "imac-lut.h"
+#include "../imac-img.h"
+#include "../imac-lut.h"
 
 /**
  * @brief Add value to each color of the image
