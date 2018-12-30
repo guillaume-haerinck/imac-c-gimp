@@ -19,8 +19,8 @@ void sepia_addToLut(ImacLut* lut3d) {
     }
     */
     for (unsigned int i = 0; i < lut3d->size; i++) {
-	    brightnessR = (i*.393) + (i * .469) + (i * .189);
-	    brightnessG = (i*.349) + (i * .486) + (i * .168);
+	    brightnessR = (i*.393) + (i * .769) + (i * .189);
+	    brightnessG = (i*.349) + (i * .686) + (i * .168);
 	    brightnessB = (i*.272) + (i * .534) + (i * .131);
 	    lut3d->dataR[i] = (unsigned char) brightnessR;
 	    lut3d->dataG[i] = (unsigned char) brightnessG;
