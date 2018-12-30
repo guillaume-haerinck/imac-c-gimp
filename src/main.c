@@ -5,12 +5,14 @@
 
 #include "imac-img.h"
 #include "imac-lut.h"
+#include "imac-lut3d.h"
 #include "utils.h"
 #include "charts/histogram.h"
 #include "image-loaders/ppm.h"
 #include "luts/inversion.h"
 #include "luts/luminosity.h"
 #include "luts/contrast.h"
+#include "luts/sepia.h"
 
 // minigimp mon_image.ppm [-h] [-histo] [<code_lut>[_<param1>]*]* [-o image_sortie.ppm]
 
@@ -23,7 +25,7 @@ int main(int argc, char *argv[]) {
     if (argc > 0) {
         ImacImg img;
         ImacLut lut;
-        lut_new(&lut);
+        lut3d_new(&lut);
         int imagePathIndex = -1;
 
         /* Handle filetype */
@@ -67,13 +69,14 @@ int main(int argc, char *argv[]) {
             } else if (strcmp(argv[i], "INVERT") == 0) {
                 inv_lut(&lut);
             } else if (strcmp(argv[i], "SEPIA") == 0) {
+                sepia_addToLut(&lut);
                 // printf("Sepia filter power is: %s\n", argv[i + 1]);
             }
         }
 
         /* Save result */
-        lut_print(&lut);
-        lut_applyRgb(&lut, &img);
+        lut3d_print(&lut);
+        lut3d_applyRgb(&lut, &img);
         if (bHistogram) {
             ImacImg histogram;
             img_new(&histogram, 256, 150);
@@ -82,14 +85,15 @@ int main(int argc, char *argv[]) {
             ppm_save("./output-histogram.ppm", &histogram);
             img_delete(&histogram);
         }
-        if (imagePathIndex != -1) {
+        
+	if (imagePathIndex != -1) {
             ppm_save(argv[imagePathIndex], &img);
         } else {
             ppm_save("output.ppm", &img);
         }
 
         /* Clean memory */
-        lut_delete(&lut);
+        lut3d_delete(&lut);
         img_delete(&img);
     } else {
         printf("No input file provided !\n");
