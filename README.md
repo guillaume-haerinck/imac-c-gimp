@@ -59,6 +59,8 @@ https://www.mochima.com/articles/LUT/LUT.html
 
 https://docs.opencv.org/2.4/doc/tutorials/core/basic_linear_transform/basic_linear_transform.html
 
+https://www.dfstudios.co.uk/articles/programming/image-programming-algorithms/image-processing-algorithms-part-5-contrast-adjustment/?fbclid=IwAR3ckOxGVc_Y4dCLp3lHU7QkBqBtbxhjTy6jJkn-1UUPMb2L8jiHANva4wc
+
 ### Books
 
 https://abhijitnathwani.github.io/blog/2017/12/20/First-C-Program-for-Image-Processing

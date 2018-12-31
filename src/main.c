@@ -60,12 +60,10 @@ int main(int argc, char *argv[]) {
                 long value = strtol(argv[i + 1], NULL, 10);
                 if (value > 255) { value = 255; }
                 contrast_addToLut(&lut, (unsigned char) value);
-                // printf("Add constrast filter power is: %s\n", argv[i + 1]);
             } else if (strcmp(argv[i], "DIMCON") == 0) {
                 long value = strtol(argv[i + 1], NULL, 10);
                 if (value > 255) { value = 255; }
                 contrast_dimToLut(&lut, (unsigned char) value);
-                // printf("Dim constrast filter power is: %s\n", argv[i + 1]);
             } else if (strcmp(argv[i], "INVERT") == 0) {
                 inv_lut(&lut);
             } else if (strcmp(argv[i], "SEPIA") == 0) {
@@ -102,6 +100,6 @@ int main(int argc, char *argv[]) {
 
     end = clock();
     cpuTimeUsed = ((double) (end - start)) / CLOCKS_PER_SEC;
-    printf("CPU time used (in seconds): %f \n", cpuTimeUsed);
+    printf("CPU time used (in seconds): %f\n", cpuTimeUsed);
     return EXIT_SUCCESS;
 }
