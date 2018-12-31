@@ -12,7 +12,7 @@ int lut_new(ImacLut* lut) {
     }
 
     // Init to no-effect lut
-    for (unsigned int i = 0; i <= 255; i++) {
+    for (unsigned int i = 0; i <= lut->size; i++) {
         lut->data[i] = (unsigned char) i;
     }
     return EXIT_SUCCESS;

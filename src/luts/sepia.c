@@ -1,7 +1,8 @@
 #include "sepia.h"
 #include <stdio.h>
 
-void sepia_addToLut(ImacLut* lut3d) {
+void sepia_addToLut3d(ImacLut3d* lut3d) {
+	// FIXME
     int brightnessR = 0, brightnessG = 0, brightnessB = 0;
     /*
     for (unsigned int red = 0; red < lut3d->size; red++) {
@@ -18,7 +19,7 @@ void sepia_addToLut(ImacLut* lut3d) {
 	    }
     }
     */
-    for (unsigned int i = 0; i < lut3d->size; i++) {
+    for (unsigned int i = 0; i < lut3d->channelSize; i++) {
 	    brightnessR = (i*.393) + (i * .769) + (i * .189);
 	    brightnessG = (i*.349) + (i * .686) + (i * .168);
 	    brightnessB = (i*.272) + (i * .534) + (i * .131);

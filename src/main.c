@@ -20,12 +20,15 @@ int main(int argc, char *argv[]) {
     clock_t start, end;
     double cpuTimeUsed;
     bool bHistogram = false;
+    bool bLut3d = false;
     start = clock();
 
     if (argc > 0) {
         ImacImg img;
         ImacLut lut;
-        lut3d_new(&lut);
+        ImacLut3d lut3d;
+        lut_new(&lut);
+        lut3d_new(&lut3d);
         int imagePathIndex = -1;
 
         /* Handle filetype */
@@ -67,14 +70,14 @@ int main(int argc, char *argv[]) {
             } else if (strcmp(argv[i], "INVERT") == 0) {
                 inv_lut(&lut);
             } else if (strcmp(argv[i], "SEPIA") == 0) {
-                sepia_addToLut(&lut);
-                // printf("Sepia filter power is: %s\n", argv[i + 1]);
+                sepia_addToLut3d(&lut3d);
+                bLut3d = true;
             }
         }
 
         /* Save result */
-        lut3d_print(&lut);
-        lut3d_applyRgb(&lut, &img);
+        lut_applyRgb(&lut, &img);
+        if (bLut3d) { lut3d_apply(&lut3d, &img); }
         if (bHistogram) {
             ImacImg histogram;
             img_new(&histogram, 256, 150);
@@ -91,7 +94,8 @@ int main(int argc, char *argv[]) {
         }
 
         /* Clean memory */
-        lut3d_delete(&lut);
+        lut_delete(&lut);
+        lut3d_delete(&lut3d);
         img_delete(&img);
     } else {
         printf("No input file provided !\n");

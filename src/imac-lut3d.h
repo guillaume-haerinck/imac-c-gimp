@@ -1,45 +1,45 @@
 /**
  * @file imac-lut3d.h
- * @brief Look up table handler
+ * @brief 3D look up table handler
  *
  */
 
-#ifndef MINIGIMP_IMAC_LUT_H
-#define MINIGIMP_IMAC_LUT_H
+#ifndef MINIGIMP_IMAC_LUT3D_H
+#define MINIGIMP_IMAC_LUT3D_H
 
 #include "imac-img.h"
 
 // --------------------- STRUCT & ENUMS
 
 /**
- * @struct ImacLut
+ * @struct ImacLut3d
  * @note You need to use lut3d_new to init it
  */
-typedef struct ImacLut {
-    int size;
+typedef struct ImacLut3d {
+    unsigned char channelSize;
     unsigned char* dataR;
     unsigned char* dataG;
     unsigned char* dataB;
-} ImacLut;
+} ImacLut3d;
 
 // --------------------- CONSTRUCTOR & DESTRUCTOR
 
 /**
- * @brief Constructor for ImacLut
+ * @brief Constructor for ImacLut3d
  * @note Don't forget to call lut3d_delete once you are done with the lut3d
  *
  * @param lut3d
- * @return
+ * @return EXIT_SUCCESS or EXIT_FAILURE
  */
-int lut3d_new(ImacLut* lut3d);
+int lut3d_new(ImacLut3d* lut3d);
 
 /**
  * @brief Destructor for ImacLut
  *
  * @param lut3d
- * @return
+ * @return EXIT_SUCCESS or EXIT_FAILURE
  */
-int lut3d_delete(ImacLut* lut3d);
+int lut3d_delete(ImacLut3d* lut3d);
 
 // ---------------------- SETTERS
 
@@ -49,18 +49,18 @@ int lut3d_delete(ImacLut* lut3d);
  * @param lut3d
  * @param index
  * @param value
- * @return brightness
+ * @param channel
  */
-void lut3d_set(ImacLut* lut3d, unsigned int index, unsigned char value, int c);
+void lut3d_set(ImacLut3d* lut3d, unsigned int index, unsigned char value, enum img_Channel c);
 
 /**
- * @brief Apply the lut3d to the all the channels of the image
+ * @brief Apply the lut3d to the image
  *
  * @param lut3d
  * @param img
- * @return
+ * @return EXIT_SUCCESS or EXIT_FAILURE
  */
-int lut3d_applyRgb(ImacLut* lut3d, ImacImg* img);
+int lut3d_apply(ImacLut3d* lut3d, ImacImg* img);
 
 // ----------------------- GETTERS
 
@@ -69,15 +69,16 @@ int lut3d_applyRgb(ImacLut* lut3d, ImacImg* img);
  *
  * @param lut3d
  * @param index
+ * @param channel
  * @return brightness
  */
-unsigned char lut3d_get(ImacLut* lut3d, unsigned int index, int c);
+unsigned char lut3d_get(ImacLut3d* lut3d, unsigned int index, enum img_Channel c);
 
 /**
  *
  * @brief Print the lut3d on debug screen.
  * @param lut3d
  */
-void lut3d_print(ImacLut* lut3d);
+void lut3d_print(ImacLut3d* lut3d);
 
-#endif //MINIGIMP_IMAC_LUT_H
+#endif //MINIGIMP_IMAC_LUT3D_H
