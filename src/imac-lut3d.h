@@ -15,6 +15,8 @@
  * @struct ImacLut3d
  * @note You need to use lut3d_new to init it
  */
+
+// TODO voir si stocker dans un seul tableau de data est plus optimisé
 typedef struct ImacLut3d {
     unsigned char channelSize;
     unsigned char* dataR;
@@ -60,7 +62,7 @@ void lut3d_set(ImacLut3d* lut3d, unsigned int index, unsigned char value, enum i
  * @param img
  * @return EXIT_SUCCESS or EXIT_FAILURE
  */
-int lut3d_apply(ImacLut3d* lut3d, ImacImg* img);
+void lut3d_apply(ImacLut3d* lut3d, ImacImg* img);
 
 // ----------------------- GETTERS
 

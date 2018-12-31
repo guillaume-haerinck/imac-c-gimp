@@ -70,14 +70,16 @@ int main(int argc, char *argv[]) {
             } else if (strcmp(argv[i], "INVERT") == 0) {
                 inv_lut(&lut);
             } else if (strcmp(argv[i], "SEPIA") == 0) {
-                sepia_addToLut3d(&lut3d);
-                bLut3d = true;
+                // sepia_addToLut3d(&lut3d);
+                // bLut3d = true;
+                sepia_addToImg(&img);
             }
         }
 
         /* Save result */
-        lut_applyRgb(&lut, &img);
-        if (bLut3d) { lut3d_apply(&lut3d, &img); }
+        // lut_applyRgb(&lut, &img);
+        // lut3d_print(&lut3d);
+        // if (bLut3d) { lut3d_apply(&lut3d, &img); }
         if (bHistogram) {
             ImacImg histogram;
             img_new(&histogram, 256, 150);

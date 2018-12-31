@@ -64,7 +64,7 @@ void lut3d_set(ImacLut3d* lut3d, unsigned int index, unsigned char value, enum i
     }
 }
 
-int lut3d_apply(ImacLut3d* lut3d, ImacImg* img) {
+void lut3d_apply(ImacLut3d* lut3d, ImacImg* img) {
     unsigned char brightness = 0;
     for (unsigned int y = 0; y < img->height; y++) {
         for (unsigned int x = 0; x < img->width; x++) {
@@ -82,6 +82,7 @@ int lut3d_apply(ImacLut3d* lut3d, ImacImg* img) {
         }
     }
 }
+
 /* Getters */
 unsigned char lut3d_get(ImacLut3d* lut3d, unsigned int index, enum img_Channel c) {
     if (index > lut3d->channelSize) {
@@ -90,17 +91,9 @@ unsigned char lut3d_get(ImacLut3d* lut3d, unsigned int index, enum img_Channel c
     }
 
     switch(c) {
-    	case 0: 
-            return lut3d->dataR[index];
-            break;
-
-    	case 1: 
-            return lut3d->dataG[index];
-            break;
-
-    	case 2: 
-            return lut3d->dataB[index];
-            break;
+    	case 0: return lut3d->dataR[index];
+    	case 1: return lut3d->dataG[index];
+    	case 2: return lut3d->dataB[index];
     }
 }
 
