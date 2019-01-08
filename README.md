@@ -49,6 +49,8 @@ And an exemple
 
 ### Articles
 
+https://affinityspotlight.com/article/1d-vs-3d-luts/
+
 https://embeddedgurus.com/stack-overflow/2010/01/a-tutorial-on-lookup-tables-in-c/
 
 http://paulbourke.net/dataformats/ppm/

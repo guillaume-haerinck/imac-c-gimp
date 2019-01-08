@@ -1,9 +1,9 @@
-#include "imac-lut.h"
+#include "imac-lut1d.h"
 #include <stdlib.h>
 #include <stdio.h>
 
 /* Constructor */
-int lut_new(ImacLut* lut) {
+int lut_new(ImacLut1d* lut) {
     lut->size = 255;
     lut->data = malloc(lut->size * sizeof(unsigned char));
     if (lut->data == NULL) {
@@ -19,13 +19,13 @@ int lut_new(ImacLut* lut) {
 }
 
 /* Destructor */
-int lut_delete(ImacLut* lut) {
+int lut_delete(ImacLut1d* lut) {
     free(lut->data);
     return EXIT_SUCCESS;
 }
 
 /* Setters */
-void lut_set(ImacLut* lut, unsigned int index, unsigned char value) {
+void lut_set(ImacLut1d* lut, unsigned int index, unsigned char value) {
     if (index > lut->size) {
         printf("Error lut_getIndex: index superior to lut size\n");
         exit(EXIT_FAILURE);
@@ -33,7 +33,7 @@ void lut_set(ImacLut* lut, unsigned int index, unsigned char value) {
     lut->data[index] = value;
 }
 
-int lut_applyRgb(ImacLut* lut, ImacImg* img) {
+int lut_applyRgb(ImacLut1d* lut, ImacImg* img) {
     unsigned char brightness = 0;
     for (unsigned int y = 0; y < img->height; y++) {
         for (unsigned int x = 0; x < img->width; x++) {
@@ -46,7 +46,7 @@ int lut_applyRgb(ImacLut* lut, ImacImg* img) {
     }
 }
 /* Getters */
-unsigned char lut_get(ImacLut* lut, unsigned int index) {
+unsigned char lut_get(ImacLut1d* lut, unsigned int index) {
     if (index > lut->size) {
         printf("Error lut_getIndex: index superior to lut size\n");
         exit(EXIT_FAILURE);
@@ -54,7 +54,7 @@ unsigned char lut_get(ImacLut* lut, unsigned int index) {
     return lut->data[index];
 }
 
-void lut_print(ImacLut* lut) {
+void lut_print(ImacLut1d* lut) {
     printf("in: ");
     for (int i = 0; i <= lut->size; i++) {
         printf("%d ", i);

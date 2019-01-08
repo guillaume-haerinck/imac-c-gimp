@@ -7,7 +7,7 @@
 #ifndef MINIGIMP_PPM_H
 #define MINIGIMP_PPM_H
 
-#include "../imac-img.h"
+#include "core/imac-img.h"
 
 /**
  * @brief Load a ppm image file and init the PPMImage pointer with it.

@@ -14,7 +14,7 @@ void lum_addToImg(ImacImg* img, unsigned char value) {
     }
 }
 
-void lum_addToLut(ImacLut* lut, unsigned char value) {
+void lum_addToLut1d(ImacLut1d *lut, unsigned char value) {
     unsigned int brightness = 0;
     for (unsigned int i = 0; i <= lut->size; i++) {
         brightness = lut->data[i] + value;
@@ -36,7 +36,7 @@ void lum_dimToImg(ImacImg* img, unsigned char value) {
     }
 }
 
-void lum_dimToLut(ImacLut* lut, unsigned char value) {
+void lum_dimToLut1d(ImacLut1d *lut, unsigned char value) {
     int brightness = 0;
     for (unsigned int i = 0; i <= lut->size; i++) {
         brightness = lut_get(lut, i) - value;

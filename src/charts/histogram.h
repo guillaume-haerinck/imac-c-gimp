@@ -1,7 +1,7 @@
 #ifndef MINIGIMP_HISTOGRAM_H
 #define MINIGIMP_HISTOGRAM_H
 
-#include "../imac-img.h"
+#include "core/imac-img.h"
 
 /**
  * @brief Create an average histogram of the image

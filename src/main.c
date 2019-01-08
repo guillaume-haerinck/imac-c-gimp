@@ -3,10 +3,10 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "imac-img.h"
-#include "imac-lut.h"
-#include "imac-lut3d.h"
-#include "utils.h"
+#include "core/imac-img.h"
+#include "core/imac-lut1d.h"
+#include "core/imac-lut3x1d.h"
+#include "core/utils.h"
 #include "charts/histogram.h"
 #include "image-loaders/ppm.h"
 #include "luts/inversion.h"
@@ -25,8 +25,8 @@ int main(int argc, char *argv[]) {
 
     if (argc > 0) {
         ImacImg img;
-        ImacLut lut;
-        ImacLut3d lut3d;
+        ImacLut1d lut;
+        ImacLut3x1d lut3d;
         lut_new(&lut);
         lut3d_new(&lut3d);
         int imagePathIndex = -1;
@@ -54,32 +54,30 @@ int main(int argc, char *argv[]) {
             } else if (strcmp(argv[i], "ADDLUM") == 0) {
                 long value = strtol(argv[i + 1], NULL, 10);
                 if (value > 255) { value = 255; }
-                lum_addToLut(&lut, (unsigned char) value);
+                lum_addToLut1d(&lut, (unsigned char) value);
             } else if (strcmp(argv[i], "DIMLUM") == 0) {
                 long value = strtol(argv[i + 1], NULL, 10);
                 if (value > 255) { value = 255; }
-                lum_dimToLut(&lut, (unsigned char) value);
+                lum_dimToLut1d(&lut, (unsigned char) value);
             } else if (strcmp(argv[i], "ADDCON") == 0) {
                 long value = strtol(argv[i + 1], NULL, 10);
                 if (value > 255) { value = 255; }
-                contrast_addToLut(&lut, (unsigned char) value);
+                contrast_addToLut1d(&lut, (unsigned char) value);
             } else if (strcmp(argv[i], "DIMCON") == 0) {
                 long value = strtol(argv[i + 1], NULL, 10);
                 if (value > 255) { value = 255; }
-                contrast_dimToLut(&lut, (unsigned char) value);
+                contrast_dimToLut1d(&lut, (unsigned char) value);
             } else if (strcmp(argv[i], "INVERT") == 0) {
-                inv_lut(&lut);
+                inv_lut1d(&lut);
             } else if (strcmp(argv[i], "SEPIA") == 0) {
-                // sepia_addToLut3d(&lut3d);
-                // bLut3d = true;
-                sepia_addToImg(&img);
+                sepia_addToLut3x1d(&lut3d);
+                bLut3d = true;
             }
         }
 
         /* Save result */
-        // lut_applyRgb(&lut, &img);
-        // lut3d_print(&lut3d);
-        // if (bLut3d) { lut3d_apply(&lut3d, &img); }
+        lut_applyRgb(&lut, &img);
+        if (bLut3d) { lut3d_apply(&lut3d, &img); }
         if (bHistogram) {
             ImacImg histogram;
             img_new(&histogram, 256, 150);

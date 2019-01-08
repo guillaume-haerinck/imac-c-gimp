@@ -5,8 +5,8 @@
 #ifndef MINIGIMP_LUMINOSITY_H
 #define MINIGIMP_LUMINOSITY_H
 
-#include "../imac-img.h"
-#include "../imac-lut.h"
+#include "core/imac-img.h"
+#include "core/imac-lut1d.h"
 
 /**
  * @brief Add value to each color of the image
@@ -22,7 +22,7 @@ void lum_addToImg(ImacImg* img, unsigned char value);
  * @param lut
  * @param value
  */
-void lum_addToLut(ImacLut* lut, unsigned char value);
+void lum_addToLut1d(ImacLut1d *lut, unsigned char value);
 
 /**
  * @brief Substract value to each color of the image
@@ -38,6 +38,6 @@ void lum_dimToImg(ImacImg* img, unsigned char value);
  * @param lut
  * @param value
  */
-void lum_dimToLut(ImacLut* lut, unsigned char value);
+void lum_dimToLut1d(ImacLut1d *lut, unsigned char value);
 
 #endif //MINIGIMP_LUMINOSITY_H

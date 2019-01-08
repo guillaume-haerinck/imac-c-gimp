@@ -13,7 +13,7 @@ void inv_img(ImacImg* img) {
     }
 }
 
-void inv_lut(ImacLut* lut) {
+void inv_lut1d(ImacLut1d *lut) {
     for (unsigned int x = 0; x <= lut->size; x++) {
         lut_set(lut, x, _invertLookupTable[x]);
     }

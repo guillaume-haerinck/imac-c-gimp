@@ -5,16 +5,16 @@
 #ifndef MINIGIMP_SEPIA_H
 #define MINIGIMP_SEPIA_H
 
-#include "../imac-img.h"
-#include "../imac-lut3d.h"
+#include "core/imac-img.h"
+#include "core/imac-lut3x1d.h"
 
 /**
- * @brief Apply sepia effect to lut3d
+ * @brief Apply sepia effect to 3x1d lut
  *
  * @param lut
  * @param value
  */
-void sepia_addToLut3d(ImacLut3d* lut);
+void sepia_addToLut3x1d(ImacLut3x1d *lut);
 
 /**
  * @brief Apply sepia effect to image

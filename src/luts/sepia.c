@@ -1,7 +1,7 @@
 #include "sepia.h"
 #include <stdio.h>
 
-void sepia_addToLut3d(ImacLut3d* lut3d) {
+void sepia_addToLut3x1d(ImacLut3x1d *lut) {
     double brightnessR = 0, brightnessG = 0, brightnessB = 0;
 
     // FIXME
@@ -22,10 +22,10 @@ void sepia_addToLut3d(ImacLut3d* lut3d) {
      */
 
 	// FIXME
-    for (unsigned int i = 0; i <= lut3d->channelSize; i++) {
-    	brightnessR = lut3d_get(lut3d, i, red);
-		brightnessG = lut3d_get(lut3d, i, green);
-		brightnessB = lut3d_get(lut3d, i, blue);
+    for (unsigned int i = 0; i <= lut->channelSize; i++) {
+    	brightnessR = lut3d_get(lut, i, red);
+		brightnessG = lut3d_get(lut, i, green);
+		brightnessB = lut3d_get(lut, i, blue);
 
 	    brightnessR = (brightnessR * .393) + (brightnessG * .769) + (brightnessB * .189);
 	    brightnessG = (brightnessR * .349) + (brightnessG * .686) + (brightnessB * .168);
@@ -35,9 +35,9 @@ void sepia_addToLut3d(ImacLut3d* lut3d) {
 		if (brightnessG > 255) { brightnessG = 255; }
 		if (brightnessB > 255) { brightnessB = 255; }
 
-	    lut3d_set(lut3d, i, (unsigned char) brightnessR, red);
-		lut3d_set(lut3d, i, (unsigned char) brightnessG, green);
-		lut3d_set(lut3d, i, (unsigned char) brightnessB, blue);
+	    lut3d_set(lut, i, (unsigned char) brightnessR, red);
+		lut3d_set(lut, i, (unsigned char) brightnessG, green);
+		lut3d_set(lut, i, (unsigned char) brightnessB, blue);
     }
 }
 

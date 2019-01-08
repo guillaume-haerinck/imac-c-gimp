@@ -1,7 +1,7 @@
 #include "contrast.h"
 #include <stdio.h>
 
-void contrast_addToLut(ImacLut* lut, unsigned char value) {
+void contrast_addToLut1d(ImacLut1d *lut, unsigned char value) {
     double brightness = 0;
     double contrastFactor = (259.0 * (value + 255.0)) / (255.0 * (259.0 - value));
     for (unsigned int i = 0; i <= lut->size; i++) {
@@ -12,7 +12,7 @@ void contrast_addToLut(ImacLut* lut, unsigned char value) {
     }
 }
 
-void contrast_dimToLut(ImacLut* lut, unsigned char value) {
+void contrast_dimToLut1d(ImacLut1d *lut, unsigned char value) {
     double brightness = 0;
     double contrastFactor = (259.0 * ((-value) + 255.0)) / (255.0 * ( 259.0 - (-value)));
     for (unsigned int i = 0; i <= lut->size; i++) {

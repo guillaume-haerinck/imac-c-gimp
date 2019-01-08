@@ -1,6 +1,6 @@
 /**
- * @file imac-lut.h
- * @brief Look up table handler
+ * @file imac-lut1d.h
+ * @brief 1D Look up table handler
  *
  */
 
@@ -12,13 +12,13 @@
 // --------------------- STRUCT & ENUMS
 
 /**
- * @struct ImacLut
+ * @struct ImacLut1d
  * @note You need to use lut_new to init it
  */
-typedef struct ImacLut {
+typedef struct ImacLut1d {
     unsigned char size;
     unsigned char* data;
-} ImacLut;
+} ImacLut1d;
 
 // --------------------- CONSTRUCTOR & DESTRUCTOR
 
@@ -29,7 +29,7 @@ typedef struct ImacLut {
  * @param lut
  * @return
  */
-int lut_new(ImacLut* lut);
+int lut_new(ImacLut1d* lut);
 
 /**
  * @brief Destructor for ImacLut
@@ -37,7 +37,7 @@ int lut_new(ImacLut* lut);
  * @param lut
  * @return
  */
-int lut_delete(ImacLut* lut);
+int lut_delete(ImacLut1d* lut);
 
 // ---------------------- SETTERS
 
@@ -49,7 +49,7 @@ int lut_delete(ImacLut* lut);
  * @param value
  * @return brightness
  */
-void lut_set(ImacLut* lut, unsigned int index, unsigned char value);
+void lut_set(ImacLut1d* lut, unsigned int index, unsigned char value);
 
 /**
  * @brief Apply the lut to the all the channels of the image
@@ -58,7 +58,7 @@ void lut_set(ImacLut* lut, unsigned int index, unsigned char value);
  * @param img
  * @return
  */
-int lut_applyRgb(ImacLut* lut, ImacImg* img);
+int lut_applyRgb(ImacLut1d* lut, ImacImg* img);
 
 // ----------------------- GETTERS
 
@@ -69,13 +69,13 @@ int lut_applyRgb(ImacLut* lut, ImacImg* img);
  * @param index
  * @return brightness
  */
-unsigned char lut_get(ImacLut* lut, unsigned int index);
+unsigned char lut_get(ImacLut1d* lut, unsigned int index);
 
 /**
  *
  * @brief Print the lut on debug screen.
  * @param lut
  */
-void lut_print(ImacLut* lut);
+void lut_print(ImacLut1d* lut);
 
 #endif //MINIGIMP_IMAC_LUT_H
