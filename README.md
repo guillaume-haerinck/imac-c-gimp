@@ -45,6 +45,10 @@ And an exemple
 * **Nicolas Lienart**
 * **Guillaume Haerinck**
 
+## TODO
+
+voir utilisation GTK
+
 ## Ressources
 
 ### Articles
