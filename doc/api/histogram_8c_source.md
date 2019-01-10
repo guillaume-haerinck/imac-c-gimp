@@ -23,9 +23,10 @@ Source: `src/charts/histogram.c`
 #include <stdlib.h>
 #include <stdio.h>
 #include "histogram.h"
-#include "image-loaders/ppm.h"
-#include "utils.h"
+#include "../image-loaders/ppm.h"
+#include "core/utils.h"
 
+// TODO parfois histogramme s'affiche mal, debugger
 int hist_rgb(ImacImg* imgToAnalyse, ImacImg* histogram) {
     unsigned int imgBrightnessSpectrum[256] = { 0 };
 

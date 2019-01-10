@@ -1,6 +1,6 @@
 ---
 search:
-    keywords: ['inversion.c', 'inv_img', 'inv_lut']
+    keywords: ['inversion.c', 'inv_img', 'inv_lut1d']
 ---
 
 # file inversion.c
@@ -11,7 +11,7 @@ search:
 |Type|Name|
 |-----|-----|
 |void|[**inv\_img**](inversion_8c.md#1aabc938477131b28b96a92bbe80403645) (**[ImacImg](struct_imac_img.md)** \* img) <br>Invert color of the image on procedural calculation. |
-|void|[**inv\_lut**](inversion_8c.md#1a8daf68ba1f96da77dfd797a9a2363004) (**[ImacLut](struct_imac_lut.md)** \* lut) <br>Invert color of a LUT. |
+|void|[**inv\_lut1d**](inversion_8c.md#1ae7f420cf6ea04be34a05f1b6f54b4bc4) (**[ImacLut1d](struct_imac_lut1d.md)** \* lut) <br>Invert color of a LUT. |
 
 
 ## Functions Documentation
@@ -35,11 +35,11 @@ Invert color of the image on procedural calculation.
 
 
 
-### function <a id="1a8daf68ba1f96da77dfd797a9a2363004" href="#1a8daf68ba1f96da77dfd797a9a2363004">inv\_lut</a>
+### function <a id="1ae7f420cf6ea04be34a05f1b6f54b4bc4" href="#1ae7f420cf6ea04be34a05f1b6f54b4bc4">inv\_lut1d</a>
 
 ```cpp
-void inversion.c::inv_lut (
-    ImacLut * lut
+void inversion.c::inv_lut1d (
+    ImacLut1d * lut
 )
 ```
 

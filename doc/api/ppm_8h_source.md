@@ -24,7 +24,7 @@ Source: `src/image-loaders/ppm.h`
 #ifndef MINIGIMP_PPM_H
 #define MINIGIMP_PPM_H
 
-#include "../imac-img.h"
+#include "core/imac-img.h"
 
 int ppm_load(char* path, ImacImg* img);
 

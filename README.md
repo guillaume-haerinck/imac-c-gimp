@@ -4,41 +4,52 @@
 
 ### Build project
 
-You need a c compiler for your system and cmake installed.
+You need a C compiler for your system and cmake installed.
 Then use the 'CMakeLists.txt' to create a makefile and build the project.
 
-### Build documentation
-
-#### On linux
-
-##### Prerequisite
-```
-sudo apt-get install npm doxygen doxygen-gui doxygen-doc
-```
-
-```
-sudo npm install gitbook-cli -g
-```
-
-Then you must install doxybook with python3.
-
-##### Update doc
-
-You generate api xml files by running `doxygen`, then with `doxybook -i doc/_xml -o doc/api -s SUMMARY.md -t gitbook
-` you transform xml to markdown.
-To read, and update markdown in live, run `gitbook serve`.
+An alternative if you want to avoid using cmake, a makefile for linux is also available. Run `make` to compile the program.
 
 ## Using the program
 
 It is a command-line program. Here is the full description.
+
 ```
 minigimp mon_image.ppm [-h] [-histo] [<code_lut>[_<param1>]*]* [-o image_sortie.ppm]
 ```
 
-And an exemple
+And here is an example
 ```
 ./minigimp vacances.ppm SEPIA 5 ADDLUM 20 -o super-vacances.ppm
 ```
+
+For more details, please read the documentation.
+
+### Read documentation
+
+Documentation is in markdown, generated and served using gitbook.
+
+To get a local version, you need to install gitbook using Node package manager (npm).
+```
+npm install gitbook-cli -g
+```
+
+To read, and update markdown in live, run `gitbook serve`.
+
+### Update doxygen reference
+
+#### On linux
+
+##### Prerequisite
+
+```
+sudo apt-get install npm doxygen doxygen-gui doxygen-doc
+```
+
+Then you must install doxybook with python3.
+
+##### Adding to gitbook
+
+You generate api xml files by running `doxygen`, then with `doxybook -i doc/_xml -o doc/api -s SUMMARY.md -t gitbook` you transform xml to markdown.
 
 ## Authors
 

@@ -1,6 +1,6 @@
 ---
 search:
-    keywords: ['luminosity.h', 'lum_addToImg', 'lum_addToLut', 'lum_dimToImg', 'lum_dimToLut']
+    keywords: ['luminosity.h', 'lum_addToImg', 'lum_addToLut1d', 'lum_dimToImg', 'lum_dimToLut1d']
 ---
 
 # file luminosity.h
@@ -12,9 +12,9 @@ Change luminosity.
 |Type|Name|
 |-----|-----|
 |void|[**lum\_addToImg**](luminosity_8h.md#1a97fd1e1b02e546bd60feb1f9e6de05d5) (**[ImacImg](struct_imac_img.md)** \* img, unsigned char value) <br>Add value to each color of the image. |
-|void|[**lum\_addToLut**](luminosity_8h.md#1a671cdf1a675fee2925215deb01b48b45) (**[ImacLut](struct_imac_lut.md)** \* lut, unsigned char value) <br>Add value to each color of the lut. |
+|void|[**lum\_addToLut1d**](luminosity_8h.md#1a0cac38eee4826b337990439bcd929a6e) (**[ImacLut1d](struct_imac_lut1d.md)** \* lut, unsigned char value) <br>Add value to each color of the lut. |
 |void|[**lum\_dimToImg**](luminosity_8h.md#1a8291eacb31efd1adb7dbac86c4400886) (**[ImacImg](struct_imac_img.md)** \* img, unsigned char value) <br>Substract value to each color of the image. |
-|void|[**lum\_dimToLut**](luminosity_8h.md#1abe7bbf9eb841427f276bd9d0ae238cb9) (**[ImacLut](struct_imac_lut.md)** \* lut, unsigned char value) <br>Substract value to each color of the lut. |
+|void|[**lum\_dimToLut1d**](luminosity_8h.md#1abbd8781701827b54f778662fc8e83b4e) (**[ImacLut1d](struct_imac_lut1d.md)** \* lut, unsigned char value) <br>Substract value to each color of the lut. |
 
 
 ## Functions Documentation
@@ -40,11 +40,11 @@ Add value to each color of the image.
 
 
 
-### function <a id="1a671cdf1a675fee2925215deb01b48b45" href="#1a671cdf1a675fee2925215deb01b48b45">lum\_addToLut</a>
+### function <a id="1a0cac38eee4826b337990439bcd929a6e" href="#1a0cac38eee4826b337990439bcd929a6e">lum\_addToLut1d</a>
 
 ```cpp
-void luminosity.h::lum_addToLut (
-    ImacLut * lut,
+void luminosity.h::lum_addToLut1d (
+    ImacLut1d * lut,
     unsigned char value
 )
 ```
@@ -82,11 +82,11 @@ Substract value to each color of the image.
 
 
 
-### function <a id="1abe7bbf9eb841427f276bd9d0ae238cb9" href="#1abe7bbf9eb841427f276bd9d0ae238cb9">lum\_dimToLut</a>
+### function <a id="1abbd8781701827b54f778662fc8e83b4e" href="#1abbd8781701827b54f778662fc8e83b4e">lum\_dimToLut1d</a>
 
 ```cpp
-void luminosity.h::lum_dimToLut (
-    ImacLut * lut,
+void luminosity.h::lum_dimToLut1d (
+    ImacLut1d * lut,
     unsigned char value
 )
 ```

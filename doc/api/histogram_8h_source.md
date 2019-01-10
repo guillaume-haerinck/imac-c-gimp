@@ -22,7 +22,7 @@ Source: `src/charts/histogram.h`
 #ifndef MINIGIMP_HISTOGRAM_H
 #define MINIGIMP_HISTOGRAM_H
 
-#include "imac-img.h"
+#include "core/imac-img.h"
 
 int hist_rgb(ImacImg* imgToAnalyse, ImacImg* histogram);
 

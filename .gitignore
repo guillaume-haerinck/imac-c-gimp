@@ -1,6 +1,8 @@
 # Gitbook
 doc/_**
 _book
+build
+bin
 
 # Prerequisites
 *.d
