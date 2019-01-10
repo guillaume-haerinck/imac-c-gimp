@@ -6,7 +6,7 @@ search:
 # imac-img.c File Reference
 
 **[Go to the documentation of this file.](imac-img_8c.md)**
-Source: `src/imac-img.c`
+Source: `src/core/imac-img.c`
 
     
     

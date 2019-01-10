@@ -57,4 +57,4 @@ unsigned char* data;
 
 
 ----------------------------------------
-The documentation for this class was generated from the following file: `src/imac-img.h`
+The documentation for this class was generated from the following file: `src/core/imac-img.h`

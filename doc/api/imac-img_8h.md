@@ -278,4 +278,4 @@ Set each colors of the pixel with the value.
 
 
 ----------------------------------------
-The documentation for this class was generated from the following file: `src/imac-img.h`
+The documentation for this class was generated from the following file: `src/core/imac-img.h`

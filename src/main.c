@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
                 ImacImg histogram;
                 img_new(&histogram, 256, 150);
                 hist_rgb(&img, &histogram);
-                // TODO append histogram to argv[1] name
+                // TODO append histogram to argv[1] name + Use the output path
                 ppm_save("./original-histogram.ppm", &histogram);
                 img_delete(&histogram);
                 bHistogram = true;
@@ -83,7 +83,7 @@ int main(int argc, char *argv[]) {
             ImacImg histogram;
             img_new(&histogram, 256, 150);
             hist_rgb(&img, &histogram);
-            // TODO append histogram to argv[1] name
+            // TODO append histogram to argv[1] name + Use the output path
             ppm_save("./output-histogram.ppm", &histogram);
             img_delete(&histogram);
         }

@@ -6,7 +6,7 @@ search:
 # utils.c File Reference
 
 **[Go to the documentation of this file.](utils_8c.md)**
-Source: `src/utils.c`
+Source: `src/core/utils.c`
 
     
     

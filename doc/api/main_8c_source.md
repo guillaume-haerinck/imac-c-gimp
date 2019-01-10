@@ -22,6 +22,8 @@ Source: `src/main.c`
     
     
     
+    
+    
       
     
     
@@ -30,29 +32,34 @@ Source: `src/main.c`
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <time.h>
 
-#include "imac-img.h"
-#include "imac-lut.h"
-#include "utils.h"
+#include "core/imac-img.h"
+#include "core/imac-lut1d.h"
+#include "core/imac-lut3x1d.h"
+#include "core/utils.h"
 #include "charts/histogram.h"
 #include "image-loaders/ppm.h"
 #include "luts/inversion.h"
 #include "luts/luminosity.h"
+#include "luts/contrast.h"
+#include "luts/sepia.h"
 
 // minigimp mon_image.ppm [-h] [-histo] [<code_lut>[_<param1>]*]* [-o image_sortie.ppm]
 
 int main(int argc, char *argv[]) {
     clock_t start, end;
     double cpuTimeUsed;
-    bool bLutUsed = false;
+    bool bHistogram = false;
+    bool bLut3d = false;
     start = clock();
 
     if (argc > 0) {
         ImacImg img;
-        ImacLut lut;
+        ImacLut1d lut;
+        ImacLut3x1d lut3d;
         lut_new(&lut);
+        lut3d_new(&lut3d);
         int imagePathIndex = -1;
 
         /* Handle filetype */
@@ -69,34 +76,49 @@ int main(int argc, char *argv[]) {
                 ImacImg histogram;
                 img_new(&histogram, 256, 150);
                 hist_rgb(&img, &histogram);
-                // TODO append histogram to argv[1] name
-                ppm_save("./histogram.ppm", &histogram);
+                // TODO append histogram to argv[1] name + Use the output path
+                ppm_save("./original-histogram.ppm", &histogram);
                 img_delete(&histogram);
+                bHistogram = true;
             } else if (strcmp(argv[i], "-o") == 0) {
                 imagePathIndex = i + 1;
             } else if (strcmp(argv[i], "ADDLUM") == 0) {
                 long value = strtol(argv[i + 1], NULL, 10);
-                // TODO
+                if (value > 255) { value = 255; }
+                lum_addToLut1d(&lut, (unsigned char) value);
             } else if (strcmp(argv[i], "DIMLUM") == 0) {
                 long value = strtol(argv[i + 1], NULL, 10);
-                // TODO
+                if (value > 255) { value = 255; }
+                lum_dimToLut1d(&lut, (unsigned char) value);
             } else if (strcmp(argv[i], "ADDCON") == 0) {
-                // printf("Add constrast filter power is: %s\n", argv[i + 1]);
+                long value = strtol(argv[i + 1], NULL, 10);
+                if (value > 255) { value = 255; }
+                contrast_addToLut1d(&lut, (unsigned char) value);
             } else if (strcmp(argv[i], "DIMCON") == 0) {
-                // printf("Dim constrast filter power is: %s\n", argv[i + 1]);
+                long value = strtol(argv[i + 1], NULL, 10);
+                if (value > 255) { value = 255; }
+                contrast_dimToLut1d(&lut, (unsigned char) value);
             } else if (strcmp(argv[i], "INVERT") == 0) {
-                inv_lut(&lut);
-                bLutUsed = true;
+                inv_lut1d(&lut);
             } else if (strcmp(argv[i], "SEPIA") == 0) {
-                // printf("Sepia filter power is: %s\n", argv[i + 1]);
+                sepia_addToLut3x1d(&lut3d);
+                bLut3d = true;
             }
         }
 
         /* Save result */
-        if (bLutUsed) {
-            lut_apply(&lut, &img);
+        lut_applyRgb(&lut, &img);
+        if (bLut3d) { lut3d_apply(&lut3d, &img); }
+        if (bHistogram) {
+            ImacImg histogram;
+            img_new(&histogram, 256, 150);
+            hist_rgb(&img, &histogram);
+            // TODO append histogram to argv[1] name + Use the output path
+            ppm_save("./output-histogram.ppm", &histogram);
+            img_delete(&histogram);
         }
-        if (imagePathIndex != -1) {
+        
+    if (imagePathIndex != -1) {
             ppm_save(argv[imagePathIndex], &img);
         } else {
             ppm_save("output.ppm", &img);
@@ -104,6 +126,7 @@ int main(int argc, char *argv[]) {
 
         /* Clean memory */
         lut_delete(&lut);
+        lut3d_delete(&lut3d);
         img_delete(&img);
     } else {
         printf("No input file provided !\n");
@@ -112,7 +135,7 @@ int main(int argc, char *argv[]) {
 
     end = clock();
     cpuTimeUsed = ((double) (end - start)) / CLOCKS_PER_SEC;
-    printf("CPU time used (in seconds): %f \n", cpuTimeUsed);
+    printf("CPU time used (in seconds): %f\n", cpuTimeUsed);
     return EXIT_SUCCESS;
 }
 ```
