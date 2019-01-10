@@ -33,7 +33,7 @@ To get a local version, you need to install gitbook using Node package manager (
 npm install gitbook-cli -g
 ```
 
-To read, and update markdown in live, run `gitbook serve`.
+To read, and update markdown in live, run `gitbook serve doc`.
 
 ### Update doxygen reference
 
@@ -49,7 +49,7 @@ Then you must install doxybook with python3.
 
 ##### Adding to gitbook
 
-You generate api xml files by running `doxygen`, then with `doxybook -i doc/_xml -o doc/api -s SUMMARY.md -t gitbook` you transform xml to markdown.
+You generate api xml files by running `doxygen`, then with `doxybook -i doc/_xml -o doc/api -s doc/SUMMARY.md -t gitbook` you transform xml to markdown.
 
 ## Authors
 
@@ -98,3 +98,7 @@ http://www.graphicsmagick.org/
 
 https://github.com/topics/image-processing?l=c&o=asc&s=forks
 
+### Third-Party project documentation
+
+https://toolchain.gitbook.com/
+https://github.com/matusnovak/doxybook

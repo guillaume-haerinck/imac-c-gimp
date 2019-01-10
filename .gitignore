@@ -1,5 +1,6 @@
 # Gitbook
 doc/_**
+doc/index.html
 _book
 build
 bin
