@@ -8,6 +8,7 @@ bin
 # Misc
 .directory
 *.swp
+bin
 
 # Prerequisites
 *.d
