@@ -19,3 +19,6 @@ minigimp: src/main.c $(OBJ)
 ofiles/%.o: src/%.c $(DEP)
 	echo target = $@ prereq = $^
 	$(COMPILE_O) $@ $<
+
+clean:
+	rm -r ofiles bin *.ppm
