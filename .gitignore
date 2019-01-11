@@ -5,6 +5,10 @@ _book
 build
 bin
 
+# Misc
+.directory
+*.swp
+
 # Prerequisites
 *.d
 

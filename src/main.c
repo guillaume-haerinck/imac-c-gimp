@@ -71,7 +71,6 @@ int main(int argc, char *argv[]) {
                 inv_lut1d(&lut);
             } else if (strcmp(argv[i], "SEPIA") == 0) {
                 sepia_addToLut3x1d(&lut3x1d);
-		//sepia_addToImg(&img);
                 bLut3x1d = true;
             }
         }
@@ -88,7 +87,7 @@ int main(int argc, char *argv[]) {
             img_delete(&histogram);
         }
         
-	if (imagePathIndex != -1) {
+	    if (imagePathIndex != -1) {
             ppm_save(argv[imagePathIndex], &img);
         } else {
             ppm_save("output.ppm", &img);
