@@ -14,7 +14,7 @@
  * @param img
  * @param value
  */
-void lum_addToImg(ImacImg* img, unsigned char value);
+void lum_addToImg(ImacImg* img, int value);
 
 /**
  * @brief Add value to each color of the lut
@@ -22,7 +22,7 @@ void lum_addToImg(ImacImg* img, unsigned char value);
  * @param lut
  * @param value
  */
-void lum_addToLut1d(ImacLut1d *lut, unsigned char value);
+void lum_addToLut1d(ImacLut1d *lut, int value);
 
 /**
  * @brief Substract value to each color of the image
@@ -30,7 +30,7 @@ void lum_addToLut1d(ImacLut1d *lut, unsigned char value);
  * @param img
  * @param value
  */
-void lum_dimToImg(ImacImg* img, unsigned char value);
+void lum_dimToImg(ImacImg* img, int value);
 
 /**
  * @brief Substract value to each color of the lut
@@ -38,6 +38,6 @@ void lum_dimToImg(ImacImg* img, unsigned char value);
  * @param lut
  * @param value
  */
-void lum_dimToLut1d(ImacLut1d *lut, unsigned char value);
+void lum_dimToLut1d(ImacLut1d *lut, int value);
 
 #endif //MINIGIMP_LUMINOSITY_H

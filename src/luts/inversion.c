@@ -2,7 +2,7 @@
 #include "inversion.h"
 
 void inv_img(ImacImg* img) {
-    unsigned char brightness = 0;
+    int brightness = 0;
     for (unsigned int y = 0; y < img->height; y++) {
         for (unsigned int x = 0; x < img->width; x++) {
             for (int c = red; c <= blue; c++) {

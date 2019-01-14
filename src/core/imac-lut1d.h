@@ -17,7 +17,7 @@
  */
 typedef struct ImacLut1d {
     unsigned char size;
-    unsigned char* data;
+    int* data;
 } ImacLut1d;
 
 // --------------------- CONSTRUCTOR & DESTRUCTOR
@@ -49,7 +49,7 @@ int lut_delete(ImacLut1d* lut);
  * @param value
  * @return brightness
  */
-void lut_set(ImacLut1d* lut, unsigned int index, unsigned char value);
+void lut_set(ImacLut1d* lut, unsigned int index, int value);
 
 /**
  * @brief Apply the lut to the all the channels of the image
@@ -69,7 +69,7 @@ int lut_applyRgb(ImacLut1d* lut, ImacImg* img);
  * @param index
  * @return brightness
  */
-unsigned char lut_get(ImacLut1d* lut, unsigned int index);
+int lut_get(ImacLut1d* lut, unsigned int index);
 
 /**
  *

@@ -5,9 +5,9 @@
 /* Constructor */
 int lut3x1d_new(ImacLut3x1d* lut3x1d) {
     lut3x1d->channelSize = 255;
-    lut3x1d->dataR = malloc(lut3x1d->channelSize * sizeof(unsigned char));
-    lut3x1d->dataG = malloc(lut3x1d->channelSize * sizeof(unsigned char));
-    lut3x1d->dataB = malloc(lut3x1d->channelSize * sizeof(unsigned char));
+    lut3x1d->dataR = malloc(lut3x1d->channelSize * sizeof(int));
+    lut3x1d->dataG = malloc(lut3x1d->channelSize * sizeof(int));
+    lut3x1d->dataB = malloc(lut3x1d->channelSize * sizeof(int));
     if (lut3x1d->dataR == NULL) {
         perror("lut3x1d_new: DataR is null");
         exit(EXIT_FAILURE);
@@ -23,9 +23,9 @@ int lut3x1d_new(ImacLut3x1d* lut3x1d) {
 
     // Init to no-effect lut3x1d
     for (unsigned int i = 0; i <= lut3x1d->channelSize; i++) {
-	    lut3x1d->dataR[i] = (unsigned char) i;
-	    lut3x1d->dataG[i] = (unsigned char) i;
-	    lut3x1d->dataB[i] = (unsigned char) i;
+	    lut3x1d->dataR[i] = i;
+	    lut3x1d->dataG[i] = i;
+	    lut3x1d->dataB[i] = i;
     }
     return EXIT_SUCCESS;
 }
@@ -39,7 +39,7 @@ int lut3x1d_delete(ImacLut3x1d* lut3x1d) {
 }
 
 /* Setters */
-void lut3x1d_set(ImacLut3x1d* lut3x1d, unsigned int index, unsigned char value, enum img_Channel c) {
+void lut3x1d_set(ImacLut3x1d* lut3x1d, unsigned int index, int value, enum img_Channel c) {
     if (index > lut3x1d->channelSize) {
         printf("Error lut3x1d_getIndex: index superior to lut3x1d channel size\n");
         exit(EXIT_FAILURE);
@@ -77,7 +77,7 @@ void lut3x1d_apply(ImacLut3x1d* lut3x1d, ImacImg* img) {
             brightnessB = img_getPixelChannel(img, x, y, blue);
 
             // TODO put it somewhere else ? It is for sepia only
-	        avgBrightness = 0.3 * brightnessR + 0.59 * brightnessG + 0.11 * brightnessB;
+	    avgBrightness = 0.3 * brightnessR + 0.59 * brightnessG + 0.11 * brightnessB;
 
             brightnessR = lut3x1d_get(lut3x1d, (unsigned int) avgBrightness, red);
             img_setPixelChannel(img, x, y, brightnessR, red);
@@ -92,7 +92,7 @@ void lut3x1d_apply(ImacLut3x1d* lut3x1d, ImacImg* img) {
 }
 
 /* Getters */
-unsigned char lut3x1d_get(ImacLut3x1d* lut3x1d, unsigned int index, enum img_Channel c) {
+int lut3x1d_get(ImacLut3x1d* lut3x1d, unsigned int index, enum img_Channel c) {
     if (index > lut3x1d->channelSize) {
         printf("Error lut3x1d_get: index superior to lut3x1d size\n");
         exit(EXIT_FAILURE);

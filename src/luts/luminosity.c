@@ -1,7 +1,7 @@
 #include "luminosity.h"
 #include <stdio.h>
 
-void lum_addToImg(ImacImg* img, unsigned char value) {
+void lum_addToImg(ImacImg* img, int value) {
     unsigned char brightness = 0;
     for (unsigned int y = 0; y < img->height; y++) {
         for (unsigned int x = 0; x < img->width; x++) {
@@ -14,16 +14,15 @@ void lum_addToImg(ImacImg* img, unsigned char value) {
     }
 }
 
-void lum_addToLut1d(ImacLut1d *lut, unsigned char value) {
-    unsigned int brightness = 0;
+void lum_addToLut1d(ImacLut1d *lut, int value) {
+    int brightness = 0;
     for (unsigned int i = 0; i <= lut->size; i++) {
         brightness = lut->data[i] + value;
-        if (brightness > 255) { brightness = 255; }
-        lut->data[i] = (unsigned char) brightness;
+        lut->data[i] = brightness;
     }
 }
 
-void lum_dimToImg(ImacImg* img, unsigned char value) {
+void lum_dimToImg(ImacImg* img, int value) {
     unsigned char brightness = 0;
     for (unsigned int y = 0; y < img->height; y++) {
         for (unsigned int x = 0; x < img->width; x++) {
@@ -36,11 +35,10 @@ void lum_dimToImg(ImacImg* img, unsigned char value) {
     }
 }
 
-void lum_dimToLut1d(ImacLut1d *lut, unsigned char value) {
+void lum_dimToLut1d(ImacLut1d *lut, int value) {
     int brightness = 0;
     for (unsigned int i = 0; i <= lut->size; i++) {
         brightness = lut_get(lut, i) - value;
-        if (brightness < 0) { brightness = 0; }
-        lut_set(lut, i, (unsigned char) brightness);
+        lut_set(lut, i, brightness);
     }
 }

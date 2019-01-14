@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 void sepia_addToLut3x1d(ImacLut3x1d *lut) {
-    double brightnessR = 0, brightnessG = 0, brightnessB = 0;
+    double brightnessR, brightnessG, brightnessB;
 
     for (unsigned int i = 0; i <= lut->channelSize; i++) {
 	brightnessR = (i * .393) + (i * .769) + (i * .189);
