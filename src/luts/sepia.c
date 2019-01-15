@@ -13,9 +13,9 @@ void sepia_addToLut3x1d(ImacLut3x1d *lut) {
 	if (brightnessG > 255) { brightnessG = 255; }
 	if (brightnessB > 255) { brightnessB = 255; }
 
-	lut3x1d_set(lut, i, (unsigned char) brightnessR, red);
-	lut3x1d_set(lut, i, (unsigned char) brightnessG, green);
-	lut3x1d_set(lut, i, (unsigned char) brightnessB, blue);
+	lut3x1d_set(lut, i, (int) brightnessR, red);
+	lut3x1d_set(lut, i, (int) brightnessG, green);
+	lut3x1d_set(lut, i, (int) brightnessB, blue);
     }
 }
 
