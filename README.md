@@ -8,6 +8,7 @@ You need a C compiler for your system and cmake installed.
 Then use the 'CMakeLists.txt' to create a makefile and build the project.
 
 An alternative if you want to avoid using cmake, a makefile for linux is also available. Run `make` to compile the program.
+You can also run make clean to purge the directory.
 
 ## Using the program
 
