@@ -6,31 +6,46 @@
 
 // TODO parfois histogramme s'affiche mal, debugger
 int hist_rgb(ImacImg* imgToAnalyse, ImacImg* histogram) {
-    unsigned int imgBrightnessSpectrum[256] = { 0 };
+    img_setToWhite(histogram);
+    unsigned int imgBrightnessSpectrum[4][256] = {{0},{0},{0},{0}};
 
     // Get values for histogram
-    unsigned int pixelAvgBrightness = 0;
-    unsigned int maxPixelsForBrightness = 0;
+    unsigned int pixelAvgBrightness[4] = {0};
+    unsigned int maxPixelsForBrightness[4] = {0};
     for (unsigned int x = 0; x < imgToAnalyse->width; x++) {
         for (unsigned int y = 0; y < imgToAnalyse->height; y++) {
             for (int c = red; c <= blue; c++) {
-                pixelAvgBrightness += img_getPixelChannel(imgToAnalyse, x, y, c);
+                pixelAvgBrightness[3] += img_getPixelChannel(imgToAnalyse, x, y, c);
+		pixelAvgBrightness[c] += img_getPixelChannel(imgToAnalyse, x, y, c);
             }
-            pixelAvgBrightness = pixelAvgBrightness / 3;
-            imgBrightnessSpectrum[(unsigned char) pixelAvgBrightness] += 1;
-            if (imgBrightnessSpectrum[(unsigned char) pixelAvgBrightness] > maxPixelsForBrightness) {
-                maxPixelsForBrightness = imgBrightnessSpectrum[(unsigned char) pixelAvgBrightness];
+            pixelAvgBrightness[3] = pixelAvgBrightness[3] / 3;
+            imgBrightnessSpectrum[3][(unsigned char) pixelAvgBrightness[3]] += 1;
+            if (imgBrightnessSpectrum[3][(unsigned char) pixelAvgBrightness[3]] > maxPixelsForBrightness[3]) {
+                maxPixelsForBrightness[3] = imgBrightnessSpectrum[3][(unsigned char) pixelAvgBrightness[3]];
             }
-            pixelAvgBrightness = 0;
+            for (int c = red; c <= blue; c++) {
+		    imgBrightnessSpectrum[c][(unsigned char) pixelAvgBrightness[c]] += 1;
+		    if (imgBrightnessSpectrum[c][(unsigned char) pixelAvgBrightness[c]] > maxPixelsForBrightness[c]) {
+			    maxPixelsForBrightness[c] = imgBrightnessSpectrum[c][(unsigned char) pixelAvgBrightness[c]];
+		    }
+            }
+            pixelAvgBrightness[3] = 0;
+            for (int c = red; c <= blue; c++) {
+		    pixelAvgBrightness[c] = 0;
+            }
         }
     }
 
     // Print histogram to file
-    _printHistogram(histogram, imgBrightnessSpectrum, maxPixelsForBrightness, 150);
+    for (int c = red; c <= blue; c++) {
+	    _printHistogram(histogram, imgBrightnessSpectrum[c], maxPixelsForBrightness[c], 255, c);
+    }
+    _printHistogram(histogram, imgBrightnessSpectrum[3], maxPixelsForBrightness[3], 150, rvb);
     return EXIT_SUCCESS;
 };
 
 int hist_channel(ImacImg* imgToAnalyse, ImacImg* histogram, enum img_Channel c) {
+    img_setToWhite(histogram);
     unsigned int imgBrightnessSpectrum[255] = { 0 };
 
     // Get values for histogram
@@ -48,12 +63,11 @@ int hist_channel(ImacImg* imgToAnalyse, ImacImg* histogram, enum img_Channel c) 
     }
 
     // Print histogram to file
-    _printHistogram(histogram, imgBrightnessSpectrum, maxPixelsForBrightness, 53);
+    _printHistogram(histogram, imgBrightnessSpectrum, maxPixelsForBrightness, 255, c);
     return EXIT_SUCCESS;
 };
 
-static void _printHistogram(ImacImg* histogram, unsigned int* histogramData, unsigned int maxData, unsigned char printColor) {
-    img_setToWhite(histogram);
+static void _printHistogram(ImacImg* histogram, unsigned int* histogramData, unsigned int maxData, unsigned char printColor, enum img_Channel c) {
 
     if (histogram->width != 256) {
         printf("_printHistogram error: histogram not 256 width");
@@ -64,7 +78,13 @@ static void _printHistogram(ImacImg* histogram, unsigned int* histogramData, uns
         long columnHeight = linearMapping(histogramData[x], 0, maxData, 0, histogram->height);
         long columnEnd = histogram->height - columnHeight;
         for (unsigned int y = histogram->height - 1; y > columnEnd; y--) {
-            img_setPixelChannels(histogram, x, y, printColor);
+            if (c == rvb) img_setPixelChannels(histogram, x, y, printColor);
+	    else {
+	    	for (unsigned char ch = red; ch<=blue; ch++){
+			if (ch == c) img_setPixelChannel(histogram, x, y, printColor, c);
+			else img_setPixelChannel(histogram, x, y, 0, ch);
+		}
+	    }
         }
     }
 }

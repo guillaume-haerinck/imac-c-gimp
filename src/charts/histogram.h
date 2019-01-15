@@ -30,6 +30,6 @@ int hist_channel(ImacImg* imgToAnalyse, ImacImg* histogram, enum img_Channel c);
  * @param maxData - Values above will be clamped
  * @param printColor - The color of the printed graph
  */
-static void _printHistogram(ImacImg* histogram, unsigned int* histogramData, unsigned int maxData, unsigned char printColor);
+static void _printHistogram(ImacImg* histogram, unsigned int* histogramData, unsigned int maxData, unsigned char printColor, enum img_Channel);
 
 #endif //MINIGIMP_HISTOGRAM_H
