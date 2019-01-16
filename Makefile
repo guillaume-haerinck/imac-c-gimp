@@ -21,7 +21,7 @@ all:
 
 minigimp: src/main.c $(OBJ)
 	@echo "********************* BUILDING MINIGIMP *********************" 
-	$(COMPILE_P) $^ -o bin/$@
+	$(COMPILE_P) $^ -o bin/$@ -lm
 
 ofiles/%.o: src/%.c $(DEP)
 	@echo "********************* COMPILING $< *********************" 

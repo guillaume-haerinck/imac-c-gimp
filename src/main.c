@@ -72,7 +72,11 @@ int main(int argc, char *argv[]) {
             } else if (strcmp(argv[i], "SEPIA") == 0) {
                 sepia_addToLut3x1d(&lut3x1d);
                 bLut3x1d = true;
+            } else if (strcmp(argv[i], "SINCON") == 0) {
+                int value = strtol(argv[i + 1], NULL, 10);
+                contrast_Sin(&lut, value);
             }
+
         }
 
         /* Save result */

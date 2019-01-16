@@ -24,4 +24,12 @@ void contrast_addToLut1d(ImacLut1d *lut, int value);
  */
 void contrast_dimToLut1d(ImacLut1d *lut, int value);
 
+/**
+ * @brief Add contrast depending on SIN 
+ *
+ * @param lut
+ * @param value
+ */
+void contrast_Sin(ImacLut1d *lut, int value);
+
 #endif //MINIGIMP_CONTRAST_H
