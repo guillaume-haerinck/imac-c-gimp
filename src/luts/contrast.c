@@ -37,3 +37,17 @@ void contrast_Sin(ImacLut1d *lut, int value) {
 	}
 	printf("%f", sin(M_PI/2));
 }
+
+void contrast_Equalizer(ImacLut1d *lut, unsigned int histogram[256]) {
+	//TODO doesn't work sometimes for no reason, not depending on the image, it randomly goes wrong
+	int totalValues=0;
+	double cdf;
+	for (int i = 0; i<256; i++){
+		totalValues+=histogram[i];	
+	}
+	for (int i = 0; i < lut->size; i++){
+		cdf += ((double)histogram[i])/totalValues;
+		lut->data[i] = (255)*cdf;
+		printf("i : %d, hist val : %d, total %d, cdf %lf, result %d\n",i, histogram[i], totalValues, cdf, lut->data[i]);
+	}
+}

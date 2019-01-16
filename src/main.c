@@ -75,6 +75,11 @@ int main(int argc, char *argv[]) {
             } else if (strcmp(argv[i], "SINCON") == 0) {
                 int value = strtol(argv[i + 1], NULL, 10);
                 contrast_Sin(&lut, value);
+            } else if (strcmp(argv[i], "HISTEQ") == 0) {
+                ImacImg histogramTab;
+		unsigned int imgBrightnessSpectrum[4][256] = {{0},{0},{0},{0}};
+		build_histogram(&img, imgBrightnessSpectrum);
+                contrast_Equalizer(&lut, imgBrightnessSpectrum[rvb]);
             }
 
         }
