@@ -4,43 +4,47 @@
 #include "../image-loaders/ppm.h"
 #include "../core/utils.h"
 
-// TODO parfois histogramme s'affiche mal, debugger
-int hist_rgb(ImacImg* imgToAnalyse, ImacImg* histogram) {
-    img_setToWhite(histogram);
-    unsigned int imgBrightnessSpectrum[4][256] = {{0},{0},{0},{0}};
+void get_maxBrightness(unsigned int imgBrightnessSpectrum[rvb+1][HIST_SIZE], unsigned int maxPixelsForBrightness[rvb+1]) {
+    for (int i = 0; i<HIST_SIZE; i++) {
+	    for (int c = red; c<=rvb; c++) {
+		    if (imgBrightnessSpectrum[c][i] > maxPixelsForBrightness[c]) {
+			    maxPixelsForBrightness[c] = imgBrightnessSpectrum[c][i];
+		    }
+	    }	
+    }
+}
 
+void build_histogram(ImacImg* imgToAnalyse, unsigned int imgBrightnessSpectrum[rvb+1][HIST_SIZE]) {
     // Get values for histogram
     unsigned int pixelAvgBrightness[4] = {0};
-    unsigned int maxPixelsForBrightness[4] = {0};
     for (unsigned int x = 0; x < imgToAnalyse->width; x++) {
         for (unsigned int y = 0; y < imgToAnalyse->height; y++) {
-            for (int c = red; c <= blue; c++) {
-                pixelAvgBrightness[3] += img_getPixelChannel(imgToAnalyse, x, y, c);
+            for (int c = red; c <= rvb; c++) {
 		pixelAvgBrightness[c] += img_getPixelChannel(imgToAnalyse, x, y, c);
+		imgBrightnessSpectrum[c][(unsigned char) pixelAvgBrightness[c]] += 1;
             }
-            pixelAvgBrightness[3] = pixelAvgBrightness[3] / 3;
-            imgBrightnessSpectrum[3][(unsigned char) pixelAvgBrightness[3]] += 1;
-            if (imgBrightnessSpectrum[3][(unsigned char) pixelAvgBrightness[3]] > maxPixelsForBrightness[3]) {
-                maxPixelsForBrightness[3] = imgBrightnessSpectrum[3][(unsigned char) pixelAvgBrightness[3]];
-            }
-            for (int c = red; c <= blue; c++) {
-		    imgBrightnessSpectrum[c][(unsigned char) pixelAvgBrightness[c]] += 1;
-		    if (imgBrightnessSpectrum[c][(unsigned char) pixelAvgBrightness[c]] > maxPixelsForBrightness[c]) {
-			    maxPixelsForBrightness[c] = imgBrightnessSpectrum[c][(unsigned char) pixelAvgBrightness[c]];
-		    }
-            }
-            pixelAvgBrightness[3] = 0;
-            for (int c = red; c <= blue; c++) {
+            pixelAvgBrightness[rvb] = (pixelAvgBrightness[red] + pixelAvgBrightness[green] + pixelAvgBrightness[blue])/ 3;
+	    imgBrightnessSpectrum[rvb][(unsigned char) pixelAvgBrightness[rvb]] += 1;
+            for (int c = red; c <= rvb; c++) {
 		    pixelAvgBrightness[c] = 0;
             }
         }
     }
+}
 
+// TODO parfois histogramme s'affiche mal, debugger
+int hist_rgb(ImacImg* imgToAnalyse, ImacImg* histogram) {
+    img_setToWhite(histogram);
+    unsigned int imgBrightnessSpectrum[4][256] = {{0},{0},{0},{0}};
+    build_histogram(imgToAnalyse, imgBrightnessSpectrum);
+    unsigned int maxPixelsForBrightness[4] = {0};
+    get_maxBrightness(imgBrightnessSpectrum, maxPixelsForBrightness);
+    unsigned char colorLevel = 0;
     // Print histogram to file
-    for (int c = red; c <= blue; c++) {
-	    _printHistogram(histogram, imgBrightnessSpectrum[c], maxPixelsForBrightness[c], 255, c);
+    for (int c = red; c <= rvb; c++) {
+	    colorLevel = (c==rvb)?150:255;
+	    _printHistogram(histogram, imgBrightnessSpectrum[c], maxPixelsForBrightness[c], colorLevel, c);
     }
-    _printHistogram(histogram, imgBrightnessSpectrum[3], maxPixelsForBrightness[3], 150, rvb);
     return EXIT_SUCCESS;
 };
 
