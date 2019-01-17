@@ -79,13 +79,13 @@ void lut3x1d_apply(ImacLut3x1d* lut3x1d, ImacImg* img) {
             // TODO put it somewhere else ? It is for sepia only
 	    avgBrightness = 0.3 * brightnessR + 0.59 * brightnessG + 0.11 * brightnessB;
 
-            brightnessR = lut3x1d_get(lut3x1d, (unsigned int) avgBrightness, red);
+            brightnessR = lut3x1d_get(lut3x1d, (unsigned char) avgBrightness, red);
             img_setPixelChannel(img, x, y, brightnessR, red);
 
-            brightnessG = lut3x1d_get(lut3x1d, (unsigned int) avgBrightness, green);
+            brightnessG = lut3x1d_get(lut3x1d, (unsigned char) avgBrightness, green);
             img_setPixelChannel(img, x, y, brightnessG, green);
 
-            brightnessB = lut3x1d_get(lut3x1d, (unsigned int) avgBrightness, blue);
+            brightnessB = lut3x1d_get(lut3x1d, (unsigned char) avgBrightness, blue);
             img_setPixelChannel(img, x, y, brightnessB, blue);
         }
     }

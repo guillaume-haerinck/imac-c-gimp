@@ -13,6 +13,7 @@
 #include "luts/luminosity.h"
 #include "luts/contrast.h"
 #include "luts/sepia.h"
+#include "convolution/convolution.h"
 
 // minigimp mon_image.ppm [-h] [-histo] [<code_lut>[_<param1>]*]* [-o image_sortie.ppm]
 
@@ -21,10 +22,13 @@ int main(int argc, char *argv[]) {
     double cpuTimeUsed;
     bool bHistogram = false;
     bool bLut3x1d = false;
+    bool convolutionImg = false;
+    int conValue;
     start = clock();
 
     if (argc > 0) {
         ImacImg img;
+        ImacImg convolutedImg;
         ImacLut1d lut;
         ImacLut3x1d lut3x1d;
         lut_new(&lut);
@@ -80,13 +84,23 @@ int main(int argc, char *argv[]) {
 		unsigned int imgBrightnessSpectrum[4][256] = {{0},{0},{0},{0}};
 		build_histogram(&img, imgBrightnessSpectrum);
                 contrast_Equalizer(&lut, imgBrightnessSpectrum[rvb]);
+            } else if (strcmp(argv[i], "BLUR") == 0) {
+		img_new(&convolutedImg, img.width, img.height);
+                conValue = strtol(argv[i + 1], NULL, 10);
+		convolutionImg = true;
             }
+
 
         }
 
         /* Save result */
         lut_applyRgb(&lut, &img);
         if (bLut3x1d) { lut3x1d_apply(&lut3x1d, &img); }
+	ImacImg* ptrOnImage = &img;
+        if (convolutionImg) {
+                convolution_blur(&img, &convolutedImg, conValue);
+		ptrOnImage = &convolutedImg;
+	}
         if (bHistogram) {
             ImacImg histogram;
             img_new(&histogram, 256, 150);
@@ -97,9 +111,9 @@ int main(int argc, char *argv[]) {
         }
         
 	    if (imagePathIndex != -1) {
-            ppm_save(argv[imagePathIndex], &img);
+            ppm_save(argv[imagePathIndex], ptrOnImage);
         } else {
-            ppm_save("output.ppm", &img);
+            ppm_save("output.ppm", ptrOnImage);
         }
 
         /* Clean memory */
