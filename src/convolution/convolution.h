@@ -7,12 +7,19 @@
 
 #include "core/imac-img.h"
 
+/**
+ * @brief Calculte the matrix shift value (recursive function)
+ *
+ * @param[in] Matrix size
+ * @param[out] Matrix shift
+ */
 int recursiveMatrix(int n);
 /**
- * @brief Add value to each color of the lut
+ * @brief Blur the image with a specified level
  *
- * @param lut
- * @param value
+ * @param[in] image
+ * @param[in] output image
+ * @param[in] blur intensity
  */
 void convolution_blur(ImacImg *img, ImacImg *outputImg, int value);
 #endif //MINIGIMP_CONVOLUTION_H
