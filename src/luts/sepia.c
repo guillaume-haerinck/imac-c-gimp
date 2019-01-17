@@ -8,10 +8,10 @@ void sepia_addToLut3x1d(ImacLut3x1d *lut) {
 	brightnessR = (i * .393) + (i * .769) + (i * .189);
 	brightnessG = (i * .349) + (i * .686) + (i * .168);
 	brightnessB = (i * .272) + (i * .534) + (i * .131);
-
-	if (brightnessR > 255) { brightnessR = 255; }
-	if (brightnessG > 255) { brightnessG = 255; }
-	if (brightnessB > 255) { brightnessB = 255; }
+	
+	if (brightnessR > 255) brightnessR = 255;
+	if (brightnessG > 255) brightnessG = 255;
+	if (brightnessB > 255) brightnessB = 255;
 
 	lut3x1d_set(lut, i, (int) brightnessR, red);
 	lut3x1d_set(lut, i, (int) brightnessG, green);

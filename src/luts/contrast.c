@@ -41,7 +41,7 @@ void contrast_Sin(ImacLut1d *lut, int value) {
 void contrast_Equalizer(ImacLut1d *lut, unsigned int histogram[256]) {
 	//TODO doesn't work sometimes for no reason, not depending on the image, it randomly goes wrong
 	int totalValues=0;
-	double cdf;
+	double cdf = 0.0;
 	for (int i = 0; i<256; i++){
 		totalValues+=histogram[i];	
 	}
