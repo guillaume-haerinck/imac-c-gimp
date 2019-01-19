@@ -9,6 +9,7 @@ bin
 .directory
 *.swp
 bin
+c_cpp_properties.json
 
 # Prerequisites
 *.d
