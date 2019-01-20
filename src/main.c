@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#include <libgen.h>
 
 #include "core/imac-img.h"
 #include "core/imac-lut1d.h"
@@ -20,14 +21,16 @@
 int main(int argc, char *argv[]) {
     clock_t start, end;
     double cpuTimeUsed;
+    char* outputDir;
     bool bHistogram = false;
     bool bLut3x1d = false;
-    bool convolutionImg = false;
-    int conValue;
+    bool bConvolution = false;
+    int blurValue;
     start = clock();
 
     if (argc > 0) {
         ImacImg img;
+        ImacImg histogram;
         ImacImg convolutedImg;
         ImacLut1d lut;
         ImacLut3x1d lut3x1d;
@@ -46,15 +49,14 @@ int main(int argc, char *argv[]) {
         /* Handle args */
         for (int i = 2; i < argc; i++) {
             if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "-histo") == 0) {
-                ImacImg histogram;
                 img_new(&histogram, 256, 150);
                 hist_rgb(&img, &histogram);
-                // TODO append histogram to argv[1] name + Use the output path
-                ppm_save("./original-histogram.ppm", &histogram);
-                img_delete(&histogram);
                 bHistogram = true;
             } else if (strcmp(argv[i], "-o") == 0) {
                 imagePathIndex = i + 1;
+                char* path = malloc(sizeof(char) * strlen(argv[imagePathIndex])); // Freed by outputDir
+                strcpy(path, argv[imagePathIndex]);
+                outputDir = dirname(path);
             } else if (strcmp(argv[i], "ADDLUM") == 0) {
                 long value = strtol(argv[i + 1], NULL, 10);
                 if (value > 255) { value = 255; }
@@ -84,8 +86,8 @@ int main(int argc, char *argv[]) {
                 contrast_equalizeToLut1d(&lut, imgBrightnessSpectrum[rvb]);
             } else if (strcmp(argv[i], "BLUR") == 0) {
                 img_new(&convolutedImg, img.width, img.height);
-                conValue = strtol(argv[i + 1], NULL, 10);
-                convolutionImg = true;
+                blurValue = strtol(argv[i + 1], NULL, 10);
+                bConvolution = true;
             }
         }
 
@@ -93,17 +95,27 @@ int main(int argc, char *argv[]) {
         lut_applyRgb(&lut, &img);
         ImacImg* ptrOnImage = &img;
         if (bLut3x1d) { lut3x1d_apply(&lut3x1d, &img); }
-        if (convolutionImg) {
-            blur_img(&img, &convolutedImg, conValue);
+        if (bConvolution) {
+            blur_img(&img, &convolutedImg, blurValue);
             ptrOnImage = &convolutedImg;
 	    }
         if (bHistogram) {
-            ImacImg histogram;
+            // Original histogram
+            char histName[] = "/original-histogram.ppm";
+            char* path = malloc(sizeof(char) * strlen(outputDir) * strlen(histName));
+            strcpy(path, outputDir);
+            strcat(path, histName);
+            ppm_save(path, &histogram);
+
+            // Modified image histogram
             img_new(&histogram, 256, 150);
             hist_rgb(&img, &histogram);
-            // TODO append histogram to argv[1] name + Use the output path
-            ppm_save("./output-histogram.ppm", &histogram);
+            char histName2[] = "/output-histogram.ppm";
+            strcpy(path, outputDir);
+            strcat(path, histName2);
+            ppm_save(path, &histogram);
             img_delete(&histogram);
+            free(path);
         }
 	    if (imagePathIndex != -1) {
             ppm_save(argv[imagePathIndex], ptrOnImage);
@@ -115,6 +127,7 @@ int main(int argc, char *argv[]) {
         lut_delete(&lut);
         lut3x1d_delete(&lut3x1d);
         img_delete(&img);
+        free(outputDir);
     } else {
         printf("No input file provided !\n");
         return EXIT_FAILURE;
