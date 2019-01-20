@@ -1,19 +1,14 @@
-#include "convolution.h"
+#include "blur.h"
 #include <stdio.h>
 
-int recursiveMatrix(int n) {
-	//printf("Value in recur = %d\n", n);
-	if (n==1) return 0;
-	return recursiveMatrix(n-2) + 1;
-}
 
-void convolution_blur(ImacImg *img, ImacImg* outputImg, int value) {
+void blur_img(ImacImg *img, ImacImg* outputImg, int value) {
 	int averagePixelValue, count;
 	if (!(value%2)) value+=1;
 	//printf("Value  = %d\n", value);
-	int radius = recursiveMatrix(value);
+	int radius = _recursiveMatrix(value);
 	//printf("value %d\n", value);
-	//printf("recursive = %d\n", recursiveMatrix(value));
+	//printf("recursive = %d\n", _recursiveMatrix(value));
 	for (int height = 0; height < img->height; height++) {
 		for (int width = 0; width < img->width; width++) {
 			for (int channel = red; channel <= blue; channel++) {
@@ -44,4 +39,12 @@ void convolution_blur(ImacImg *img, ImacImg* outputImg, int value) {
 			}
 		}
 	}
+}
+
+// ------------------------------------------ Private functions
+
+static int _recursiveMatrix(int n) {
+	//printf("Value in recur = %d\n", n);
+	if (n==1) return 0;
+	return _recursiveMatrix(n-2) + 1;
 }

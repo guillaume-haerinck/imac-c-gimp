@@ -13,7 +13,7 @@
 #include "luts/luminosity.h"
 #include "luts/contrast.h"
 #include "luts/sepia.h"
-#include "convolution/convolution.h"
+#include "convolution/blur.h"
 
 // minigimp mon_image.ppm [-h] [-histo] [<code_lut>[_<param1>]*]* [-o image_sortie.ppm]
 
@@ -78,29 +78,25 @@ int main(int argc, char *argv[]) {
                 bLut3x1d = true;
             } else if (strcmp(argv[i], "SINCON") == 0) {
                 int value = strtol(argv[i + 1], NULL, 10);
-                contrast_Sin(&lut, value);
+                contrast_sinToLut1d(&lut, value);
             } else if (strcmp(argv[i], "HISTEQ") == 0) {
-                ImacImg histogramTab;
-		unsigned int imgBrightnessSpectrum[4][256] = {{0},{0},{0},{0}};
-		build_histogram(&img, imgBrightnessSpectrum);
-                contrast_Equalizer(&lut, imgBrightnessSpectrum[rvb]);
+                unsigned int imgBrightnessSpectrum[4][256] = {{0},{0},{0},{0}};
+                contrast_equalizeToLut1d(&lut, imgBrightnessSpectrum[rvb]);
             } else if (strcmp(argv[i], "BLUR") == 0) {
-		img_new(&convolutedImg, img.width, img.height);
+                img_new(&convolutedImg, img.width, img.height);
                 conValue = strtol(argv[i + 1], NULL, 10);
-		convolutionImg = true;
+                convolutionImg = true;
             }
-
-
         }
 
         /* Save result */
         lut_applyRgb(&lut, &img);
+        ImacImg* ptrOnImage = &img;
         if (bLut3x1d) { lut3x1d_apply(&lut3x1d, &img); }
-	ImacImg* ptrOnImage = &img;
         if (convolutionImg) {
-                convolution_blur(&img, &convolutedImg, conValue);
-		ptrOnImage = &convolutedImg;
-	}
+            blur_img(&img, &convolutedImg, conValue);
+            ptrOnImage = &convolutedImg;
+	    }
         if (bHistogram) {
             ImacImg histogram;
             img_new(&histogram, 256, 150);
@@ -109,7 +105,6 @@ int main(int argc, char *argv[]) {
             ppm_save("./output-histogram.ppm", &histogram);
             img_delete(&histogram);
         }
-        
 	    if (imagePathIndex != -1) {
             ppm_save(argv[imagePathIndex], ptrOnImage);
         } else {

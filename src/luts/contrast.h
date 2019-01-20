@@ -30,7 +30,7 @@ void contrast_dimToLut1d(ImacLut1d *lut, int value);
  * @param lut
  * @param value
  */
-void contrast_Sin(ImacLut1d *lut, int value);
+void contrast_sinToLut1d(ImacLut1d *lut, int value);
 
 /**
  * @brief Add contrast depending on Histogram 
@@ -38,6 +38,6 @@ void contrast_Sin(ImacLut1d *lut, int value);
  * @param lut
  * @param histogram
  */
-void contrast_Equalizer(ImacLut1d *lut, unsigned int histogram[256]);
+void contrast_equalizeToLut1d(ImacLut1d *lut, unsigned int histogram[256]);
 
 #endif //MINIGIMP_CONTRAST_H
