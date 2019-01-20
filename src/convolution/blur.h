@@ -16,4 +16,6 @@
  */
 void blur_img(ImacImg *img, ImacImg *outputImg, int value);
 
+// TODO verifier que bien convolution https://en.wikipedia.org/wiki/Kernel_(image_processing)
+
 #endif //MINIGIMP_BLUR_H
