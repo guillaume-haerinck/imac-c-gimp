@@ -22,35 +22,4 @@ int hist_rgb(ImacImg* imgToAnalyse, ImacImg* histogram);
  */
 int hist_channel(ImacImg* imgToAnalyse, ImacImg* histogram, enum img_Channel c);
 
-// ------------------------------------------- Private functions
-
-/**
- * @brief Create an average histogram of the image
- *
- * @param[in] imgToAnalyse
- * @param[in] imgToAnalyseimgBrightnessSpectrum[4][HIST_SIZE]
- * @return EXIT_FAILURE or EXIT_SUCCESS
- */
-static void _buildHistogram(ImacImg* imgToAnalyse, unsigned int imgBrightnessSpectrum[rvb+1][HIST_SIZE]);
-
-/**
- * @brief Find the highest number of similar brightness 
- *
- * @param[in] imgToAnalyseimgBrightnessSpectrum[4][HIST_SIZE]
- * @param[in] maxPixelsForBrightness[4]
- * @return EXIT_FAILURE or EXIT_SUCCESS
- */
-
-static void _getMaxBrightness(unsigned int imgBrightnessSpectrum[rvb+1][HIST_SIZE], unsigned int maxPixelsForBrightness[rvb+1]);
-
-/**
- * @brief Print histogram data to an image
- *
- * @param histogram
- * @param histogramData
- * @param maxData - Values above will be clamped
- * @param printColor - The color of the printed graph
- */
-static void _printHistogram(ImacImg* histogram, unsigned int* histogramData, unsigned int maxData, unsigned char printColor, enum img_Channel);
-
 #endif //MINIGIMP_HISTOGRAM_H

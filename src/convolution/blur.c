@@ -1,6 +1,20 @@
 #include "blur.h"
 #include <stdio.h>
 
+// ---------------------------------------- Private functions
+
+/**
+ * @brief Calculte the matrix shift value (recursive function)
+ * @note Private function
+ */
+static int _recursiveMatrix(int n);
+int _recursiveMatrix(int n) {
+	//printf("Value in recur = %d\n", n);
+	if (n==1) return 0;
+	return _recursiveMatrix(n-2) + 1;
+}
+
+// ----------------------------------------- Public functions
 
 void blur_img(ImacImg *img, ImacImg* outputImg, int value) {
 	int averagePixelValue, count;
@@ -39,12 +53,4 @@ void blur_img(ImacImg *img, ImacImg* outputImg, int value) {
 			}
 		}
 	}
-}
-
-// ------------------------------------------ Private functions
-
-static int _recursiveMatrix(int n) {
-	//printf("Value in recur = %d\n", n);
-	if (n==1) return 0;
-	return _recursiveMatrix(n-2) + 1;
 }
