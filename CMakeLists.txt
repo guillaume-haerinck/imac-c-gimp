@@ -1,5 +1,5 @@
 # Requirement
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 2.8)
 set(CMAKE_C_STANDARD 99)
 
 # Project configuration
@@ -10,3 +10,4 @@ include_directories(src)
 # Executable file
 set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 add_executable(${PROJECT_NAME} ${source_files})
+target_link_libraries(${PROJECT_NAME} m) # Add math.h
