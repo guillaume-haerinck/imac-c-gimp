@@ -56,9 +56,8 @@ void lut_set(ImacLut1d* lut, unsigned int index, int value);
  *
  * @param lut
  * @param img
- * @return
  */
-int lut_applyRgb(ImacLut1d* lut, ImacImg* img);
+void lut_applyRgb(ImacLut1d* lut, ImacImg* img);
 
 // ----------------------- GETTERS
 

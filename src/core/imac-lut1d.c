@@ -33,7 +33,7 @@ void lut_set(ImacLut1d* lut, unsigned int index, int value) {
     lut->data[index] = value;
 }
 
-int lut_applyRgb(ImacLut1d* lut, ImacImg* img) {
+void lut_applyRgb(ImacLut1d* lut, ImacImg* img) {
     int brightness = 0;
     for (unsigned int y = 0; y < img->height; y++) {
         for (unsigned int x = 0; x < img->width; x++) {
