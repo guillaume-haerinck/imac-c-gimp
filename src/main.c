@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
                 hist_rgb(&img, &histogram);
                 bHistogram = true;
             } else if (strcmp(argv[i], "-o") == 0) {
-                outputPath = malloc(sizeof(char) * strlen(argv[i + 1]));
+                outputPath = (char*) malloc(sizeof(char) * strlen(argv[i + 1]));
                 strcpy(outputPath, argv[i + 1]);
                 outputDir = getDirname(argv[i + 1]);
             } else if (strcmp(argv[i], "ADDLUM") == 0) {
@@ -81,6 +81,7 @@ int main(int argc, char *argv[]) {
                 bLut1d = true;
             } else if (strcmp(argv[i], "INVERT") == 0) {
                 inv_lut1d(&lut);
+                bLut1d = true;
             } else if (strcmp(argv[i], "SEPIA") == 0) {
                 sepia_addToLut3x1d(&lut3x1d);
                 bLut3x1d = true;
@@ -93,6 +94,7 @@ int main(int argc, char *argv[]) {
                 contrast_equalizeToLut1d(&lut, imgBrightnessSpectrum[rvb]);
                 bLut1d = true;
             } else if (strcmp(argv[i], "BLUR") == 0) {
+                // TODO apply blur here ?
                 img_new(&convolutedImg, img.width, img.height);
                 blurValue = strtol(argv[i + 1], NULL, 10);
                 bConvolution = true;
@@ -104,13 +106,13 @@ int main(int argc, char *argv[]) {
         if (bLut1d) { lut_applyRgb(&lut, &img); }
         if (bLut3x1d) { lut3x1d_apply(&lut3x1d, &img); }
         if (bConvolution) {
-            blur_img(&img, &convolutedImg, blurValue);
+            // blur_img(&img, &convolutedImg, blurValue);
             ptrOnImage = &convolutedImg;
 	    }
         if (bHistogram) {
             // Original histogram
             char histName[] = "/original-histogram.ppm";
-            char* path = malloc(sizeof(char) * strlen(outputDir) * strlen(histName));
+            char* path = (char*) malloc(sizeof(char) * strlen(outputDir) * strlen(histName));
             strcpy(path, outputDir);
             strcat(path, histName);
             ppm_save(path, &histogram);

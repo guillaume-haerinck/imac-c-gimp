@@ -32,7 +32,7 @@
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}", // Start path for args
             "environment": [],
-            "externalConsole": true
+            "externalConsole": false
         }
     ]
 }
