@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "imac-img.h"
+#include "utils.h"
 
 /* Constructor */
 int img_new(ImacImg* img, unsigned int width, unsigned int height) {
@@ -27,12 +28,14 @@ int img_delete(ImacImg* img) {
 
 /* Getters */
 unsigned char img_getPixelChannel(ImacImg* img, unsigned int x, unsigned int y, enum img_Channel c) {
-    if (x > img->width) {
+    if (x >= img->width) {
         printf("Error img_getPixelChannel: x superior to img width\n");
-        exit(EXIT_FAILURE);
-    } else if (y > img->height) {
+        DEBUG_BREAK;
+        return(EXIT_FAILURE);
+    } else if (y >= img->height) {
         printf("Error img_getPixelChannel: y superior to img height\n");
-        exit(EXIT_FAILURE);
+        DEBUG_BREAK;
+        return(EXIT_FAILURE);
     }
     return img->data[y * img->width * 3 + x * 3 + c];
 }

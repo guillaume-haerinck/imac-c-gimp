@@ -1,13 +1,14 @@
 #include "imac-lut3x1d.h"
+#include "utils.h"
 #include <stdlib.h>
 #include <stdio.h>
 
 /* Constructor */
 int lut3x1d_new(ImacLut3x1d* lut3x1d) {
     lut3x1d->channelSize = 255;
-    lut3x1d->dataR = malloc(lut3x1d->channelSize * sizeof(int));
-    lut3x1d->dataG = malloc(lut3x1d->channelSize * sizeof(int));
-    lut3x1d->dataB = malloc(lut3x1d->channelSize * sizeof(int));
+    lut3x1d->dataR = (int) malloc(lut3x1d->channelSize * sizeof(int));
+    lut3x1d->dataG = (int) malloc(lut3x1d->channelSize * sizeof(int));
+    lut3x1d->dataB = (int) malloc(lut3x1d->channelSize * sizeof(int));
     if (lut3x1d->dataR == NULL) {
         perror("lut3x1d_new: DataR is null");
         exit(EXIT_FAILURE);
@@ -93,9 +94,10 @@ void lut3x1d_apply(ImacLut3x1d* lut3x1d, ImacImg* img) {
 
 /* Getters */
 int lut3x1d_get(ImacLut3x1d* lut3x1d, unsigned int index, enum img_Channel c) {
-    if (index > lut3x1d->channelSize) {
+    if (index >= lut3x1d->channelSize) {
         printf("Error lut3x1d_get: index superior to lut3x1d size\n");
-        exit(EXIT_FAILURE);
+        DEBUG_BREAK;
+        return(EXIT_FAILURE);
     }
 
     switch(c) {

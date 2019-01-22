@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "name": "(gdb) Launch",
             "type": "cppdbg",
@@ -28,7 +29,7 @@
             "type": "cppvsdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/bin/Debug/minigimp.exe",
-            "args": ["./images/car.ppm", "DIMCON", "150", "-o", "./build/bin/Debug/test.ppm"],
+            "args": ["./images/car.ppm", "-h", "BLUR", "15", "-o", "./build/bin/Debug/test.ppm"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}", // Start path for args
             "environment": [],

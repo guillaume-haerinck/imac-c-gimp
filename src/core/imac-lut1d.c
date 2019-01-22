@@ -1,11 +1,12 @@
-#include "imac-lut1d.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "imac-lut1d.h"
+#include "utils.h"
 
 /* Constructor */
 int lut_new(ImacLut1d* lut) {
     lut->size = 255;
-    lut->data = malloc(lut->size * sizeof(int));
+    lut->data = (int) malloc(lut->size * sizeof(int));
     if (lut->data == NULL) {
         perror("lut_new: Data is null");
         exit(EXIT_FAILURE);
@@ -49,9 +50,10 @@ void lut_applyRgb(ImacLut1d* lut, ImacImg* img) {
 }
 /* Getters */
 int lut_get(ImacLut1d* lut, unsigned int index) {
-    if (index > lut->size) {
+    if (index >= lut->size) {
         printf("Error lut_getIndex: index superior to lut size\n");
-        exit(EXIT_FAILURE);
+        DEBUG_BREAK;
+        return(EXIT_FAILURE);
     }
     return lut->data[index];
 }

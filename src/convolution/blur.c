@@ -32,9 +32,9 @@ void blur_img(ImacImg *img, ImacImg* outputImg, int value) {
 				count = 0;
 				//if (width==0&&height==0) printf("\nChannel %d, value %d\n", channel, averagePixelValue);
 				for (int matrixX= width-radius; matrixX <= width+radius; matrixX++) {
-					if (matrixX < 0 || matrixX > img->width) continue;
+					if (matrixX < 0 || matrixX >= img->width) continue;
 					for (int matrixY = height-radius; matrixY <= height+radius; matrixY++) {
-						if (matrixY < 0 || matrixY > img->height) continue;
+						if (matrixY < 0 || matrixY >= img->height) continue;
 						count++;
 						averagePixelValue += img_getPixelChannel(img, matrixX, matrixY, channel);
 						//if (width == 0 && height == 0){
