@@ -84,6 +84,12 @@ int main(int argc, char *argv[]) {
             } else if (strcmp(argv[i], "INVERT") == 0) {
                 inv_lut1d(&lut);
                 bLut1d = true;
+            } else if (strcmp(argv[i], "GRAY") == 0) {
+                for (unsigned int x = 0; x < img.width; x++) {
+                    for (unsigned int y = 0; y < img.height; y++) {
+                        img_setPixelChannels(&img, x, y, img_getPixelGrayscale(&img, x, y));
+                    }
+                }
             } else if (strcmp(argv[i], "SEPIA") == 0) {
                 sepia_addToLut3x1d(&lut3x1d);
                 bLut3x1d = true;
