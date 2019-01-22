@@ -12,7 +12,6 @@
  * @brief Apply sepia effect to 3x1d lut
  *
  * @param lut
- * @param value
  */
 void sepia_addToLut3x1d(ImacLut3x1d *lut);
 

@@ -26,7 +26,16 @@
  * @param filename
  * @return extension
  */
-const char* getFilenameExtension(const char *filename);
+const char* getFilenameExtension(const char* filename);
+
+/**
+ * @brief Get directory path without filename
+ * @note Will change the pointer passed
+ *
+ * @param path
+ * @return dirname - no ending '/'
+ */
+char* getDirname(char* path);
 
 // ----------------------------- MATHS
 /**

@@ -2,7 +2,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
-#include <libgen.h>
 
 #include "core/imac-img.h"
 #include "core/imac-lut1d.h"
@@ -22,10 +21,15 @@ int main(int argc, char *argv[]) {
     clock_t start, end;
     double cpuTimeUsed;
     char* outputDir = NULL;
+    char* outputPath = NULL;
+    int blurValue = 0;
+
+    // Pass activation
     bool bHistogram = false;
     bool bLut3x1d = false;
+    bool bLut1d = false;
     bool bConvolution = false;
-    int blurValue = 0;
+
     start = clock();
 
     if (argc > 0) {
@@ -36,7 +40,6 @@ int main(int argc, char *argv[]) {
         ImacLut3x1d lut3x1d;
         lut_new(&lut);
         lut3x1d_new(&lut3x1d);
-        int imagePathIndex = -1;
 
         /* Handle filetype */
         if (strcmp("ppm", getFilenameExtension(argv[1])) == 0) {
@@ -53,26 +56,29 @@ int main(int argc, char *argv[]) {
                 hist_rgb(&img, &histogram);
                 bHistogram = true;
             } else if (strcmp(argv[i], "-o") == 0) {
-                imagePathIndex = i + 1;
-                char* path = malloc(sizeof(char) * strlen(argv[imagePathIndex])); // Freed by outputDir
-                strcpy(path, argv[imagePathIndex]);
-                outputDir = dirname(path);
+                outputPath = malloc(sizeof(char) * strlen(argv[i + 1]));
+                strcpy(outputPath, argv[i + 1]);
+                outputDir = getDirname(argv[i + 1]);
             } else if (strcmp(argv[i], "ADDLUM") == 0) {
                 long value = strtol(argv[i + 1], NULL, 10);
                 if (value > 255) { value = 255; }
                 lum_addToLut1d(&lut, (unsigned char) value);
+                bLut1d = true;
             } else if (strcmp(argv[i], "DIMLUM") == 0) {
                 long value = strtol(argv[i + 1], NULL, 10);
                 if (value > 255) { value = 255; }
                 lum_dimToLut1d(&lut, (unsigned char) value);
+                bLut1d = true;
             } else if (strcmp(argv[i], "ADDCON") == 0) {
                 long value = strtol(argv[i + 1], NULL, 10);
                 if (value > 255) { value = 255; }
                 contrast_addToLut1d(&lut, (unsigned char) value);
+                bLut1d = true;
             } else if (strcmp(argv[i], "DIMCON") == 0) {
                 long value = strtol(argv[i + 1], NULL, 10);
                 if (value > 255) { value = 255; }
                 contrast_dimToLut1d(&lut, (unsigned char) value);
+                bLut1d = true;
             } else if (strcmp(argv[i], "INVERT") == 0) {
                 inv_lut1d(&lut);
             } else if (strcmp(argv[i], "SEPIA") == 0) {
@@ -81,9 +87,11 @@ int main(int argc, char *argv[]) {
             } else if (strcmp(argv[i], "SINCON") == 0) {
                 int value = strtol(argv[i + 1], NULL, 10);
                 contrast_sinToLut1d(&lut, value);
+                bLut1d = true;
             } else if (strcmp(argv[i], "HISTEQ") == 0) {
                 unsigned int imgBrightnessSpectrum[4][256] = {{0},{0},{0},{0}};
                 contrast_equalizeToLut1d(&lut, imgBrightnessSpectrum[rvb]);
+                bLut1d = true;
             } else if (strcmp(argv[i], "BLUR") == 0) {
                 img_new(&convolutedImg, img.width, img.height);
                 blurValue = strtol(argv[i + 1], NULL, 10);
@@ -91,9 +99,9 @@ int main(int argc, char *argv[]) {
             }
         }
 
-        /* Save result */
-        lut_applyRgb(&lut, &img);
+        /* Apply filters */
         ImacImg* ptrOnImage = &img;
+        if (bLut1d) { lut_applyRgb(&lut, &img); }
         if (bLut3x1d) { lut3x1d_apply(&lut3x1d, &img); }
         if (bConvolution) {
             blur_img(&img, &convolutedImg, blurValue);
@@ -117,17 +125,19 @@ int main(int argc, char *argv[]) {
             img_delete(&histogram);
             free(path);
         }
-	    if (imagePathIndex != -1) {
-            ppm_save(argv[imagePathIndex], ptrOnImage);
+
+        /* Save image */
+	    if (outputPath != NULL) {
+            ppm_save(outputPath, ptrOnImage);
         } else {
-            ppm_save("output.ppm", ptrOnImage);
+            ppm_save("./output.ppm", ptrOnImage);
         }
 
         /* Clean memory */
         lut_delete(&lut);
         lut3x1d_delete(&lut3x1d);
         img_delete(&img);
-        free(outputDir);
+        free(outputPath);
     } else {
         printf("No input file provided !\n");
         return EXIT_FAILURE;
