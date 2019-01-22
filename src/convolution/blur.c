@@ -16,7 +16,7 @@ int _recursiveMatrix(int n) {
 
 // ----------------------------------------- Public functions
 
-// TODO use kernel_apply() and declare convolution matrix + FIXME on windows
+// TODO use kernel_apply() and declare convolution matrix
 
 void blur_img(ImacImg *img, ImacImg* outputImg, int value) {
 	int averagePixelValue, count;

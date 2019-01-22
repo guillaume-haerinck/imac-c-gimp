@@ -12,7 +12,7 @@ int img_new(ImacImg* img, unsigned int width, unsigned int height) {
 
     img->width = width;
     img->height = height;
-    img->data = malloc(3 * img->width * img->height * sizeof(unsigned char));
+    img->data = (unsigned char*) malloc(3 * img->width * img->height * sizeof(unsigned char));
     if (img->data == NULL) {
         perror("img_new: Data is null");
         exit(EXIT_FAILURE);
@@ -38,6 +38,25 @@ unsigned char img_getPixelChannel(ImacImg* img, unsigned int x, unsigned int y, 
         return(EXIT_FAILURE);
     }
     return img->data[y * img->width * 3 + x * 3 + c];
+}
+
+unsigned char img_getPixelGrayscale(ImacImg* img, unsigned int x, unsigned int y) {
+    if (x >= img->width) {
+        printf("Error img_getPixelChannel: x superior to img width\n");
+        DEBUG_BREAK;
+        return(EXIT_FAILURE);
+    } else if (y >= img->height) {
+        printf("Error img_getPixelChannel: y superior to img height\n");
+        DEBUG_BREAK;
+        return(EXIT_FAILURE);
+    }
+    int avg = img->data[y * img->width * 3 + x * 3 + red];
+    avg += img->data[y * img->width * 3 + x * 3 + green];
+    avg += img->data[y * img->width * 3 + x * 3 + blue];
+    avg = avg / 3;
+    if(avg > 255) { avg = 255; }
+    if(avg < 0) { avg = 0; }
+    return (unsigned char) avg;
 }
 
 /* Setters */

@@ -6,7 +6,7 @@
 /* Constructor */
 int lut_new(ImacLut1d* lut) {
     lut->size = 255;
-    lut->data = (int) malloc(lut->size * sizeof(int));
+    lut->data = (int*) malloc(lut->size * sizeof(int));
     if (lut->data == NULL) {
         perror("lut_new: Data is null");
         exit(EXIT_FAILURE);
@@ -39,11 +39,11 @@ void lut_applyRgb(ImacLut1d* lut, ImacImg* img) {
     for (unsigned int y = 0; y < img->height; y++) {
         for (unsigned int x = 0; x < img->width; x++) {
             for (int c = red; c <= blue; c++) {
-                brightness = img_getPixelChannel(img, x, y, c);
+                brightness = img_getPixelChannel(img, x, y, (enum img_Channel) c);
                 brightness = lut_get(lut, brightness);
 		if (brightness > 255) brightness = 255;
 		else if (brightness < 0) brightness = 0;
-                img_setPixelChannel(img, x, y, (unsigned char) brightness, c);
+                img_setPixelChannel(img, x, y, (unsigned char) brightness, (enum img_Channel) c);
             }
         }
     }

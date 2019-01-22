@@ -6,9 +6,9 @@
 /* Constructor */
 int lut3x1d_new(ImacLut3x1d* lut3x1d) {
     lut3x1d->channelSize = 255;
-    lut3x1d->dataR = (int) malloc(lut3x1d->channelSize * sizeof(int));
-    lut3x1d->dataG = (int) malloc(lut3x1d->channelSize * sizeof(int));
-    lut3x1d->dataB = (int) malloc(lut3x1d->channelSize * sizeof(int));
+    lut3x1d->dataR = (int*) malloc(lut3x1d->channelSize * sizeof(int));
+    lut3x1d->dataG = (int*) malloc(lut3x1d->channelSize * sizeof(int));
+    lut3x1d->dataB = (int*) malloc(lut3x1d->channelSize * sizeof(int));
     if (lut3x1d->dataR == NULL) {
         perror("lut3x1d_new: DataR is null");
         exit(EXIT_FAILURE);

@@ -14,6 +14,7 @@
 #include "luts/contrast.h"
 #include "luts/sepia.h"
 #include "convolution/blur.h"
+#include "convolution/edge.h"
 
 // minigimp mon_image.ppm [-h] [-histo] [<code_lut>[_<param1>]*]* [-o image_sortie.ppm]
 
@@ -48,6 +49,7 @@ int main(int argc, char *argv[]) {
             printf("Error in main: unknown file extension");
             return EXIT_FAILURE;
         }
+        img_new(&convolutedImg, img.width, img.height);
 
         /* Handle args */
         for (int i = 2; i < argc; i++) {
@@ -94,9 +96,12 @@ int main(int argc, char *argv[]) {
                 contrast_equalizeToLut1d(&lut, imgBrightnessSpectrum[rvb]);
                 bLut1d = true;
             } else if (strcmp(argv[i], "BLUR") == 0) {
-                // TODO apply blur here ?
-                img_new(&convolutedImg, img.width, img.height);
+                // TODO handle if convolution already exists
                 blurValue = strtol(argv[i + 1], NULL, 10);
+                blur_img(&img, &convolutedImg, blurValue);
+                bConvolution = true;
+            } else if (strcmp(argv[i], "EDGE") == 0) {
+                edge_img(&img, &convolutedImg);
                 bConvolution = true;
             }
         }
@@ -105,10 +110,7 @@ int main(int argc, char *argv[]) {
         ImacImg* ptrOnImage = &img;
         if (bLut1d) { lut_applyRgb(&lut, &img); }
         if (bLut3x1d) { lut3x1d_apply(&lut3x1d, &img); }
-        if (bConvolution) {
-            blur_img(&img, &convolutedImg, blurValue);
-            ptrOnImage = &convolutedImg;
-	    }
+        if (bConvolution) { ptrOnImage = &convolutedImg; }
         if (bHistogram) {
             // Original histogram
             char histName[] = "/original-histogram.ppm";
@@ -124,7 +126,6 @@ int main(int argc, char *argv[]) {
             strcpy(path, outputDir);
             strcat(path, histName2);
             ppm_save(path, &histogram);
-            img_delete(&histogram);
             free(path);
         }
 
@@ -139,6 +140,8 @@ int main(int argc, char *argv[]) {
         lut_delete(&lut);
         lut3x1d_delete(&lut3x1d);
         img_delete(&img);
+        img_delete(&convolutedImg);
+        img_delete(&histogram);
         free(outputPath);
     } else {
         printf("No input file provided !\n");

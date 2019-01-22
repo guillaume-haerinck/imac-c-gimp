@@ -6,9 +6,11 @@
 /**
  * @brief Kernel matrix for convolution operation
  * @struct ImacKernel
+ * @note Matrix must be a 1 dimensional array, and squared.
  */
 typedef struct ImacKernel {
-    unsigned int size;
+    unsigned int arraySize;
+    unsigned int matrixSize;
     int* matrix;
 } ImacKernel;
 
@@ -17,6 +19,16 @@ typedef struct ImacKernel {
  * @param[in] kernel
  * @param[in, out] img
  */
-void kernel_apply(ImacKernel* kernel, ImacImg* img);
+void kernel_apply(ImacKernel* kernel, ImacImg* img, ImacImg* outputImg);
+
+/**
+ * @brief Get the x, y value of the matrix
+ * @note 0,0 is top left
+ * @param kernel
+ * @param x
+ * @param y
+ * @return value
+ */ 
+int kernel_get(ImacKernel* kernel, unsigned char x, unsigned int y);
 
 #endif // MINIGIMP_IMAC_KERNEL_H

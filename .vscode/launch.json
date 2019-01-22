@@ -10,7 +10,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/bin/Debug/minigimp",
-            "args": ["./images/car.ppm", "-h", "ADDCON", "50", "-o", "./build/bin/Debug/test.ppm"],
+            "args": ["./images/car.ppm", "-h", "EDGE", "-o", "./build/bin/Debug/test.ppm"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
@@ -29,7 +29,7 @@
             "type": "cppvsdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/bin/Debug/minigimp.exe",
-            "args": ["./images/car.ppm", "-h", "BLUR", "15", "-o", "./build/bin/Debug/test.ppm"],
+            "args": ["./images/car.ppm", "-h", "EDGE", "-o", "./build/bin/Debug/test.ppm"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}", // Start path for args
             "environment": [],

@@ -84,8 +84,23 @@ int img_delete(ImacImg* img);
  */
 unsigned char img_getPixelChannel(ImacImg* img, unsigned int x, unsigned int y, enum img_Channel c);
 
+/**
+ * @brief Get the average pixel value.
+ * @note 0,0 position is top left corner.
+ *
+ * @param img
+ * @param x
+ * @param y
+ * @return Brightness value contained between 0 and 255.
+ */
+unsigned char img_getPixelGrayscale(ImacImg* img, unsigned int x, unsigned int y);
+
 // ------------------------------------- SETTERS
 
+/**
+ * @brief Set all the pixels to white
+ * @param img
+ */
 void img_setToWhite(ImacImg* img);
 
 /**
