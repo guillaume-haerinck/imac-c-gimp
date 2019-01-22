@@ -21,11 +21,11 @@
 int main(int argc, char *argv[]) {
     clock_t start, end;
     double cpuTimeUsed;
-    char* outputDir;
+    char* outputDir = NULL;
     bool bHistogram = false;
     bool bLut3x1d = false;
     bool bConvolution = false;
-    int blurValue;
+    int blurValue = 0;
     start = clock();
 
     if (argc > 0) {

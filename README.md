@@ -57,10 +57,6 @@ You generate api xml files by running `doxygen`, then with `doxybook -i doc/_xml
 * **Nicolas Lienart**
 * **Guillaume Haerinck**
 
-## TODO
-
-voir utilisation GTK
-
 ## Ressources
 
 ### Articles
@@ -78,6 +74,20 @@ https://www.mochima.com/articles/LUT/LUT.html
 https://docs.opencv.org/2.4/doc/tutorials/core/basic_linear_transform/basic_linear_transform.html
 
 https://www.dfstudios.co.uk/articles/programming/image-programming-algorithms/image-processing-algorithms-part-5-contrast-adjustment/?fbclid=IwAR3ckOxGVc_Y4dCLp3lHU7QkBqBtbxhjTy6jJkn-1UUPMb2L8jiHANva4wc
+
+#### Convolution
+
+https://rosettacode.org/wiki/Image_convolution#C
+
+http://aishack.in/tutorials/image-convolution-examples/
+
+https://en.wikipedia.org/wiki/Kernel_(image_processing)
+
+http://machinelearninguru.com/computer_vision/basics/convolution/image_convolution_1.html
+
+https://www.tutorialspoint.com/dip/concept_of_convolution.htm
+
+http://aishack.in/tutorials/convolutions/
 
 ### Books
 

@@ -6,6 +6,18 @@
 #ifndef MINIGIMP_UTILS_H
 #define MINIGIMP_UTILS_H
 
+// ----------------------------- DEBUG
+#include <signal.h>
+
+#ifdef _MSC_VER
+#define DEBUG_BREAK __debugbreak()
+#else
+    #ifndef SIGTRAP
+    #define SIGTRAP 5
+    #endif
+#define DEBUG_BREAK raise(SIGTRAP)
+#endif
+
 // ----------------------------- INPUTS & OUTPUTS
 
 /**
