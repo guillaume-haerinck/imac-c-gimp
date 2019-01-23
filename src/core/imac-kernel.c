@@ -7,8 +7,8 @@
 
 static unsigned char _getPixelAvgKernelValue(ImacKernel* kernel, ImacImg* img, unsigned int anchorX, unsigned int anchorY);
 static unsigned char _getPixelAvgKernelValue(ImacKernel* kernel, ImacImg* img, unsigned int anchorX, unsigned int anchorY) {
-    unsigned int avgKernelBrightness = 0;
-    unsigned int pixelBrightness = 0;
+    int avgKernelBrightness = 0;
+    int pixelBrightness = 0;
     for (unsigned char matX = 0; matX < kernel->matrixSize; matX++) {
         for (unsigned char matY = 0; matY < kernel->matrixSize; matY++) {
             pixelBrightness = img_getPixelGrayscale(img, anchorX - 1 + matX, anchorY - 1 + matY);
