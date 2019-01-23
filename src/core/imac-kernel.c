@@ -21,16 +21,52 @@ static unsigned char _getPixelAvgKernelValue(ImacKernel* kernel, ImacImg* img, u
     return (unsigned char) avgKernelBrightness;
 }
 
+static unsigned char _getPixelChannelAvgKernelValue(ImacKernel* kernel, ImacImg* img, unsigned int anchorX, unsigned int anchorY, enum img_Channel channel);
+static unsigned char _getPixelChannelAvgKernelValue(ImacKernel* kernel, ImacImg* img, unsigned int anchorX, unsigned int anchorY, enum img_Channel channel) {
+    int avgKernelBrightness = 0;
+    int pixelBrightness = 0;
+    for (unsigned char matX = 0; matX < kernel->matrixSize; matX++) {
+        for (unsigned char matY = 0; matY < kernel->matrixSize; matY++) {
+            pixelBrightness = img_getPixelChannel(img, anchorX - 1 + matX, anchorY - 1 + matY, channel);
+            pixelBrightness = pixelBrightness * kernel_get(kernel, matX, matY);
+            avgKernelBrightness += pixelBrightness;
+        }
+    }
+    if (avgKernelBrightness > 255) { avgKernelBrightness = 255; }
+    if (avgKernelBrightness < 0) { avgKernelBrightness = 0; }
+    return (unsigned char) avgKernelBrightness;
+}
+
 // ----------------------------------------- PUBLIC FUNCTIONS
 
-// TODO use colors and not grayscale + Use another image
-void kernel_apply(ImacKernel* kernel, ImacImg* img, ImacImg* outputImg) {
+void kernel_applyGrayscale(ImacKernel* kernel, ImacImg* img, ImacImg* outputImg) {
     if (kernel->matrixSize == 3) {
         unsigned char brightness = 0;
         for (unsigned int x = 1; x < img->width - 1; x++) {
             for (unsigned int y = 1; y < img->height - 1; y++) {
                 brightness = _getPixelAvgKernelValue(kernel, img, x, y);
                 img_setPixelChannels(outputImg, x, y, brightness);
+            }
+        }
+    } else {
+        printf("error kernel_apply: Squarred Matrix size must be 3\n");
+        DEBUG_BREAK;
+    }
+}
+
+void kernel_applyRgb(ImacKernel* kernel, ImacImg* img, ImacImg* outputImg) {
+    if (kernel->matrixSize == 3) {
+        unsigned char brightness = 0;
+        for (unsigned int x = 1; x < img->width - 1; x++) {
+            for (unsigned int y = 1; y < img->height - 1; y++) {
+                brightness = _getPixelChannelAvgKernelValue(kernel, img, x, y, red);
+                img_setPixelChannel(outputImg, x, y, brightness, red);
+
+                brightness = _getPixelChannelAvgKernelValue(kernel, img, x, y, green);
+                img_setPixelChannel(outputImg, x, y, brightness, green);
+
+                brightness = _getPixelChannelAvgKernelValue(kernel, img, x, y, blue);
+                img_setPixelChannel(outputImg, x, y, brightness, blue);
             }
         }
     } else {

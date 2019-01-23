@@ -13,5 +13,5 @@ void edge_img(ImacImg* img, ImacImg* outputImg) {
     edge.matrixSize = 3;
     edge.arraySize = 9;
     edge.matrix = edgeKernelMatrix;
-    kernel_apply(&edge, img, outputImg);
+    kernel_applyGrayscale(&edge, img, outputImg);
 }

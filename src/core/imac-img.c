@@ -36,6 +36,10 @@ unsigned char img_getPixelChannel(ImacImg* img, unsigned int x, unsigned int y, 
         printf("Error img_getPixelChannel: y superior to img height\n");
         DEBUG_BREAK;
         return(EXIT_FAILURE);
+    } else if (c == rvb) {
+        printf("Error img_getPixelChannel: rvb is not a channel, use img_getPixelGrayscale instead");
+        DEBUG_BREAK;
+        return(EXIT_FAILURE);
     }
     return img->data[y * img->width * 3 + x * 3 + c];
 }
