@@ -19,14 +19,14 @@ static void _buildHistogram(ImacImg* imgToAnalyse, unsigned int imgBrightnessSpe
     unsigned int pixelAvgBrightness[4] = {0};
     for (unsigned int x = 0; x < imgToAnalyse->width; x++) {
         for (unsigned int y = 0; y < imgToAnalyse->height; y++) {
-            for (int c = red; c <= rvb; c++) {
-                pixelAvgBrightness[c] += img_getPixelChannel(imgToAnalyse, x, y, c);
+            for (int c = red; c <= blue; c++) {
+                pixelAvgBrightness[c] += img_getPixelChannel(imgToAnalyse, x, y, (enum img_Channel) c);
                 imgBrightnessSpectrum[c][(unsigned char) pixelAvgBrightness[c]] += 1;
             }
 
             pixelAvgBrightness[rvb] = (pixelAvgBrightness[red] + pixelAvgBrightness[green] + pixelAvgBrightness[blue])/ 3;
 	        imgBrightnessSpectrum[rvb][(unsigned char) pixelAvgBrightness[rvb]] += 1;
-            for (int c = red; c <= rvb; c++) {
+            for (int c = red; c <= blue; c++) {
                 pixelAvgBrightness[c] = 0;
             }
         }
@@ -67,15 +67,15 @@ static void _printHistogram(ImacImg* histogram, unsigned int* histogramData, uns
     }
 
     for (unsigned int x = 0; x < histogram->width; x++) {
-        long columnHeight = linearMapping(histogramData[x], 0, maxData, 0, histogram->height);
-        long columnEnd = histogram->height - columnHeight;
+        unsigned int columnHeight = linearMapping(histogramData[x], 0, maxData, 0, histogram->height);
+        unsigned int columnEnd = histogram->height - columnHeight;
 
         for (unsigned int y = histogram->height - 1; y > columnEnd; y--) {
             if (c == rvb) img_setPixelChannels(histogram, x, y, printColor);
             else {
-                for (unsigned char ch = red; ch<=blue; ch++){
+                for (int ch = red; ch <= blue; ch++) {
                     if (ch == c) img_setPixelChannel(histogram, x, y, printColor, c);
-                    else img_setPixelChannel(histogram, x, y, 0, ch);
+                    else img_setPixelChannel(histogram, x, y, 0, (enum img_Channel) ch);
                 }
             }
         }
@@ -95,7 +95,7 @@ int hist_rgb(ImacImg* imgToAnalyse, ImacImg* histogram) {
     // Print histogram to file
     for (int c = red; c <= rvb; c++) {
 	    colorLevel = (c==rvb)?150:255;
-	    _printHistogram(histogram, imgBrightnessSpectrum[c], maxPixelsForBrightness[c], colorLevel, c);
+	    _printHistogram(histogram, imgBrightnessSpectrum[c], maxPixelsForBrightness[c], colorLevel, (enum img_Channel) c);
     }
     return EXIT_SUCCESS;
 }

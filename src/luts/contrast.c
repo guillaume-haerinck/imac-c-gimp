@@ -45,10 +45,10 @@ void contrast_equalizeToLut1d(ImacLut1d *lut, unsigned int histogram[256]) {
 	// FIXME doesn't work sometimes for no reason, not depending on the image, it randomly goes wrong
 	int totalValues = 0;
 	double cdf = 0.0;
-	for (int i = 0; i < 256; i++){
+	for (int i = 0; i < 256; i++) {
 		totalValues += histogram[i];	
 	}
-	for (int i = 0; i < lut->size; i++){
+	for (int i = 0; i < lut->size; i++) {
 		cdf += (double) histogram[i] / totalValues;
 		lut->data[i] = (255) * cdf;
 	}
