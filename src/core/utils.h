@@ -6,6 +6,19 @@
 #ifndef MINIGIMP_UTILS_H
 #define MINIGIMP_UTILS_H
 
+// ----------------------------- PRINT FANCY LOGO IN TERMINAL
+#define ANSI_COLOR_RESET "\x1b[0m"
+#define ANSI_COLOR_CYAN "\x1b[36m"
+#define ANSI_COLOR_YELLOW "\x1b[33m"
+#define ANSI_COLOR_GREEN "\x1b[32m"
+
+void print_logo();
+
+// ----------------------------- PROGRESS BAR FOR SLOW EFFECTS
+#include <stdio.h>
+
+void progress_bar(int currentProgress, int total); 
+
 // ----------------------------- DEBUG
 #include <signal.h>
 

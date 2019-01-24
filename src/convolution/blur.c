@@ -20,6 +20,7 @@ int _recursiveMatrix(int n) {
 
 void blur_img(ImacImg *img, ImacImg* outputImg, int value) {
 	int averagePixelValue, count;
+	int currentProgress = 0;
 	if (!(value%2)) value+=1;
 	//printf("Value  = %d\n", value);
 	int radius = _recursiveMatrix(value);
@@ -28,6 +29,8 @@ void blur_img(ImacImg *img, ImacImg* outputImg, int value) {
 	for (int height = 0; height < img->height; height++) {
 		for (int width = 0; width < img->width; width++) {
 			for (int channel = red; channel <= blue; channel++) {
+				currentProgress++;
+				progress_bar(currentProgress, (img->height)*(img->width)*3);
 				averagePixelValue = 0;
 				count = 0;
 				//if (width==0&&height==0) printf("\nChannel %d, value %d\n", channel, averagePixelValue);

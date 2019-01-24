@@ -6,6 +6,7 @@
 #define MINIGIMP_BLUR_H
 
 #include "core/imac-img.h"
+#include "core/utils.h"
 
 /**
  * @brief Blur the image with a specified level
