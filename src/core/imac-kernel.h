@@ -19,14 +19,14 @@ typedef struct ImacKernel {
  * @param[in] kernel
  * @param[in, out] img
  */
-void kernel_applyGrayscale(ImacKernel* kernel, ImacImg* img, ImacImg* outputImg);
+void kernel_applyGrayscale(ImacKernel* kernel, ImacImg* img, ImacImg* outputImg, float matrixMultiplication);
 
 /**
  * @brief Apply convolution matrix on image
  * @param[in] kernel
  * @param[in, out] img
  */
-void kernel_applyRgb(ImacKernel* kernel, ImacImg* img, ImacImg* outputImg);
+void kernel_applyRgb(ImacKernel* kernel, ImacImg* img, ImacImg* outputImg, float matrixMultiplication);
 
 /**
  * @brief Get the x, y value of the matrix

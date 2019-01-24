@@ -105,8 +105,8 @@ int main(int argc, char *argv[]) {
             } else if (strcmp(argv[i], "BLUR") == 0) {
                 // TODO handle if convolution already exists
                 blurValue = strtol(argv[i + 1], NULL, 10);
-		        printf("Applying %s with %d...\n", argv[i], blurValue);
-                blur_img(&img, &convolutedImg, blurValue);
+                printf("Applying %s with %d...\n", argv[i], blurValue);
+                blur_imgRecursive(&img, &convolutedImg, blurValue);
                 bConvolution = true;
 		        printf("\n");
 		        printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);

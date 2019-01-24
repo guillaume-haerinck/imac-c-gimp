@@ -1,7 +1,14 @@
 #include "blur.h"
 #include <stdio.h>
 
-// ---------------------------------------- Private functions
+// ---------------------------------------- PRIVATE MEMBERS
+static int blurKernelMatrix[9] = {
+	1, 2, 1,
+	2, 4, 2,
+	1, 2, 1
+};
+
+// ---------------------------------------- PRIVATE FUNCTIONS
 
 /**
  * @brief Calculte the matrix shift value (recursive function)
@@ -13,9 +20,9 @@ int _recursiveMatrix(int n) {
 	return _recursiveMatrix(n-2) + 1;
 }
 
-// ----------------------------------------- Public functions
+// ----------------------------------------- PUBLIC FUNCTIONS
 
-void blur_img(ImacImg *img, ImacImg* outputImg, int value) {
+void blur_imgRecursive(ImacImg *img, ImacImg* outputImg, int value) {
 	int averagePixelValue, count;
 	int currentProgress = 0;
 	int const progressBarSize = img->height * img->width * 3;
@@ -42,4 +49,13 @@ void blur_img(ImacImg *img, ImacImg* outputImg, int value) {
 		currentProgress++;
 		gui_progressBar(currentProgress, progressBarSize);
 	}
+}
+
+// ---------------------- PUBLIC FUNCTIONS
+void blur_imgKernel(ImacImg* img, ImacImg* outputImg) {
+    ImacKernel blur;
+    blur.matrixSize = 3;
+    blur.arraySize = 9;
+    blur.matrix = blurKernelMatrix;
+    kernel_applyRgb(&blur, img, outputImg, 1.0f / 16.0f);
 }

@@ -7,6 +7,7 @@
 
 #include "core/imac-img.h"
 #include "core/utils.h"
+#include "core/imac-kernel.h"
 
 /**
  * @brief Blur the image with a specified level
@@ -15,8 +16,14 @@
  * @param[in] output image
  * @param[in] blur intensity
  */
-void blur_img(ImacImg *img, ImacImg *outputImg, int value);
+void blur_imgRecursive(ImacImg *img, ImacImg *outputImg, int value);
 
-// TODO verifier que bien convolution https://en.wikipedia.org/wiki/Kernel_(image_processing)
+/**
+ * @brief Blur the image
+ *
+ * @param[in] image
+ * @param[in] output image
+ */
+void blur_imgKernel(ImacImg* img, ImacImg* outputImg);
 
 #endif //MINIGIMP_BLUR_H

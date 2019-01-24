@@ -10,4 +10,5 @@
 
 void edge_img(ImacImg* img, ImacImg* outputImg);
 
+
 #endif // MINIGIMP_EDGE_H
