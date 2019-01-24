@@ -11,7 +11,7 @@
  * @param[in] imgToAnalyseimgBrightnessSpectrum[4][HIST_SIZE]
  * @return EXIT_FAILURE or EXIT_SUCCESS
  */
-static void hist_buildHistogram(ImacImg* imgToAnalyse, unsigned int imgBrightnessSpectrum[rvb+1][HIST_SIZE]);
+void hist_buildHistogram(ImacImg* imgToAnalyse, unsigned int imgBrightnessSpectrum[rvb+1][HIST_SIZE]);
 
 /**
  * @brief Find the highest number of similar brightness 
@@ -20,7 +20,7 @@ static void hist_buildHistogram(ImacImg* imgToAnalyse, unsigned int imgBrightnes
  * @param[in] maxPixelsForBrightness[4]
  * @return EXIT_FAILURE or EXIT_SUCCESS
  */
-static void hist_getMaxBrightness(unsigned int imgBrightnessSpectrum[rvb+1][HIST_SIZE], unsigned int maxPixelsForBrightness[rvb+1]);
+void hist_getMaxBrightness(unsigned int imgBrightnessSpectrum[rvb+1][HIST_SIZE], unsigned int maxPixelsForBrightness[rvb+1]);
 
 /**
  * @brief Print histogram data to an image
@@ -30,7 +30,7 @@ static void hist_getMaxBrightness(unsigned int imgBrightnessSpectrum[rvb+1][HIST
  * @param maxData - Values above will be clamped
  * @param printColor - The color of the printed graph
  */
-static void hist_printHistogram(ImacImg* histogram, unsigned int* histogramData, unsigned int maxData, unsigned char printColor, enum img_Channel);
+void hist_printHistogram(ImacImg* histogram, unsigned int* histogramData, unsigned int maxData, unsigned char printColor, enum img_Channel);
 
 /**
  * @brief Call the functions to build the histogram and put it into an image

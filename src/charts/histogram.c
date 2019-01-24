@@ -4,17 +4,7 @@
 #include "../image-loaders/ppm.h"
 #include "../core/utils.h"
 
-// ------------------------------------------- PRIVATE FUNCTIONS
-
-/**
- * @brief Create an average histogram of the image
- *
- * @param[in] imgToAnalyse
- * @param[in] imgToAnalyseimgBrightnessSpectrum[4][HIST_SIZE]
- * @return EXIT_FAILURE or EXIT_SUCCESS
- */
-static void hist_buildHistogram(ImacImg* imgToAnalyse, unsigned int imgBrightnessSpectrum[rvb+1][HIST_SIZE]);
-static void hist_buildHistogram(ImacImg* imgToAnalyse, unsigned int imgBrightnessSpectrum[rvb+1][HIST_SIZE]) {
+void hist_buildHistogram(ImacImg* imgToAnalyse, unsigned int imgBrightnessSpectrum[rvb+1][HIST_SIZE]) {
     // Get values for histogram
     unsigned int pixelAvgBrightness[4] = {0};
     for (unsigned int x = 0; x < imgToAnalyse->width; x++) {
@@ -33,15 +23,7 @@ static void hist_buildHistogram(ImacImg* imgToAnalyse, unsigned int imgBrightnes
     }
 }
 
-/**
- * @brief Find the highest number of similar brightness 
- *
- * @param[in] imgToAnalyseimgBrightnessSpectrum[4][HIST_SIZE]
- * @param[in] maxPixelsForBrightness[4]
- * @return EXIT_FAILURE or EXIT_SUCCESS
- */
-static void hist_getMaxBrightness(unsigned int imgBrightnessSpectrum[rvb+1][HIST_SIZE], unsigned int maxPixelsForBrightness[rvb+1]);
-static void hist_getMaxBrightness(unsigned int imgBrightnessSpectrum[rvb+1][HIST_SIZE], unsigned int maxPixelsForBrightness[rvb+1]) {
+void hist_getMaxBrightness(unsigned int imgBrightnessSpectrum[rvb+1][HIST_SIZE], unsigned int maxPixelsForBrightness[rvb+1]) {
     for (int i = 0; i<HIST_SIZE; i++) {
 	    for (int c = red; c<=rvb; c++) {
 		    if (imgBrightnessSpectrum[c][i] > maxPixelsForBrightness[c]) {
@@ -51,16 +33,7 @@ static void hist_getMaxBrightness(unsigned int imgBrightnessSpectrum[rvb+1][HIST
     }
 }
 
-/**
- * @brief Print histogram data to an image
- *
- * @param histogram
- * @param histogramData
- * @param maxData - Values above will be clamped
- * @param printColor - The color of the printed graph
- */
-static void hist_printHistogram(ImacImg* histogram, unsigned int* histogramData, unsigned int maxData, unsigned char printColor, enum img_Channel);
-static void hist_printHistogram(ImacImg* histogram, unsigned int* histogramData, unsigned int maxData, unsigned char printColor, enum img_Channel c) {
+void hist_printHistogram(ImacImg* histogram, unsigned int* histogramData, unsigned int maxData, unsigned char printColor, enum img_Channel c) {
     if (histogram->width != 256) {
         printf("hist_printHistogram error: histogram not 256 width");
         exit(EXIT_FAILURE);

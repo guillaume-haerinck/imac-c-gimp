@@ -15,7 +15,7 @@ all:
 	@echo "********************* CHECKING FILES *********************" 
 	# Make the same directories in ofiles/ as the architecture in src/
 	@mkdir -vp $(dir $(OBJ))
-	@mkdir -vp bin
+	@mkdir -vp bin output
 	# When every necessary dirs exist call this makefile again to build the actual program
 	@make -f Makefile minigimp
 
