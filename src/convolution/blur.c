@@ -46,6 +46,7 @@ void blur_imgRecursive(ImacImg *img, ImacImg* outputImg, int value) {
 				img_setPixelChannel(outputImg, width, height, (int) averagePixelValue, (enum img_Channel) channel);
 			}
 		}
+		// FIXME
 		currentProgress++;
 		gui_progressBar(currentProgress, progressBarSize);
 	}

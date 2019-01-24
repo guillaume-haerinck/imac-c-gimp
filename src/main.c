@@ -122,21 +122,28 @@ int main(int argc, char *argv[]) {
         if (bLut3x1d) { lut3x1d_apply(&lut3x1d, &img); }
         if (bConvolution) { ptrOnImage = &convolutedImg; }
         if (bHistogram) {
-            // Original histogram
-            char histName[] = "/original-histogram.ppm";
-            char* path = (char*) malloc(sizeof(char) * strlen(outputDir) * strlen(histName) + 1);
-            strcpy(path, outputDir);
-            strcat(path, histName);
-            ppm_save(path, &histogram);
+            if (outputPath != NULL) {
+                // Original histogram
+                char histName[] = "/original-histogram.ppm";
+                char* path = (char*) malloc(sizeof(char) * strlen(outputDir) * strlen(histName) + 1);
+                strcpy(path, outputDir);
+                strcat(path, histName);
+                ppm_save(path, &histogram);
 
-            // Modified image histogram
-            img_new(&histogram, 256, 150);
-            hist_rgb(&img, &histogram);
-            char histName2[] = "/output-histogram.ppm";
-            strcpy(path, outputDir);
-            strcat(path, histName2);
-            ppm_save(path, &histogram);
-            free(path);
+                // Modified image histogram
+                img_new(&histogram, 256, 150);
+                hist_rgb(&img, &histogram);
+                char histName2[] = "/output-histogram.ppm";
+                strcpy(path, outputDir);
+                strcat(path, histName2);
+                ppm_save(path, &histogram);
+                free(path);
+            } else {
+                ppm_save("./original-histogram.ppm", &histogram);
+                img_new(&histogram, 256, 150);
+                hist_rgb(&img, &histogram);
+                ppm_save("./output-histogram.ppm", &histogram);
+            }
         }
 
         /* Save image */
