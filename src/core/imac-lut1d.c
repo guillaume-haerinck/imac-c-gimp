@@ -5,16 +5,16 @@
 
 /* Constructor */
 int lut_new(ImacLut1d* lut) {
-    lut->size = 255;
-    lut->data = (int*) malloc(lut->size * sizeof(int));
+    lut->size = 256;
+    lut->data = (unsigned char*) malloc(lut->size * sizeof(unsigned char));
     if (lut->data == NULL) {
-        perror("lut_new: Data is null");
+        printf("lut_new: Data is null");
         exit(EXIT_FAILURE);
     }
 
     // Init to no-effect lut
-    for (unsigned int i = 0; i <= lut->size; i++) {
-        lut->data[i] = (int) i;
+    for (unsigned int i = 0; i < lut->size; i++) {
+        lut_set(lut, i, i);
     }
     return EXIT_SUCCESS;
 }
@@ -27,47 +27,40 @@ int lut_delete(ImacLut1d* lut) {
 
 /* Setters */
 void lut_set(ImacLut1d* lut, unsigned int index, int value) {
-    if (index > lut->size) {
+    if (index >= lut->size) {
         printf("Error lut_getIndex: index superior to lut size\n");
+        DEBUG_BREAK;
         exit(EXIT_FAILURE);
     }
-    lut->data[index] = value;
+    if (value > 255) { value = 255; }
+    if (value < 0) { value = 0; }
+    lut->data[index] = (unsigned char) value;
 }
 
 void lut_applyRgb(ImacLut1d* lut, ImacImg* img) {
-    int brightness = 0;
+    unsigned int brightness = 0;
     for (unsigned int y = 0; y < img->height; y++) {
         for (unsigned int x = 0; x < img->width; x++) {
-            for (int c = red; c <= blue; c++) {
-                brightness = img_getPixelChannel(img, x, y, (enum img_Channel) c);
-                brightness = lut_get(lut, brightness);
-		if (brightness > 255) brightness = 255;
-		else if (brightness < 0) brightness = 0;
-                img_setPixelChannel(img, x, y, (unsigned char) brightness, (enum img_Channel) c);
-            }
+            brightness = img_getPixelChannel(img, x, y, red);
+            brightness = lut_get(lut, brightness);
+            img_setPixelChannel(img, x, y, brightness, red);
+
+            brightness = img_getPixelChannel(img, x, y, green);
+            brightness = lut_get(lut, brightness);
+            img_setPixelChannel(img, x, y, brightness, green);
+
+            brightness = img_getPixelChannel(img, x, y, blue);
+            brightness = lut_get(lut, brightness);
+            img_setPixelChannel(img, x, y, brightness, blue);
         }
     }
 }
 /* Getters */
-int lut_get(ImacLut1d* lut, unsigned int index) {
+unsigned int lut_get(ImacLut1d* lut, unsigned int index) {
     if (index >= lut->size) {
         printf("Error lut_getIndex: index superior to lut size\n");
         DEBUG_BREAK;
         return(EXIT_FAILURE);
     }
     return lut->data[index];
-}
-
-void lut_print(ImacLut1d* lut) {
-    printf("in: ");
-    for (int i = 0; i <= lut->size; i++) {
-        printf("%d ", i);
-    }
-    printf("\n");
-
-    printf("to: ");
-    for (int i = 0; i <= lut->size; i++) {
-        printf("%d ", lut->data[i]);
-    }
-    printf("\n");
 }

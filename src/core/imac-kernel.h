@@ -36,6 +36,6 @@ void kernel_applyRgb(ImacKernel* kernel, ImacImg* img, ImacImg* outputImg);
  * @param y
  * @return value
  */ 
-int kernel_get(ImacKernel* kernel, unsigned char x, unsigned int y);
+int kernel_get(ImacKernel* kernel, unsigned int x, unsigned int y);
 
 #endif // MINIGIMP_IMAC_KERNEL_H

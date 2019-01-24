@@ -20,6 +20,6 @@ void inv_img(ImacImg* img);
  * @brief Invert color of a LUT
  * @param lut
  */
-void inv_lut1d(ImacLut1d *lut);
+void inv_lut1d(ImacLut1d* lut);
 
 #endif //MINIGIMP_INVERSION_H

@@ -31,9 +31,8 @@ int main(int argc, char *argv[]) {
     bool bLut1d = false;
     bool bConvolution = false;
 
+    gui_printLogo();
     start = clock();
-
-    print_logo();
 
     if (argc > 0) {
         ImacImg img;
@@ -66,22 +65,22 @@ int main(int argc, char *argv[]) {
             } else if (strcmp(argv[i], "ADDLUM") == 0) {
                 long value = strtol(argv[i + 1], NULL, 10);
                 if (value > 255) { value = 255; }
-                lum_addToLut1d(&lut, (unsigned char) value);
+                lum_addToLut1d(&lut, (int) value);
                 bLut1d = true;
             } else if (strcmp(argv[i], "DIMLUM") == 0) {
                 long value = strtol(argv[i + 1], NULL, 10);
                 if (value > 255) { value = 255; }
-                lum_dimToLut1d(&lut, (unsigned char) value);
+                lum_dimToLut1d(&lut, (int) value);
                 bLut1d = true;
             } else if (strcmp(argv[i], "ADDCON") == 0) {
                 long value = strtol(argv[i + 1], NULL, 10);
                 if (value > 255) { value = 255; }
-                contrast_addToLut1d(&lut, (unsigned char) value);
+                contrast_addToLut1d(&lut, (int) value);
                 bLut1d = true;
             } else if (strcmp(argv[i], "DIMCON") == 0) {
                 long value = strtol(argv[i + 1], NULL, 10);
                 if (value > 255) { value = 255; }
-                contrast_dimToLut1d(&lut, (unsigned char) value);
+                contrast_dimToLut1d(&lut, (int) value);
                 bLut1d = true;
             } else if (strcmp(argv[i], "INVERT") == 0) {
                 inv_lut1d(&lut);
@@ -106,11 +105,11 @@ int main(int argc, char *argv[]) {
             } else if (strcmp(argv[i], "BLUR") == 0) {
                 // TODO handle if convolution already exists
                 blurValue = strtol(argv[i + 1], NULL, 10);
-		printf("Applying %s with %d...\n", argv[i], blurValue);
+		        printf("Applying %s with %d...\n", argv[i], blurValue);
                 blur_img(&img, &convolutedImg, blurValue);
                 bConvolution = true;
-		printf("\n");
-		printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);
+		        printf("\n");
+		        printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);
             } else if (strcmp(argv[i], "EDGE") == 0) {
                 edge_img(&img, &convolutedImg);
                 bConvolution = true;

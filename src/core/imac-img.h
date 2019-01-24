@@ -113,7 +113,7 @@ void img_setToWhite(ImacImg* img);
  * @param value
  * @param c - color channel
  */
-void img_setPixelChannel(ImacImg* img, unsigned int x, unsigned int y, unsigned char value, enum img_Channel c);
+void img_setPixelChannel(ImacImg* img, unsigned int x, unsigned int y, int value, enum img_Channel c);
 
 /**
  * @brief Set each colors of the pixel with the value
@@ -124,6 +124,6 @@ void img_setPixelChannel(ImacImg* img, unsigned int x, unsigned int y, unsigned 
  * @param y
  * @param value
  */
-void img_setPixelChannels(ImacImg* img, unsigned  int x, unsigned int y, unsigned char value);
+void img_setPixelChannels(ImacImg* img, unsigned  int x, unsigned int y, int value);
 
 #endif //MINIGIMP_IMAC_IMG_H

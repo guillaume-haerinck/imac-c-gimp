@@ -5,28 +5,28 @@
 
 /* Constructor */
 int lut3x1d_new(ImacLut3x1d* lut3x1d) {
-    lut3x1d->channelSize = 255;
-    lut3x1d->dataR = (int*) malloc(lut3x1d->channelSize * sizeof(int));
-    lut3x1d->dataG = (int*) malloc(lut3x1d->channelSize * sizeof(int));
-    lut3x1d->dataB = (int*) malloc(lut3x1d->channelSize * sizeof(int));
+    lut3x1d->channelSize = 256;
+    lut3x1d->dataR = (unsigned char*) malloc(lut3x1d->channelSize * sizeof(unsigned char));
+    lut3x1d->dataG = (unsigned char*) malloc(lut3x1d->channelSize * sizeof(unsigned char));
+    lut3x1d->dataB = (unsigned char*) malloc(lut3x1d->channelSize * sizeof(unsigned char));
     if (lut3x1d->dataR == NULL) {
-        perror("lut3x1d_new: DataR is null");
+        printf("lut3x1d_new: DataR is null");
         exit(EXIT_FAILURE);
     }
     if (lut3x1d->dataG == NULL) {
-        perror("lut3x1d_new: DataG is null");
+        printf("lut3x1d_new: DataG is null");
         exit(EXIT_FAILURE);
     }
     if (lut3x1d->dataB == NULL) {
-        perror("lut3x1d_new: DataB is null");
+        printf("lut3x1d_new: DataB is null");
         exit(EXIT_FAILURE);
     }
 
     // Init to no-effect lut3x1d
-    for (unsigned int i = 0; i <= lut3x1d->channelSize; i++) {
-	    lut3x1d->dataR[i] = i;
-	    lut3x1d->dataG[i] = i;
-	    lut3x1d->dataB[i] = i;
+    for (unsigned int i = 0; i < lut3x1d->channelSize; i++) {
+        lut3x1d_set(lut3x1d, i, i, red);
+        lut3x1d_set(lut3x1d, i, i, green);
+        lut3x1d_set(lut3x1d, i, i, blue);
     }
     return EXIT_SUCCESS;
 }
@@ -40,23 +40,27 @@ int lut3x1d_delete(ImacLut3x1d* lut3x1d) {
 }
 
 /* Setters */
-void lut3x1d_set(ImacLut3x1d* lut3x1d, unsigned int index, int value, enum img_Channel c) {
-    if (index > lut3x1d->channelSize) {
+void lut3x1d_set(ImacLut3x1d* lut3x1d, unsigned int index, unsigned int value, enum img_Channel c) {
+    if (index >= lut3x1d->channelSize) {
         printf("Error lut3x1d_getIndex: index superior to lut3x1d channel size\n");
+        DEBUG_BREAK;
         exit(EXIT_FAILURE);
     }
 
+    if (value > 255) { value = 255; }
+    if (value < 0) { value = 0; }
+
     switch(c) {
     	case red:
-            lut3x1d->dataR[index] = value;
+            lut3x1d->dataR[index] = (unsigned char) value;
             break;
 
     	case green:
-            lut3x1d->dataG[index] = value;
+            lut3x1d->dataG[index] = (unsigned char) value;
             break;
 
     	case blue:
-            lut3x1d->dataB[index] = value;
+            lut3x1d->dataB[index] = (unsigned char) value;
             break;
 
         default:
@@ -67,9 +71,9 @@ void lut3x1d_set(ImacLut3x1d* lut3x1d, unsigned int index, int value, enum img_C
 
 void lut3x1d_apply(ImacLut3x1d* lut3x1d, ImacImg* img) {
     double avgBrightness = 0;
-    unsigned char brightnessR = 0;
-    unsigned char brightnessG = 0;
-    unsigned char brightnessB = 0;
+    unsigned int brightnessR = 0;
+    unsigned int brightnessG = 0;
+    unsigned int brightnessB = 0;
 
     for (unsigned int y = 0; y < img->height; y++) {
         for (unsigned int x = 0; x < img->width; x++) {
@@ -80,20 +84,20 @@ void lut3x1d_apply(ImacLut3x1d* lut3x1d, ImacImg* img) {
             // Is it a gamma to linear ratio ? If so use a function to say it
 	        avgBrightness = 0.3 * brightnessR + 0.59 * brightnessG + 0.11 * brightnessB;
 
-            brightnessR = lut3x1d_get(lut3x1d, (unsigned char) avgBrightness, red);
+            brightnessR = lut3x1d_get(lut3x1d, (int) avgBrightness, red);
             img_setPixelChannel(img, x, y, brightnessR, red);
 
-            brightnessG = lut3x1d_get(lut3x1d, (unsigned char) avgBrightness, green);
+            brightnessG = lut3x1d_get(lut3x1d, (int) avgBrightness, green);
             img_setPixelChannel(img, x, y, brightnessG, green);
 
-            brightnessB = lut3x1d_get(lut3x1d, (unsigned char) avgBrightness, blue);
+            brightnessB = lut3x1d_get(lut3x1d, (int) avgBrightness, blue);
             img_setPixelChannel(img, x, y, brightnessB, blue);
         }
     }
 }
 
 /* Getters */
-int lut3x1d_get(ImacLut3x1d* lut3x1d, unsigned int index, enum img_Channel c) {
+unsigned int lut3x1d_get(ImacLut3x1d* lut3x1d, unsigned int index, enum img_Channel c) {
     if (index >= lut3x1d->channelSize) {
         printf("Error lut3x1d_get: index superior to lut3x1d size\n");
         DEBUG_BREAK;
@@ -106,24 +110,7 @@ int lut3x1d_get(ImacLut3x1d* lut3x1d, unsigned int index, enum img_Channel c) {
     	case blue: return lut3x1d->dataB[index];
         default:
             printf("Error lut3x1d_get: Unknown color\n");
+            DEBUG_BREAK;
             exit(EXIT_FAILURE);
     }
-}
-
-void lut3x1d_print(ImacLut3x1d* lut3x1d) {
-    printf("in: ");
-    for (int i = 0; i < lut3x1d->channelSize; i++) {
-        printf("R:%d ", i);
-        printf("G:%d ", i);
-        printf("B:%d ", i);
-    }
-    printf("\n");
-
-    printf("to: ");
-    for (int i = 0; i <= lut3x1d->channelSize; i++) {
-        printf("R:%d ", lut3x1d->dataR[i]);
-        printf("G:%d ", lut3x1d->dataG[i]);
-        printf("B:%d ", lut3x1d->dataB[i]);
-    }
-    printf("\n");
 }

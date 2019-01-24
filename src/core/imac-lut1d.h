@@ -16,8 +16,8 @@
  * @note You need to use lut_new to init it
  */
 typedef struct ImacLut1d {
-    unsigned char size;
-    int* data;
+    unsigned int size;
+    unsigned char* data;
 } ImacLut1d;
 
 // --------------------- CONSTRUCTOR & DESTRUCTOR
@@ -68,13 +68,6 @@ void lut_applyRgb(ImacLut1d* lut, ImacImg* img);
  * @param index
  * @return brightness
  */
-int lut_get(ImacLut1d* lut, unsigned int index);
-
-/**
- *
- * @brief Print the lut on debug screen.
- * @param lut
- */
-void lut_print(ImacLut1d* lut);
+unsigned int lut_get(ImacLut1d* lut, unsigned int index);
 
 #endif //MINIGIMP_IMAC_LUT_H

@@ -9,8 +9,8 @@ static unsigned char _getPixelAvgKernelValue(ImacKernel* kernel, ImacImg* img, u
 static unsigned char _getPixelAvgKernelValue(ImacKernel* kernel, ImacImg* img, unsigned int anchorX, unsigned int anchorY) {
     int avgKernelBrightness = 0;
     int pixelBrightness = 0;
-    for (unsigned char matX = 0; matX < kernel->matrixSize; matX++) {
-        for (unsigned char matY = 0; matY < kernel->matrixSize; matY++) {
+    for (unsigned int matX = 0; matX < kernel->matrixSize; matX++) {
+        for (unsigned int matY = 0; matY < kernel->matrixSize; matY++) {
             pixelBrightness = img_getPixelGrayscale(img, anchorX - 1 + matX, anchorY - 1 + matY);
             pixelBrightness = pixelBrightness * kernel_get(kernel, matX, matY);
             avgKernelBrightness += pixelBrightness;
@@ -25,8 +25,8 @@ static unsigned char _getPixelChannelAvgKernelValue(ImacKernel* kernel, ImacImg*
 static unsigned char _getPixelChannelAvgKernelValue(ImacKernel* kernel, ImacImg* img, unsigned int anchorX, unsigned int anchorY, enum img_Channel channel) {
     int avgKernelBrightness = 0;
     int pixelBrightness = 0;
-    for (unsigned char matX = 0; matX < kernel->matrixSize; matX++) {
-        for (unsigned char matY = 0; matY < kernel->matrixSize; matY++) {
+    for (unsigned int matX = 0; matX < kernel->matrixSize; matX++) {
+        for (unsigned int matY = 0; matY < kernel->matrixSize; matY++) {
             pixelBrightness = img_getPixelChannel(img, anchorX - 1 + matX, anchorY - 1 + matY, channel);
             pixelBrightness = pixelBrightness * kernel_get(kernel, matX, matY);
             avgKernelBrightness += pixelBrightness;
@@ -75,7 +75,7 @@ void kernel_applyRgb(ImacKernel* kernel, ImacImg* img, ImacImg* outputImg) {
     }
 }
 
-int kernel_get(ImacKernel* kernel, unsigned char x, unsigned int y) {
+int kernel_get(ImacKernel* kernel, unsigned int x, unsigned int y) {
     if ((x >= kernel->matrixSize) || (y >= kernel->matrixSize)) {
         printf("Error kernel_get: index superior to matrix size\n");
         DEBUG_BREAK;

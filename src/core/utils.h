@@ -12,12 +12,12 @@
 #define ANSI_COLOR_YELLOW "\x1b[33m"
 #define ANSI_COLOR_GREEN "\x1b[32m"
 
-void print_logo();
+void gui_printLogo();
 
 // ----------------------------- PROGRESS BAR FOR SLOW EFFECTS
 #include <stdio.h>
 
-void progress_bar(int currentProgress, int total); 
+void gui_progressBar(int currentProgress, int total); 
 
 // ----------------------------- DEBUG
 #include <signal.h>

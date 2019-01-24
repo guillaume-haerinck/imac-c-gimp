@@ -1,7 +1,7 @@
 #include "utils.h"
 #include "string.h"
 
-void print_logo() {
+void gui_printLogo() {
 	char letterOpenCB[][7+1] = {"   /$$$","  /$$_/"," | $$  "," /$$$  ","|  $$  "," \\ $$  "," |  $$$","  \\___/"};
 	char letterCloseCB[][7+1] = {" /$$$  ","|_  $$ ","  | $$ ","  | $$$","  | $$/","  | $$ "," /$$$/ ","|___/  "};
 	char letterM[][13+1] = {" /$$      /$$","| $$$    /$$$","| $$$$  /$$$$","| $$ $$/$$ $$","| $$  $$$| $$","| $$\\  $ | $$","| $$ \\/  | $$","|__/     |__/"};
@@ -35,16 +35,16 @@ void print_logo() {
 }
 
 /* Progress Bar loader */
-void progress_bar(int currentProgress, int total) {
+void gui_progressBar(int currentProgress, int total) {
 	char bar[101] = "";
 	const char fill = '*';
-	float progress = (100./total)*(currentProgress+1);
+	double progress = (100 / total) * (currentProgress + 1);
 	int barIndex;
 	for (int j = 0; j < progress; j++) {
 		barIndex = j;
 		bar[barIndex] = fill;
 	}
-	printf("\r[%-*s][%3.2f%%]",100, bar, progress);
+	printf("\r[%-*s][%3.2f%%]", 100, bar, (float) progress);
 	fflush(stdout);
 }
 
