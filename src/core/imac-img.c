@@ -12,7 +12,7 @@ int img_new(ImacImg* img, unsigned int width, unsigned int height) {
 
     img->width = width;
     img->height = height;
-    img->data = (unsigned char*) malloc(3 * img->width * img->height * sizeof(unsigned char));
+    img->data = malloc(3 * img->width * img->height * sizeof(unsigned int)); // TODO check why bug on unsigned char
     if (img->data == NULL) {
         perror("img_new: Data is null");
         exit(EXIT_FAILURE);
