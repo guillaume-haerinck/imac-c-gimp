@@ -28,26 +28,33 @@ void blur_vignette(ImacImg *img, ImacImg* outputImg, int valueMax, int posX, int
 	int averagePixelValue, count;
 	int currentProgress = 0;
 	int const progressBarSize = img->height;
-	double powWidth = pow((double)img->width, 2.0);
-	double powHeight = pow((double)img->height, 2.0);
+	double powWidth = pow((double)img->width/2, 2.0);
+	double powHeight = pow((double)img->height/2, 2.0);
 	double hypotenuseMax = sqrt(powWidth + powHeight);
 	int radiusSteps = hypotenuseMax / valueMax;
+	//printf("powWidth : %f, powHeight = %f, hypotenuseMax = %f, radiusSteps = %d\n", powWidth, powHeight, hypotenuseMax, radiusSteps);
 	double SideP1, SideP2;
 	if (posX < 0) posX = 0;
 	else if (posX > 100) posX = 100;
 	if (posY < 0) posY = 0;
 	else if (posY > 100) posY = 100;
-	double SideO1 = (img->width / 100) * posX;
-	double SideO2 = (img->height / 100) * posY;
+	double SideO1 = (img->width / 100.) * posX;
+	double SideO2 = (img->height / 100.) * posY;
+	//printf("SideO1 = %f, SideO2 = %f\n", SideO1, SideO2);
 	int radius;
+	double beforeRadius;
 
 	for (unsigned int height = 0; height < img->height; height++) {
 		for (unsigned int width = 0; width < img->width; width++) {
 			SideP1 = SideO1 - width;
-			SideP2 = SideO1 - height;
+			SideP2 = SideO2 - height;
+			//printf("SideP1 : %d, SideP2 = %d\n", SideP1, SideP2);
 			SideP1 = pow(SideP1, 2.0);
 			SideP2 = pow(SideP2, 2.0);
-			radius = sqrt(SideP1 + SideP2) / radiusSteps;
+			beforeRadius = sqrt(SideP1 + SideP2) / radiusSteps + 0.5;
+			radius = (int) beforeRadius;
+			if (width == 0 && height == 0) printf("Radius = %d, SideP1 = %f, SideP2 = %f\n", radius, SideP1, SideP2);
+			//if (radius > 1 ) printf("Radius = %d\n", radius);
 			for (int channel = red; channel <= blue; channel++) {
 				averagePixelValue = 0;
 				count = 0;
