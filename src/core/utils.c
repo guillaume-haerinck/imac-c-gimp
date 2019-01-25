@@ -38,7 +38,7 @@ void gui_printLogo() {
 void gui_progressBar(int currentProgress, int total) {
 	char bar[101] = "";
 	const char fill = '*';
-	double progress = (100 / total) * (currentProgress + 1);
+	double progress = ((float) 100 / total) * (currentProgress + 1);
 	int barIndex;
 	for (int j = 0; j < progress; j++) {
 		barIndex = j;
@@ -98,6 +98,8 @@ char* getDirname(char* path) {
         path = (char *) dot;
     return path;
 }
+
+
 
 /* Maths */
 long linearMapping(int value, int start1, int stop1, int start2, int stop2) {
