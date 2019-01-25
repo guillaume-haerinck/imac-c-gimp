@@ -37,6 +37,7 @@ int hist_findMaxIndex(int *histogram, int histSize);
 
 /**
  * @brief Build an appropriate histogram array for terminal printing
+ * @note You must free the pointer after you are done with it
  *
  * @param[in] outputHistogram[256]
  * @param[in] outputHist[scale]

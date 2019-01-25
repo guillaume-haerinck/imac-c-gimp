@@ -22,7 +22,7 @@ void contrast_dimToLut1d(ImacLut1d *lut, int value) {
         brightness = contrastFactor * (lut_get(lut, i) - 128) + 128;
 	if (brightness < 0) brightness = 0;
 	if (brightness > 255) brightness = 255;
-	printf("value = %d, i = %d new = %d\n", value, i, (int)brightness);
+	// printf("value = %d, i = %d new = %d\n", value, i, (int)brightness);
         lut_set(lut, i, (int) brightness);
     }
 }

@@ -29,7 +29,7 @@
             "type": "cppvsdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/bin/Debug/minigimp.exe",
-            "args": ["./images/car.ppm", "-h", "EDGE", "-o", "./build/bin/Debug/test.ppm"],
+            "args": ["./images/flower.ppm", "-h", "EDGE", "-o", "./build/bin/Debug/test.ppm"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}", // Start path for args
             "environment": [],
