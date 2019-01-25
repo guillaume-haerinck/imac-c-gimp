@@ -158,6 +158,7 @@ int main(int argc, char *argv[]) {
                 hist_rgb(&img, &histogram);
                 ppm_save("./output-histogram.ppm", &histogram);
             }
+            img_delete(&histogram);
         }
 
         /* Save image */
@@ -172,7 +173,6 @@ int main(int argc, char *argv[]) {
         lut3x1d_delete(&lut3x1d);
         img_delete(&img);
         img_delete(&convolutedImg);
-        img_delete(&histogram);
         free(outputPath);
     } else {
         printf("No input file provided !\n");
