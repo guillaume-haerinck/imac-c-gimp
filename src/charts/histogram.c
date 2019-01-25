@@ -80,7 +80,6 @@ void hist_fillScaledHistogram(int *inputHist, int *outputHist, int scale) {
 			quantitee = palier - rest;
 			inputHistIndex++;
 		} else quantitee = palier;
-		//printf("value = %d\n", value);
 		partEntQuantitee = (int) quantitee;
 		partDecQuantitee = (float) quantitee - partEntQuantitee;
 
@@ -88,12 +87,10 @@ void hist_fillScaledHistogram(int *inputHist, int *outputHist, int scale) {
 			valueRound = inputHist[inputHistIndex];
 			value += (int) (valueRound < 0 ? valueRound-.5 : valueRound+.5); 
 			inputHistIndex++;
-			// printf("value = %d\n", value);
 		}
 		if (inputHistIndex > 255) inputHistIndex = 255;
 		valueRound = (float) inputHist[inputHistIndex] * partDecQuantitee;
 		value += (int) (valueRound < 0 ? valueRound-.5 : valueRound+.5); 
-		//printf("///value = %d, inputHistIndex = %d, inputHist[inputHistIndex] = %d, partDecQuantitee = %f\n", value, inputHistIndex, inputHist[inputHistIndex], partDecQuantitee);
 		rest = 1. - partDecQuantitee;	
 		outputHist[outputIndex] = value;
 	}
@@ -109,16 +106,11 @@ void hist_printTerminal(int *histogram1, int *histogram2, int scaleX){
 	hist_fillScaledHistogram(histogram1, scaledHist1, scaleX);
 	hist_fillScaledHistogram(histogram2, scaledHist2, scaleX);
 
-	hist_printHistValues(histogram1, HIST_SIZE);
-	hist_printHistValues(scaledHist1, scaleX);
-	hist_printHistValues(histogram2, HIST_SIZE);
-	hist_printHistValues(scaledHist2, scaleX);
-
 	int hheight;
 	int hPos1, hPos2;
 	int lineNum;
-	char histogramTitle1[] = "Histogram1";
-	char histogramTitle2[] = "Histogram2";
+	char histogramTitle1[] = "Original Histogram";
+	char histogramTitle2[] = "New Image Histogram";
 	int maxValueIndex1 = hist_findMaxIndex(scaledHist1, scaleX);
 	int maxValueIndex2 = hist_findMaxIndex(scaledHist2, scaleX);
 	float upscaleFactor1 = (float) HIST_HEIGHT / scaledHist1[maxValueIndex1];

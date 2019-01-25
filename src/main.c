@@ -29,11 +29,14 @@ int main(int argc, char *argv[]) {
 
     // Pass activation
     bool bHistogram = false;
+    bool termHistogram = false;
     bool bLut3x1d = false;
     bool bLut1d = false;
 
     gui_printLogo();
     start = clock();
+    
+    unsigned int originalHistogram[4][256] ={{0},{0},{0},{0}};
 
     if (argc > 0) {
         ImacImg img;
@@ -58,10 +61,13 @@ int main(int argc, char *argv[]) {
         /* Handle args */
         for (int i = 2; i < argc; i++) {
             if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "-histo") == 0) {
-                img_new(&histogram, 256, 150);
-                hist_rgb(ptrOnImage, &histogram);
-                bHistogram = true;
-            } else if (strcmp(argv[i], "-o") == 0) {
+		    img_new(&histogram, 256, 150);
+		    hist_rgb(ptrOnImage, &histogram);
+		    bHistogram = true;
+            } else if (strcmp(argv[i], "-v") == 0) {
+		    termHistogram = true;
+		    hist_buildHistogram(ptrOnImage, originalHistogram);
+            }  else if (strcmp(argv[i], "-o") == 0) {
                 if (argc == i + 2) {
                     outputPath = (char*) malloc(sizeof(char) * strlen(argv[i + 1]) + 1);
                     strcpy(outputPath, argv[i + 1]);
@@ -104,10 +110,10 @@ int main(int argc, char *argv[]) {
                 contrast_sinToLut1d(&lut, value);
                 bLut1d = true;
             } else if (strcmp(argv[i], "HISTEQ") == 0) {
-                unsigned int imgBrightnessSpectrum[4][256] = {{0},{0},{0},{0}};
-		        hist_buildHistogram(ptrOnImage, imgBrightnessSpectrum);
-                contrast_equalizeToLut1d(&lut, imgBrightnessSpectrum[rvb]);
-                bLut1d = true;
+		    unsigned int imgBrightnessSpectrum[4][256] = {{0},{0},{0},{0}};
+		    hist_buildHistogram(ptrOnImage, imgBrightnessSpectrum);
+		    contrast_equalizeToLut1d(&lut, imgBrightnessSpectrum[rvb]);
+		    bLut1d = true;
             } else if (strcmp(argv[i], "BLUR") == 0) {
                 // TODO handle if convolution already exists
                 blurValue = strtol(argv[i + 1], NULL, 10);
@@ -156,6 +162,11 @@ int main(int argc, char *argv[]) {
         /* Apply filters */
         if (bLut1d) { lut_applyRgb(&lut, ptrOnImage); }
         if (bLut3x1d) { lut3x1d_apply(&lut3x1d, ptrOnImage); }
+	if (termHistogram) {
+		unsigned int imgBrightnessSpectrum[4][256] = {{0},{0},{0},{0}};
+		hist_buildHistogram(ptrOnImage, imgBrightnessSpectrum);
+		hist_printTerminal(originalHistogram[3], imgBrightnessSpectrum[3], 20);
+	}
         if (bHistogram) {
             if (outputPath != NULL) {
                 // Original histogram
