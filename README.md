@@ -89,6 +89,10 @@ https://www.tutorialspoint.com/dip/concept_of_convolution.htm
 
 http://aishack.in/tutorials/convolutions/
 
+http://setosa.io/ev/image-kernels/
+
+https://lodev.org/cgtutor/filtering.html
+
 ### Books
 
 https://abhijitnathwani.github.io/blog/2017/12/20/First-C-Program-for-Image-Processing
