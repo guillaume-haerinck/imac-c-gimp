@@ -14,6 +14,7 @@
 #include "luts/contrast.h"
 #include "luts/sepia.h"
 #include "convolution/blur.h"
+#include "convolution/emboss.h"
 #include "convolution/edge.h"
 
 // minigimp mon_image.ppm [-h] [-histo] [<code_lut>[_<param1>]*]* [-o image_sortie.ppm]
@@ -128,6 +129,9 @@ int main(int argc, char *argv[]) {
 		        printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);
             } else if (strcmp(argv[i], "KBLUR") == 0) {
                 blur_imgKernel(&img, &convolutedImg);
+                bConvolution = true;
+            } else if (strcmp(argv[i], "EMBOSS") == 0) {
+                emboss_img(&img, &convolutedImg);
                 bConvolution = true;
             }
         }
