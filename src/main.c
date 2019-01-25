@@ -141,19 +141,21 @@ int main(int argc, char *argv[]) {
             if (outputPath != NULL) {
                 // Original histogram
                 char histName[] = "/original-histogram.ppm";
-                char* path = (char*) malloc(sizeof(char) * strlen(outputDir) * strlen(histName) + 1);
+                char* path = (char*) malloc(sizeof(char) * strlen(outputDir) * strlen(histName) + 2);
                 strcpy(path, outputDir);
                 strcat(path, histName);
                 ppm_save(path, &histogram);
+                free(path);
 
                 // Modified image histogram
                 img_new(&histogram, 256, 150);
                 hist_rgb(&img, &histogram);
                 char histName2[] = "/output-histogram.ppm";
-                strcpy(path, outputDir);
-                strcat(path, histName2);
-                ppm_save(path, &histogram);
-                free(path);
+                char* path2 = (char*) malloc(sizeof(char) * strlen(outputDir) * strlen(histName2) + 2);
+                strcpy(path2, outputDir);
+                strcat(path2, histName2);
+                ppm_save(path2, &histogram);
+                free(path2);
             } else {
                 ppm_save("./original-histogram.ppm", &histogram);
                 img_new(&histogram, 256, 150);
