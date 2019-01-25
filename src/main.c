@@ -145,6 +145,10 @@ int main(int argc, char *argv[]) {
                 ImacImg* temp = ptrOnImage;
                 ptrOnImage = ptrOnSwap;
                 ptrOnSwap = temp;
+            } else if (strcmp(argv[i], "FLIP_V") == 0) {
+		    symmetry_flipV(ptrOnImage);
+            } else if (strcmp(argv[i], "FLIP_H") == 0) {
+		    symmetry_flipH(ptrOnImage);
             }
 
         }
