@@ -6,9 +6,9 @@
 /* Constructor */
 int lut3x1d_new(ImacLut3x1d* lut3x1d) {
     lut3x1d->channelSize = 256;
-    lut3x1d->dataR = (unsigned char*) malloc(lut3x1d->channelSize * sizeof(unsigned char));
-    lut3x1d->dataG = (unsigned char*) malloc(lut3x1d->channelSize * sizeof(unsigned char));
-    lut3x1d->dataB = (unsigned char*) malloc(lut3x1d->channelSize * sizeof(unsigned char));
+    lut3x1d->dataR = (int*) malloc(lut3x1d->channelSize * sizeof(int));
+    lut3x1d->dataG = (int*) malloc(lut3x1d->channelSize * sizeof(int));
+    lut3x1d->dataB = (int*) malloc(lut3x1d->channelSize * sizeof(int));
     if (lut3x1d->dataR == NULL) {
         printf("lut3x1d_new: DataR is null");
         exit(EXIT_FAILURE);
@@ -46,10 +46,7 @@ void lut3x1d_set(ImacLut3x1d* lut3x1d, unsigned int index, unsigned int value, e
         DEBUG_BREAK;
         exit(EXIT_FAILURE);
     }
-
-    if (value > 255) { value = 255; }
-    if (value < 0) { value = 0; }
-
+    
     switch(c) {
     	case red:
             lut3x1d->dataR[index] = (unsigned char) value;
@@ -97,7 +94,7 @@ void lut3x1d_apply(ImacLut3x1d* lut3x1d, ImacImg* img) {
 }
 
 /* Getters */
-unsigned int lut3x1d_get(ImacLut3x1d* lut3x1d, unsigned int index, enum img_Channel c) {
+int lut3x1d_get(ImacLut3x1d* lut3x1d, unsigned int index, enum img_Channel c) {
     if (index >= lut3x1d->channelSize) {
         printf("Error lut3x1d_get: index superior to lut3x1d size\n");
         DEBUG_BREAK;

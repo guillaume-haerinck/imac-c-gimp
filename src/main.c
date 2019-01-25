@@ -100,6 +100,7 @@ int main(int argc, char *argv[]) {
                 bLut1d = true;
             } else if (strcmp(argv[i], "HISTEQ") == 0) {
                 unsigned int imgBrightnessSpectrum[4][256] = {{0},{0},{0},{0}};
+                // TODO intialiser l'histogramme ?
                 contrast_equalizeToLut1d(&lut, imgBrightnessSpectrum[rvb]);
                 bLut1d = true;
             } else if (strcmp(argv[i], "BLUR") == 0) {

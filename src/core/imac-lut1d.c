@@ -6,7 +6,7 @@
 /* Constructor */
 int lut_new(ImacLut1d* lut) {
     lut->size = 256;
-    lut->data = (unsigned char*) malloc(lut->size * sizeof(unsigned char));
+    lut->data = (int*) malloc(lut->size * sizeof(int));
     if (lut->data == NULL) {
         printf("lut_new: Data is null");
         exit(EXIT_FAILURE);
@@ -32,9 +32,7 @@ void lut_set(ImacLut1d* lut, unsigned int index, int value) {
         DEBUG_BREAK;
         exit(EXIT_FAILURE);
     }
-    if (value > 255) { value = 255; }
-    if (value < 0) { value = 0; }
-    lut->data[index] = (unsigned char) value;
+    lut->data[index] = value;
 }
 
 void lut_applyRgb(ImacLut1d* lut, ImacImg* img) {
@@ -56,7 +54,7 @@ void lut_applyRgb(ImacLut1d* lut, ImacImg* img) {
     }
 }
 /* Getters */
-unsigned int lut_get(ImacLut1d* lut, unsigned int index) {
+int lut_get(ImacLut1d* lut, unsigned int index) {
     if (index >= lut->size) {
         printf("Error lut_getIndex: index superior to lut size\n");
         DEBUG_BREAK;

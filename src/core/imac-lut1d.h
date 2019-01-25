@@ -17,7 +17,7 @@
  */
 typedef struct ImacLut1d {
     unsigned int size;
-    unsigned char* data;
+    int* data;
 } ImacLut1d;
 
 // --------------------- CONSTRUCTOR & DESTRUCTOR
@@ -68,6 +68,6 @@ void lut_applyRgb(ImacLut1d* lut, ImacImg* img);
  * @param index
  * @return brightness
  */
-unsigned int lut_get(ImacLut1d* lut, unsigned int index);
+int lut_get(ImacLut1d* lut, unsigned int index);
 
 #endif //MINIGIMP_IMAC_LUT_H

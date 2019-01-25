@@ -18,9 +18,9 @@
 
 typedef struct ImacLut3x1d {
     unsigned int channelSize;
-    unsigned char* dataR;
-    unsigned char* dataG;
-    unsigned char* dataB;
+    int* dataR;
+    int* dataG;
+    int* dataB;
 } ImacLut3x1d;
 
 // --------------------- CONSTRUCTOR & DESTRUCTOR
@@ -73,6 +73,6 @@ void lut3x1d_apply(ImacLut3x1d* lut3x1d, ImacImg* img);
  * @param channel
  * @return brightness
  */
-unsigned int lut3x1d_get(ImacLut3x1d* lut3x1d, unsigned int index, enum img_Channel c);
+int lut3x1d_get(ImacLut3x1d* lut3x1d, unsigned int index, enum img_Channel c);
 
 #endif //MINIGIMP_IMAC_LUT3D_H
