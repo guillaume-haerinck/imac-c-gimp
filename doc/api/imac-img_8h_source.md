@@ -23,6 +23,10 @@ Source: `src/core/imac-img.h`
     
     
     
+    
+    
+    
+    
       
       
       
@@ -42,6 +46,7 @@ enum img_Channel {
     red = 0,
     green = 1,
     blue = 2,
+    rvb = 3,
 };
 
 enum img_Format {
@@ -69,13 +74,15 @@ int img_delete(ImacImg* img);
 
 unsigned char img_getPixelChannel(ImacImg* img, unsigned int x, unsigned int y, enum img_Channel c);
 
+unsigned char img_getPixelGrayscale(ImacImg* img, unsigned int x, unsigned int y);
+
 // ------------------------------------- SETTERS
 
 void img_setToWhite(ImacImg* img);
 
-void img_setPixelChannel(ImacImg* img, unsigned int x, unsigned int y, unsigned char value, enum img_Channel c);
+void img_setPixelChannel(ImacImg* img, unsigned int x, unsigned int y, int value, enum img_Channel c);
 
-void img_setPixelChannels(ImacImg* img, unsigned  int x, unsigned int y, unsigned char value);
+void img_setPixelChannels(ImacImg* img, unsigned  int x, unsigned int y, int value);
 
 #endif //MINIGIMP_IMAC_IMG_H
 ```

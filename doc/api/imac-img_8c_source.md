@@ -13,6 +13,7 @@ Source: `src/core/imac-img.c`
     
     
     
+    
       
     
     
@@ -21,6 +22,7 @@ Source: `src/core/imac-img.c`
 #include <stdio.h>
 #include <stdlib.h>
 #include "imac-img.h"
+#include "utils.h"
 
 /* Constructor */
 int img_new(ImacImg* img, unsigned int width, unsigned int height) {
@@ -31,9 +33,9 @@ int img_new(ImacImg* img, unsigned int width, unsigned int height) {
 
     img->width = width;
     img->height = height;
-    img->data = malloc(3 * img->width * img->height * sizeof(unsigned char));
+    img->data = (unsigned char*) malloc(3 * img->width * img->height * sizeof(unsigned char));
     if (img->data == NULL) {
-        perror("img_new: Data is null");
+        printf("img_new: Data is null");
         exit(EXIT_FAILURE);
     }
     return EXIT_SUCCESS;
@@ -47,14 +49,39 @@ int img_delete(ImacImg* img) {
 
 /* Getters */
 unsigned char img_getPixelChannel(ImacImg* img, unsigned int x, unsigned int y, enum img_Channel c) {
-    if (x > img->width) {
+    if (x >= img->width) {
         printf("Error img_getPixelChannel: x superior to img width\n");
-        exit(EXIT_FAILURE);
-    } else if (y > img->height) {
+        DEBUG_BREAK;
+        return(EXIT_FAILURE);
+    } else if (y >= img->height) {
         printf("Error img_getPixelChannel: y superior to img height\n");
-        exit(EXIT_FAILURE);
+        DEBUG_BREAK;
+        return(EXIT_FAILURE);
+    } else if (c == rvb) {
+        printf("Error img_getPixelChannel: rvb is not a channel, use img_getPixelGrayscale instead");
+        DEBUG_BREAK;
+        return(EXIT_FAILURE);
     }
     return img->data[y * img->width * 3 + x * 3 + c];
+}
+
+unsigned char img_getPixelGrayscale(ImacImg* img, unsigned int x, unsigned int y) {
+    if (x >= img->width) {
+        printf("Error img_getPixelChannel: x superior to img width\n");
+        DEBUG_BREAK;
+        return(EXIT_FAILURE);
+    } else if (y >= img->height) {
+        printf("Error img_getPixelChannel: y superior to img height\n");
+        DEBUG_BREAK;
+        return(EXIT_FAILURE);
+    }
+    int avg = img->data[y * img->width * 3 + x * 3 + red];
+    avg += img->data[y * img->width * 3 + x * 3 + green];
+    avg += img->data[y * img->width * 3 + x * 3 + blue];
+    avg = avg / 3;
+    if (avg > 255) { avg = 255; }
+    if (avg < 0) { avg = 0; }
+    return (unsigned char) avg;
 }
 
 /* Setters */
@@ -65,28 +92,36 @@ void img_setToWhite(ImacImg* img) {
     }
 }
 
-void img_setPixelChannel(ImacImg* img, unsigned int x, unsigned int y, unsigned char value, enum img_Channel c) {
+void img_setPixelChannel(ImacImg* img, unsigned int x, unsigned int y, int value, enum img_Channel c) {
     if (x > img->width) {
         printf("Error img_setPixelChannel: x superior to img width\n");
+        DEBUG_BREAK;
         exit(EXIT_FAILURE);
     } else if (y > img->height) {
         printf("Error img_setPixelChannel: y superior to img height\n");
+        DEBUG_BREAK;
         exit(EXIT_FAILURE);
     }
-    img->data[y * img->width * 3 + x * 3 + c] = value;
+    if (value > 255) { value = 255; }
+    if (value < 0) { value = 0; }
+    img->data[y * img->width * 3 + x * 3 + c] = (unsigned char) value;
 }
 
-void img_setPixelChannels(ImacImg* img, unsigned int x, unsigned int y, unsigned char value) {
+void img_setPixelChannels(ImacImg* img, unsigned int x, unsigned int y, int value) {
     if (x > img->width) {
         printf("Error img_setPixelChannels: x superior to img width\n");
+        DEBUG_BREAK;
         exit(EXIT_FAILURE);
     } else if (y > img->height) {
         printf("Error img_setPixelChannels: y superior to img height\n");
+        DEBUG_BREAK;
         exit(EXIT_FAILURE);
     }
-    img->data[y * img->width * 3 + x * 3 + red] = value;
-    img->data[y * img->width * 3 + x * 3 + green] = value;
-    img->data[y * img->width * 3 + x * 3 + blue] = value;
+    if (value > 255) { value = 255; }
+    if (value < 0) { value = 0; }
+    img->data[y * img->width * 3 + x * 3 + red] = (unsigned char) value;
+    img->data[y * img->width * 3 + x * 3 + green] = (unsigned char) value;
+    img->data[y * img->width * 3 + x * 3 + blue] = (unsigned char) value;
 }
 ```
 

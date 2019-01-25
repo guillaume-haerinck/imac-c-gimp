@@ -12,8 +12,8 @@ search:
 
 |Type|Name|
 |-----|-----|
-|unsigned char|[**size**](struct_imac_lut1d.md#1aac71ffe03c84523594a575b2062849c3)|
-|unsigned char \*|[**data**](struct_imac_lut1d.md#1ac24cea2bfcc927fd29bc74d1086707d8)|
+|unsigned int|[**size**](struct_imac_lut1d.md#1aac913b3a1f6ef005d66bf7a84428773e)|
+|int \*|[**data**](struct_imac_lut1d.md#1ac103627c1ad15cbec2f22d0abe6d54b6)|
 
 
 ## Detailed Description
@@ -28,18 +28,18 @@ You need to use lut\_new to init it
 
 ## Public Attributes Documentation
 
-### variable <a id="1aac71ffe03c84523594a575b2062849c3" href="#1aac71ffe03c84523594a575b2062849c3">size</a>
+### variable <a id="1aac913b3a1f6ef005d66bf7a84428773e" href="#1aac913b3a1f6ef005d66bf7a84428773e">size</a>
 
 ```cpp
-unsigned char size;
+unsigned int size;
 ```
 
 
 
-### variable <a id="1ac24cea2bfcc927fd29bc74d1086707d8" href="#1ac24cea2bfcc927fd29bc74d1086707d8">data</a>
+### variable <a id="1ac103627c1ad15cbec2f22d0abe6d54b6" href="#1ac103627c1ad15cbec2f22d0abe6d54b6">data</a>
 
 ```cpp
-unsigned char* data;
+int* data;
 ```
 
 

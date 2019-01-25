@@ -36,12 +36,12 @@ int ppm_load(char* path, ImacImg* img) {
     enum img_Format format = P6;
 
     if (img == NULL) {
-        perror("ppm_load: Null img pointer");
+        printf("ppm_load: Null img pointer");
         return EXIT_FAILURE;
     }
     fp = fopen(path, "rb");
     if (fp == NULL) {
-        perror("ppm_load: Failed to open file");
+        printf("ppm_load: Failed to open file");
         return EXIT_FAILURE;
     }
 
@@ -91,7 +91,7 @@ int ppm_save(char* path, ImacImg* img) {
     // TODO check if data
     FILE* fp = fopen(path, "wb");
     if (fp == NULL) {
-        perror("ppm_save: cannot create new file");
+        printf("ppm_save: cannot create new file");
         return EXIT_FAILURE;
     }
 

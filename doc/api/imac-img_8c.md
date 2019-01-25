@@ -1,6 +1,6 @@
 ---
 search:
-    keywords: ['imac-img.c', 'img_new', 'img_delete', 'img_getPixelChannel', 'img_setToWhite', 'img_setPixelChannel', 'img_setPixelChannels']
+    keywords: ['imac-img.c', 'img_new', 'img_delete', 'img_getPixelChannel', 'img_getPixelGrayscale', 'img_setToWhite', 'img_setPixelChannel', 'img_setPixelChannels']
 ---
 
 # file imac-img.c
@@ -13,9 +13,10 @@ search:
 |int|[**img\_new**](imac-img_8c.md#1a9d6e9f6384788fbcdace048c7327209f) (**[ImacImg](struct_imac_img.md)** \* img, unsigned int width, unsigned int height) <br>Constructor for **[ImacImg](struct_imac_img.md)**. |
 |int|[**img\_delete**](imac-img_8c.md#1aa00c1131cec1fae13895faba2f1f5cac) (**[ImacImg](struct_imac_img.md)** \* img) <br>Destructor for **[ImacImg](struct_imac_img.md)**. |
 |unsigned char|[**img\_getPixelChannel**](imac-img_8c.md#1a19bfc01604a78996551a46ee0a3eb9c3) (**[ImacImg](struct_imac_img.md)** \* img, unsigned int x, unsigned int y, enum **[img\_Channel](imac-img_8h.md#1a415ca2e37928df0e87062550612407a1)** c) <br>Get the pixel value for given color. |
-|void|[**img\_setToWhite**](imac-img_8c.md#1a8c88589c2eb9c42d7e7916c97f0c20de) (**[ImacImg](struct_imac_img.md)** \* img) |
-|void|[**img\_setPixelChannel**](imac-img_8c.md#1a8f7aa804b06a0df8eafa77e1a4d12805) (**[ImacImg](struct_imac_img.md)** \* img, unsigned int x, unsigned int y, unsigned char value, enum **[img\_Channel](imac-img_8h.md#1a415ca2e37928df0e87062550612407a1)** c) <br>Set the value of a color of a pixel. |
-|void|[**img\_setPixelChannels**](imac-img_8c.md#1a5b8f1a182c7c694217d09dcdce848308) (**[ImacImg](struct_imac_img.md)** \* img, unsigned int x, unsigned int y, unsigned char value) <br>Set each colors of the pixel with the value. |
+|unsigned char|[**img\_getPixelGrayscale**](imac-img_8c.md#1af9fb17f888ac6de641fe82c48ca9bbdb) (**[ImacImg](struct_imac_img.md)** \* img, unsigned int x, unsigned int y) <br>Get the average pixel value. |
+|void|[**img\_setToWhite**](imac-img_8c.md#1a8c88589c2eb9c42d7e7916c97f0c20de) (**[ImacImg](struct_imac_img.md)** \* img) <br>Set all the pixels to white. |
+|void|[**img\_setPixelChannel**](imac-img_8c.md#1ad25186e851da5eaf7ca0b89456784da2) (**[ImacImg](struct_imac_img.md)** \* img, unsigned int x, unsigned int y, int value, enum **[img\_Channel](imac-img_8h.md#1a415ca2e37928df0e87062550612407a1)** c) <br>Set the value of a color of a pixel. |
+|void|[**img\_setPixelChannels**](imac-img_8c.md#1a57bc143e9c97536373429aff37c97291) (**[ImacImg](struct_imac_img.md)** \* img, unsigned int x, unsigned int y, int value) <br>Set each colors of the pixel with the value. |
 
 
 ## Functions Documentation
@@ -136,6 +137,43 @@ Brightness value contained between 0 and 255.
 
 
 
+### function <a id="1af9fb17f888ac6de641fe82c48ca9bbdb" href="#1af9fb17f888ac6de641fe82c48ca9bbdb">img\_getPixelGrayscale</a>
+
+```cpp
+unsigned char imac-img.c::img_getPixelGrayscale (
+    ImacImg * img,
+    unsigned int x,
+    unsigned int y
+)
+```
+
+Get the average pixel value. 
+
+
+
+**Note:**
+
+0,0 position is top left corner.
+
+
+
+
+**Parameters:**
+
+
+* **img** 
+* **x** 
+* **y** 
+
+
+
+**Returns:**
+
+Brightness value contained between 0 and 255. 
+
+
+
+
 ### function <a id="1a8c88589c2eb9c42d7e7916c97f0c20de" href="#1a8c88589c2eb9c42d7e7916c97f0c20de">img\_setToWhite</a>
 
 ```cpp
@@ -144,16 +182,25 @@ void imac-img.c::img_setToWhite (
 )
 ```
 
+Set all the pixels to white. 
 
 
-### function <a id="1a8f7aa804b06a0df8eafa77e1a4d12805" href="#1a8f7aa804b06a0df8eafa77e1a4d12805">img\_setPixelChannel</a>
+
+**Parameters:**
+
+
+* **img** 
+
+
+
+### function <a id="1ad25186e851da5eaf7ca0b89456784da2" href="#1ad25186e851da5eaf7ca0b89456784da2">img\_setPixelChannel</a>
 
 ```cpp
 void imac-img.c::img_setPixelChannel (
     ImacImg * img,
     unsigned int x,
     unsigned int y,
-    unsigned char value,
+    int value,
     enum img_Channel c
 )
 ```
@@ -180,14 +227,14 @@ Set the value of a color of a pixel.
 
 
 
-### function <a id="1a5b8f1a182c7c694217d09dcdce848308" href="#1a5b8f1a182c7c694217d09dcdce848308">img\_setPixelChannels</a>
+### function <a id="1a57bc143e9c97536373429aff37c97291" href="#1a57bc143e9c97536373429aff37c97291">img\_setPixelChannels</a>
 
 ```cpp
 void imac-img.c::img_setPixelChannels (
     ImacImg * img,
     unsigned int x,
     unsigned int y,
-    unsigned char value
+    int value
 )
 ```
 

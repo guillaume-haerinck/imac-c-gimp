@@ -11,20 +11,20 @@ Change luminosity.
 
 |Type|Name|
 |-----|-----|
-|void|[**lum\_addToImg**](luminosity_8h.md#1a97fd1e1b02e546bd60feb1f9e6de05d5) (**[ImacImg](struct_imac_img.md)** \* img, unsigned char value) <br>Add value to each color of the image. |
-|void|[**lum\_addToLut1d**](luminosity_8h.md#1a0cac38eee4826b337990439bcd929a6e) (**[ImacLut1d](struct_imac_lut1d.md)** \* lut, unsigned char value) <br>Add value to each color of the lut. |
-|void|[**lum\_dimToImg**](luminosity_8h.md#1a8291eacb31efd1adb7dbac86c4400886) (**[ImacImg](struct_imac_img.md)** \* img, unsigned char value) <br>Substract value to each color of the image. |
-|void|[**lum\_dimToLut1d**](luminosity_8h.md#1abbd8781701827b54f778662fc8e83b4e) (**[ImacLut1d](struct_imac_lut1d.md)** \* lut, unsigned char value) <br>Substract value to each color of the lut. |
+|void|[**lum\_addToImg**](luminosity_8h.md#1a0c7a3912d85a68443e43483b68971d7e) (**[ImacImg](struct_imac_img.md)** \* img, int value) <br>Add value to each color of the image. |
+|void|[**lum\_addToLut1d**](luminosity_8h.md#1a6e31cd3b40471fe08c7f803898086ceb) (**[ImacLut1d](struct_imac_lut1d.md)** \* lut, int value) <br>Add value to each color of the lut. |
+|void|[**lum\_dimToImg**](luminosity_8h.md#1a5b7dbf31fe5740d6dd69a1a845f16c38) (**[ImacImg](struct_imac_img.md)** \* img, int value) <br>Substract value to each color of the image. |
+|void|[**lum\_dimToLut1d**](luminosity_8h.md#1a6010503968eb42b6a68d2d78d191d6aa) (**[ImacLut1d](struct_imac_lut1d.md)** \* lut, int value) <br>Substract value to each color of the lut. |
 
 
 ## Functions Documentation
 
-### function <a id="1a97fd1e1b02e546bd60feb1f9e6de05d5" href="#1a97fd1e1b02e546bd60feb1f9e6de05d5">lum\_addToImg</a>
+### function <a id="1a0c7a3912d85a68443e43483b68971d7e" href="#1a0c7a3912d85a68443e43483b68971d7e">lum\_addToImg</a>
 
 ```cpp
 void luminosity.h::lum_addToImg (
     ImacImg * img,
-    unsigned char value
+    int value
 )
 ```
 
@@ -40,12 +40,12 @@ Add value to each color of the image.
 
 
 
-### function <a id="1a0cac38eee4826b337990439bcd929a6e" href="#1a0cac38eee4826b337990439bcd929a6e">lum\_addToLut1d</a>
+### function <a id="1a6e31cd3b40471fe08c7f803898086ceb" href="#1a6e31cd3b40471fe08c7f803898086ceb">lum\_addToLut1d</a>
 
 ```cpp
 void luminosity.h::lum_addToLut1d (
     ImacLut1d * lut,
-    unsigned char value
+    int value
 )
 ```
 
@@ -61,12 +61,12 @@ Add value to each color of the lut.
 
 
 
-### function <a id="1a8291eacb31efd1adb7dbac86c4400886" href="#1a8291eacb31efd1adb7dbac86c4400886">lum\_dimToImg</a>
+### function <a id="1a5b7dbf31fe5740d6dd69a1a845f16c38" href="#1a5b7dbf31fe5740d6dd69a1a845f16c38">lum\_dimToImg</a>
 
 ```cpp
 void luminosity.h::lum_dimToImg (
     ImacImg * img,
-    unsigned char value
+    int value
 )
 ```
 
@@ -82,12 +82,12 @@ Substract value to each color of the image.
 
 
 
-### function <a id="1abbd8781701827b54f778662fc8e83b4e" href="#1abbd8781701827b54f778662fc8e83b4e">lum\_dimToLut1d</a>
+### function <a id="1a6010503968eb42b6a68d2d78d191d6aa" href="#1a6010503968eb42b6a68d2d78d191d6aa">lum\_dimToLut1d</a>
 
 ```cpp
 void luminosity.h::lum_dimToLut1d (
     ImacLut1d * lut,
-    unsigned char value
+    int value
 )
 ```
 
