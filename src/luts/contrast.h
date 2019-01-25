@@ -6,6 +6,7 @@
 #define MINIGIMP_CONTRAST_H
 
 #include "core/imac-img.h"
+#include "charts/histogram.h"
 #include "core/imac-lut1d.h"
 
 /**

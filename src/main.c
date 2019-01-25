@@ -101,6 +101,7 @@ int main(int argc, char *argv[]) {
             } else if (strcmp(argv[i], "HISTEQ") == 0) {
                 unsigned int imgBrightnessSpectrum[4][256] = {{0},{0},{0},{0}};
                 // TODO intialiser l'histogramme ?
+		hist_buildHistogram(&img, imgBrightnessSpectrum);
                 contrast_equalizeToLut1d(&lut, imgBrightnessSpectrum[rvb]);
                 bLut1d = true;
             } else if (strcmp(argv[i], "BLUR") == 0) {

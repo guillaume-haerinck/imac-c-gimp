@@ -2,8 +2,11 @@
 #define MINIGIMP_HISTOGRAM_H
 
 #include "core/imac-img.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 #define HIST_SIZE 256
-
+#define HIST_HEIGHT 15
 /**
  * @brief Create an average histogram of the image
  *
@@ -21,6 +24,45 @@ void hist_buildHistogram(ImacImg* imgToAnalyse, unsigned int imgBrightnessSpectr
  * @return EXIT_FAILURE or EXIT_SUCCESS
  */
 void hist_getMaxBrightness(unsigned int imgBrightnessSpectrum[rvb+1][HIST_SIZE], unsigned int maxPixelsForBrightness[rvb+1]);
+
+
+/**
+ * @brief Get max Brightness for a one dimensional array
+ *
+ * @param[in] histogram[size]
+ * @param[in] size
+ * @param[out] max brightness value index
+ */
+int hist_findMaxIndex(int *histogram, int histSize);
+
+/**
+ * @brief Build an appropriate histogram array for terminal printing
+ *
+ * @param[in] outputHistogram[256]
+ * @param[in] outputHist[scale]
+ * @param[out] pointer on new array
+ */
+int *hist_initScaledHistogram(int *outputHistogram, int scale);
+
+void hist_printHistValues(int *histogram, int nbOfValues);
+
+/**
+ * @brief Fill scaled histogram array for terminal printing
+ *
+ * @param[in] inputHist[256]
+ * @param[in] outputHist[scale]
+ * @param[in] scale
+ */
+void hist_fillScaledHistogram(int *inputHist, int *outputHist, int scale);
+
+/**
+ * @brief Print two histograms in the terminal side by side
+ *
+ * @param[in] histogram1[256]
+ * @param[in] histogram2[256]
+ * @param[in] scaleX
+ */
+void hist_printTerminal(int *histogram1, int *histogram2, int scaleX);
 
 /**
  * @brief Print histogram data to an image

@@ -20,6 +20,9 @@ void contrast_dimToLut1d(ImacLut1d *lut, int value) {
     double contrastFactor = (259.0 * ((-value) + 255.0)) / (255.0 * ( 259.0 - (-value)));
     for (unsigned int i = 0; i < lut->size; i++) {
         brightness = contrastFactor * (lut_get(lut, i) - 128) + 128;
+	if (brightness < 0) brightness = 0;
+	if (brightness > 255) brightness = 255;
+	printf("value = %d, i = %d new = %d\n", value, i, (int)brightness);
         lut_set(lut, i, (int) brightness);
     }
 }
@@ -41,6 +44,7 @@ void contrast_sinToLut1d(ImacLut1d *lut, int value) {
 }
 
 void contrast_equalizeToLut1d(ImacLut1d *lut, unsigned int histogram[256]) {
+	//hist_printTerminal(histogram, histogram, 20);
 	// FIXME doesn't work sometimes for no reason, not depending on the image, it randomly goes wrong
 	int totalValues = 0;
 	double cdf = 0.0;

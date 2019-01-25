@@ -33,6 +33,134 @@ void hist_getMaxBrightness(unsigned int imgBrightnessSpectrum[rvb+1][HIST_SIZE],
     }
 }
 
+
+int findMaxIndex(int *histogram, int histSize) {
+	int maxValueIndex = 0;
+	for (int i = 0; i < histSize; i++) {
+		if (histogram[i] > histogram[maxValueIndex]) maxValueIndex = i;
+	}
+	return maxValueIndex;
+}
+
+int *initScaledHistogram(int *outputHistogram, int scale) {
+	outputHistogram = malloc(sizeof(outputHistogram)*scale);	
+	if (!outputHistogram) EXIT_FAILURE;
+	return outputHistogram;
+}
+
+void printHistValues(int *histogram, int nbOfValues) {
+	printf("\n");
+	printf("H: ");
+	for (int i = 0; i < nbOfValues; i++){
+		printf("%2d ", histogram[i]);
+	}
+	printf("\n");
+	printf("\n");
+}
+
+void fillScaledHistogram(int *inputHist, int *outputHist, int scale) {
+	float palier = (float)HIST_SIZE/scale;
+	float quantitee = 0.;
+	int inputHistIndex = 0;
+	float rest = 0.;
+	float partDecQuantitee = 0.;
+	int partEntQuantitee = 0;
+	int value = 0;
+	float valueRound = 0.;
+	for (int outputIndex = 0; outputIndex < scale; outputIndex++) {
+		value = 0;
+		if (rest) {
+			valueRound = inputHist[inputHistIndex] * rest;
+			value += (int) (valueRound < 0 ? valueRound-.5 : valueRound+.5); 
+			quantitee = palier - rest;
+			inputHistIndex++;
+		} else quantitee = palier;
+		//printf("value = %d\n", value);
+		partEntQuantitee = (int) quantitee;
+		partDecQuantitee = (float) quantitee - partEntQuantitee;
+
+		for (int j = 0; j < partEntQuantitee; j++) {
+			valueRound = inputHist[inputHistIndex];
+			value += (int) (valueRound < 0 ? valueRound-.5 : valueRound+.5); 
+			inputHistIndex++;
+			printf("value = %d\n", value);
+		}
+		if (inputHistIndex > 255) inputHistIndex = 255;
+		valueRound = (float) inputHist[inputHistIndex] * partDecQuantitee;
+		value += (int) (valueRound < 0 ? valueRound-.5 : valueRound+.5); 
+		//printf("///value = %d, inputHistIndex = %d, inputHist[inputHistIndex] = %d, partDecQuantitee = %f\n", value, inputHistIndex, inputHist[inputHistIndex], partDecQuantitee);
+		rest = 1. - partDecQuantitee;	
+		outputHist[outputIndex] = value;
+	}
+}
+
+void hist_printTerminal(int *histogram1, int *histogram2, int scaleX){
+	int *scaledHist1 = NULL;
+	int *scaledHist2 = NULL;
+	float palier = (float)HIST_SIZE/scaleX;
+	scaledHist1 = initScaledHistogram(scaledHist1, scaleX);
+	scaledHist2 = initScaledHistogram(scaledHist2, scaleX);
+
+	fillScaledHistogram(histogram1, scaledHist1, scaleX);
+	fillScaledHistogram(histogram2, scaledHist2, scaleX);
+
+	printHistValues(histogram1, HIST_SIZE);
+	printHistValues(scaledHist1, scaleX);
+	printHistValues(histogram2, HIST_SIZE);
+	printHistValues(scaledHist2, scaleX);
+
+	int hheight;
+	int hPos1, hPos2;
+	int lineNum;
+	char histogramTitle1[] = "Histogram1";
+	char histogramTitle2[] = "Histogram2";
+	int maxValueIndex1 = findMaxIndex(scaledHist1, scaleX);
+	int maxValueIndex2 = findMaxIndex(scaledHist2, scaleX);
+	float upscaleFactor1 = (float) HIST_HEIGHT/scaledHist1[maxValueIndex1];
+	float upscaleFactor2 = (float) HIST_HEIGHT/scaledHist2[maxValueIndex2];
+	char gap[] = "   >   ";
+	for(int h = 1; h<=HIST_HEIGHT; h++){
+		hheight = HIST_HEIGHT - h + 1;
+		lineNum = hheight;
+		printf("%2d | ..", lineNum);
+		hPos1 = hheight;
+		hPos2 = hheight;
+		hPos1/=upscaleFactor1;
+		hPos2/=upscaleFactor2;
+		for (int w=0; w<scaleX; w++) {
+			if (hPos1 <= scaledHist1[w]) {
+				printf("# ..");
+			}	
+			else{ printf("....");}
+		} 
+		printf("%s", gap);
+		printf("%2d | ..", lineNum);
+		for (int w=0; w<scaleX; w++) {
+			if (hPos2 <= scaledHist2[w]) {
+				printf("# ..");
+			}	
+			else{ printf("....");}
+		}
+		printf("\n");
+	}
+	printf("       ");
+	for(float w = 0; w < HIST_SIZE; w += palier) {
+		printf("%-3d ", (int)w);
+	}
+	printf("%s", gap);
+	printf("       ");
+	for(float w = 0; w < HIST_SIZE; w += palier) {
+		printf("%-3d ", (int)w);
+	}
+	printf("\n");
+	int paddingL1 = ((8+scaleX*4)-strlen(histogramTitle1))/2;
+	int paddingL2 = ((8+scaleX*4)-strlen(histogramTitle2))/2;
+	printf("%-*s%s%*s", paddingL1-1, "---", histogramTitle1, paddingL1, "---");
+	printf("%s", gap);
+	printf("%-*s%s%*s\n", paddingL2, "---", histogramTitle2, paddingL2+1, "---");
+	//printf("HIST_VALUES/scaleX = %f\n", HIST_VALUES/scaleX);
+}
+
 void hist_printHistogram(ImacImg* histogram, unsigned int* histogramData, unsigned int maxData, unsigned char printColor, enum img_Channel c) {
     if (histogram->width != 256) {
         printf("hist_printHistogram error: histogram not 256 width");

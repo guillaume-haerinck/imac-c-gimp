@@ -25,7 +25,7 @@ int _recursiveMatrix(int n) {
 void blur_imgRecursive(ImacImg *img, ImacImg* outputImg, int value) {
 	int averagePixelValue, count;
 	int currentProgress = 0;
-	int const progressBarSize = img->height * img->width * 3;
+	int const progressBarSize = img->height;
 	if (!(value % 2)) value += 1;
 	int radius = _recursiveMatrix(value);
 	for (unsigned int height = 0; height < img->height; height++) {
