@@ -34,7 +34,7 @@ void hist_getMaxBrightness(unsigned int imgBrightnessSpectrum[rvb+1][HIST_SIZE],
 }
 
 
-int findMaxIndex(int *histogram, int histSize) {
+int hist_findMaxIndex(int *histogram, int histSize) {
 	int maxValueIndex = 0;
 	for (int i = 0; i < histSize; i++) {
 		if (histogram[i] > histogram[maxValueIndex]) maxValueIndex = i;
@@ -42,13 +42,13 @@ int findMaxIndex(int *histogram, int histSize) {
 	return maxValueIndex;
 }
 
-int *initScaledHistogram(int *outputHistogram, int scale) {
+int *hist_initScaledHistogram(int *outputHistogram, int scale) {
 	outputHistogram = malloc(sizeof(outputHistogram)*scale);	
 	if (!outputHistogram) EXIT_FAILURE;
 	return outputHistogram;
 }
 
-void printHistValues(int *histogram, int nbOfValues) {
+void hist_printHistValues(int *histogram, int nbOfValues) {
 	printf("\n");
 	printf("H: ");
 	for (int i = 0; i < nbOfValues; i++){
@@ -58,7 +58,7 @@ void printHistValues(int *histogram, int nbOfValues) {
 	printf("\n");
 }
 
-void fillScaledHistogram(int *inputHist, int *outputHist, int scale) {
+void hist_fillScaledHistogram(int *inputHist, int *outputHist, int scale) {
 	float palier = (float)HIST_SIZE/scale;
 	float quantitee = 0.;
 	int inputHistIndex = 0;
@@ -98,24 +98,24 @@ void hist_printTerminal(int *histogram1, int *histogram2, int scaleX){
 	int *scaledHist1 = NULL;
 	int *scaledHist2 = NULL;
 	float palier = (float)HIST_SIZE/scaleX;
-	scaledHist1 = initScaledHistogram(scaledHist1, scaleX);
-	scaledHist2 = initScaledHistogram(scaledHist2, scaleX);
+	scaledHist1 = hist_initScaledHistogram(scaledHist1, scaleX);
+	scaledHist2 = hist_initScaledHistogram(scaledHist2, scaleX);
 
-	fillScaledHistogram(histogram1, scaledHist1, scaleX);
-	fillScaledHistogram(histogram2, scaledHist2, scaleX);
+	hist_fillScaledHistogram(histogram1, scaledHist1, scaleX);
+	hist_fillScaledHistogram(histogram2, scaledHist2, scaleX);
 
-	printHistValues(histogram1, HIST_SIZE);
-	printHistValues(scaledHist1, scaleX);
-	printHistValues(histogram2, HIST_SIZE);
-	printHistValues(scaledHist2, scaleX);
+	hist_printHistValues(histogram1, HIST_SIZE);
+	hist_printHistValues(scaledHist1, scaleX);
+	hist_printHistValues(histogram2, HIST_SIZE);
+	hist_printHistValues(scaledHist2, scaleX);
 
 	int hheight;
 	int hPos1, hPos2;
 	int lineNum;
 	char histogramTitle1[] = "Histogram1";
 	char histogramTitle2[] = "Histogram2";
-	int maxValueIndex1 = findMaxIndex(scaledHist1, scaleX);
-	int maxValueIndex2 = findMaxIndex(scaledHist2, scaleX);
+	int maxValueIndex1 = hist_findMaxIndex(scaledHist1, scaleX);
+	int maxValueIndex2 = hist_findMaxIndex(scaledHist2, scaleX);
 	float upscaleFactor1 = (float) HIST_HEIGHT/scaledHist1[maxValueIndex1];
 	float upscaleFactor2 = (float) HIST_HEIGHT/scaledHist2[maxValueIndex2];
 	char gap[] = "   >   ";
