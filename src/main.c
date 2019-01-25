@@ -30,7 +30,6 @@ int main(int argc, char *argv[]) {
     bool bHistogram = false;
     bool bLut3x1d = false;
     bool bLut1d = false;
-    bool bConvolution = false;
 
     gui_printLogo();
     start = clock();
@@ -38,26 +37,28 @@ int main(int argc, char *argv[]) {
     if (argc > 0) {
         ImacImg img;
         ImacImg histogram;
-        ImacImg convolutedImg;
+        ImacImg swapImg;
         ImacLut1d lut;
         ImacLut3x1d lut3x1d;
+        ImacImg* ptrOnImage = &img;
         lut_new(&lut);
         lut3x1d_new(&lut3x1d);
 
         /* Handle filetype */
         if (strcmp("ppm", getFilenameExtension(argv[1])) == 0) {
-            ppm_load(argv[1], &img);
+            ppm_load(argv[1], ptrOnImage);
         } else {
             printf("Error in main: unknown file extension");
             return EXIT_FAILURE;
         }
-        img_new(&convolutedImg, img.width, img.height);
+        img_new(&swapImg, img.width, img.height);
+        ImacImg* ptrOnSwap = &swapImg;
 
         /* Handle args */
         for (int i = 2; i < argc; i++) {
             if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "-histo") == 0) {
                 img_new(&histogram, 256, 150);
-                hist_rgb(&img, &histogram);
+                hist_rgb(ptrOnImage, &histogram);
                 bHistogram = true;
             } else if (strcmp(argv[i], "-o") == 0) {
                 if (argc == i + 2) {
@@ -91,7 +92,7 @@ int main(int argc, char *argv[]) {
             } else if (strcmp(argv[i], "GRAY") == 0) {
                 for (unsigned int x = 0; x < img.width; x++) {
                     for (unsigned int y = 0; y < img.height; y++) {
-                        img_setPixelChannels(&img, x, y, img_getPixelGrayscale(&img, x, y));
+                        img_setPixelChannels(ptrOnImage, x, y, img_getPixelGrayscale(ptrOnImage, x, y));
                     }
                 }
             } else if (strcmp(argv[i], "SEPIA") == 0) {
@@ -103,44 +104,52 @@ int main(int argc, char *argv[]) {
                 bLut1d = true;
             } else if (strcmp(argv[i], "HISTEQ") == 0) {
                 unsigned int imgBrightnessSpectrum[4][256] = {{0},{0},{0},{0}};
-		        hist_buildHistogram(&img, imgBrightnessSpectrum);
+		        hist_buildHistogram(ptrOnImage, imgBrightnessSpectrum);
                 contrast_equalizeToLut1d(&lut, imgBrightnessSpectrum[rvb]);
                 bLut1d = true;
             } else if (strcmp(argv[i], "BLUR") == 0) {
                 // TODO handle if convolution already exists
                 blurValue = strtol(argv[i + 1], NULL, 10);
                 printf("Applying %s with %d...\n", argv[i], blurValue);
-                blur_imgRecursive(&img, &convolutedImg, blurValue);
-                bConvolution = true;
+                blur_imgRecursive(ptrOnImage, ptrOnSwap, blurValue);
+                ImacImg* temp = ptrOnImage;
+                ptrOnImage = ptrOnSwap;
+                ptrOnSwap = temp;
 		        printf("\n");
 		        printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);
             } else if (strcmp(argv[i], "EDGE") == 0) {
-                edge_img(&img, &convolutedImg);
-                bConvolution = true;
+                edge_img(ptrOnImage, ptrOnSwap);
+                ImacImg* temp = ptrOnImage;
+                ptrOnImage = ptrOnSwap;
+                ptrOnSwap = temp;
             } else if (strcmp(argv[i], "VBLUR") == 0) {
                 // TODO handle if convolution already exists
                 blurValue = strtol(argv[i + 1], NULL, 10);
                 int posX = strtol(argv[i + 2], NULL, 10);
                 int posY = strtol(argv[i + 3], NULL, 10);
                 printf("Applying %s with %d...\n", argv[i], blurValue);
-                blur_vignette(&img, &convolutedImg, blurValue, posX, posY);
-                bConvolution = true;
+                blur_vignette(ptrOnImage, ptrOnSwap, blurValue, posX, posY);
+                ImacImg* temp = ptrOnImage;
+                ptrOnImage = ptrOnSwap;
+                ptrOnSwap = temp;
 		        printf("\n");
 		        printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);
             } else if (strcmp(argv[i], "KBLUR") == 0) {
-                blur_imgKernel(&img, &convolutedImg);
-                bConvolution = true;
+                blur_imgKernel(ptrOnImage, ptrOnSwap);
+                ImacImg* temp = ptrOnImage;
+                ptrOnImage = ptrOnSwap;
+                ptrOnSwap = temp;
             } else if (strcmp(argv[i], "EMBOSS") == 0) {
-                emboss_img(&img, &convolutedImg);
-                bConvolution = true;
+                emboss_img(ptrOnImage, ptrOnSwap);
+                ImacImg* temp = ptrOnImage;
+                ptrOnImage = ptrOnSwap;
+                ptrOnSwap = temp;
             }
         }
 
         /* Apply filters */
-        ImacImg* ptrOnImage = &img;
-        if (bLut1d) { lut_applyRgb(&lut, &img); }
-        if (bLut3x1d) { lut3x1d_apply(&lut3x1d, &img); }
-        if (bConvolution) { ptrOnImage = &convolutedImg; }
+        if (bLut1d) { lut_applyRgb(&lut, ptrOnImage); }
+        if (bLut3x1d) { lut3x1d_apply(&lut3x1d, ptrOnImage); }
         if (bHistogram) {
             if (outputPath != NULL) {
                 // Original histogram
@@ -153,7 +162,7 @@ int main(int argc, char *argv[]) {
 
                 // Modified image histogram
                 img_new(&histogram, 256, 150);
-                hist_rgb(&img, &histogram);
+                hist_rgb(ptrOnImage, &histogram);
                 char histName2[] = "/output-histogram.ppm";
                 char* path2 = (char*) malloc(sizeof(char) * strlen(outputDir) * strlen(histName2) + 2);
                 strcpy(path2, outputDir);
@@ -163,7 +172,7 @@ int main(int argc, char *argv[]) {
             } else {
                 ppm_save("./original-histogram.ppm", &histogram);
                 img_new(&histogram, 256, 150);
-                hist_rgb(&img, &histogram);
+                hist_rgb(ptrOnImage, &histogram);
                 ppm_save("./output-histogram.ppm", &histogram);
             }
             img_delete(&histogram);
@@ -180,7 +189,7 @@ int main(int argc, char *argv[]) {
         lut_delete(&lut);
         lut3x1d_delete(&lut3x1d);
         img_delete(&img);
-        img_delete(&convolutedImg);
+        img_delete(&swapImg);
         free(outputPath);
     } else {
         printf("No input file provided !\n");
