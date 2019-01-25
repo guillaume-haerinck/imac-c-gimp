@@ -59,9 +59,11 @@ int main(int argc, char *argv[]) {
                 hist_rgb(&img, &histogram);
                 bHistogram = true;
             } else if (strcmp(argv[i], "-o") == 0) {
-                outputPath = (char*) malloc(sizeof(char) * strlen(argv[i + 1]) + 1);
-                strcpy(outputPath, argv[i + 1]);
-                outputDir = getDirname(argv[i + 1]);
+                if (argc == i + 2) {
+                    outputPath = (char*) malloc(sizeof(char) * strlen(argv[i + 1]) + 1);
+                    strcpy(outputPath, argv[i + 1]);
+                    outputDir = getDirname(argv[i + 1]);
+                }
             } else if (strcmp(argv[i], "ADDLUM") == 0) {
                 long value = strtol(argv[i + 1], NULL, 10);
                 if (value > 255) { value = 255; }
