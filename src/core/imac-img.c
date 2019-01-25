@@ -74,9 +74,11 @@ void img_setToWhite(ImacImg* img) {
 void img_setPixelChannel(ImacImg* img, unsigned int x, unsigned int y, int value, enum img_Channel c) {
     if (x > img->width) {
         printf("Error img_setPixelChannel: x superior to img width\n");
+        DEBUG_BREAK;
         exit(EXIT_FAILURE);
     } else if (y > img->height) {
         printf("Error img_setPixelChannel: y superior to img height\n");
+        DEBUG_BREAK;
         exit(EXIT_FAILURE);
     }
     if (value > 255) { value = 255; }
@@ -87,9 +89,11 @@ void img_setPixelChannel(ImacImg* img, unsigned int x, unsigned int y, int value
 void img_setPixelChannels(ImacImg* img, unsigned int x, unsigned int y, int value) {
     if (x > img->width) {
         printf("Error img_setPixelChannels: x superior to img width\n");
+        DEBUG_BREAK;
         exit(EXIT_FAILURE);
     } else if (y > img->height) {
         printf("Error img_setPixelChannels: y superior to img height\n");
+        DEBUG_BREAK;
         exit(EXIT_FAILURE);
     }
     if (value > 255) { value = 255; }

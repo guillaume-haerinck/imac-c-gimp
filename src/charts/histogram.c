@@ -42,8 +42,8 @@ int hist_findMaxIndex(int *histogram, int histSize) {
 	return maxValueIndex;
 }
 
-int *hist_initScaledHistogram(int *outputHistogram, int scale) {
-	outputHistogram = malloc(sizeof(outputHistogram)*scale);	
+int* hist_initScaledHistogram(int *outputHistogram, int scale) {
+	outputHistogram = malloc(sizeof(outputHistogram) * scale);	
 	if (!outputHistogram) EXIT_FAILURE;
 	return outputHistogram;
 }
@@ -59,7 +59,7 @@ void hist_printHistValues(int *histogram, int nbOfValues) {
 }
 
 void hist_fillScaledHistogram(int *inputHist, int *outputHist, int scale) {
-	float palier = (float)HIST_SIZE/scale;
+	float palier = (float) HIST_SIZE / scale;
 	float quantitee = 0.;
 	int inputHistIndex = 0;
 	float rest = 0.;
@@ -97,7 +97,7 @@ void hist_fillScaledHistogram(int *inputHist, int *outputHist, int scale) {
 void hist_printTerminal(int *histogram1, int *histogram2, int scaleX){
 	int *scaledHist1 = NULL;
 	int *scaledHist2 = NULL;
-	float palier = (float)HIST_SIZE/scaleX;
+	float palier = (float) HIST_SIZE / scaleX;
 	scaledHist1 = hist_initScaledHistogram(scaledHist1, scaleX);
 	scaledHist2 = hist_initScaledHistogram(scaledHist2, scaleX);
 
@@ -116,17 +116,17 @@ void hist_printTerminal(int *histogram1, int *histogram2, int scaleX){
 	char histogramTitle2[] = "Histogram2";
 	int maxValueIndex1 = hist_findMaxIndex(scaledHist1, scaleX);
 	int maxValueIndex2 = hist_findMaxIndex(scaledHist2, scaleX);
-	float upscaleFactor1 = (float) HIST_HEIGHT/scaledHist1[maxValueIndex1];
-	float upscaleFactor2 = (float) HIST_HEIGHT/scaledHist2[maxValueIndex2];
+	float upscaleFactor1 = (float) HIST_HEIGHT / scaledHist1[maxValueIndex1];
+	float upscaleFactor2 = (float) HIST_HEIGHT / scaledHist2[maxValueIndex2];
 	char gap[] = "   >   ";
-	for(int h = 1; h<=HIST_HEIGHT; h++){
+	for(int h = 1; h <= HIST_HEIGHT; h++){
 		hheight = HIST_HEIGHT - h + 1;
 		lineNum = hheight;
 		printf("%2d | ..", lineNum);
 		hPos1 = hheight;
 		hPos2 = hheight;
-		hPos1/=upscaleFactor1;
-		hPos2/=upscaleFactor2;
+		hPos1 /= upscaleFactor1;
+		hPos2 /= upscaleFactor2;
 		for (int w=0; w<scaleX; w++) {
 			if (hPos1 <= scaledHist1[w]) {
 				printf("# ..");
@@ -135,7 +135,7 @@ void hist_printTerminal(int *histogram1, int *histogram2, int scaleX){
 		} 
 		printf("%s", gap);
 		printf("%2d | ..", lineNum);
-		for (int w=0; w<scaleX; w++) {
+		for (int w = 0; w < scaleX; w++) {
 			if (hPos2 <= scaledHist2[w]) {
 				printf("# ..");
 			}	
@@ -153,8 +153,8 @@ void hist_printTerminal(int *histogram1, int *histogram2, int scaleX){
 		printf("%-3d ", (int)w);
 	}
 	printf("\n");
-	int paddingL1 = ((8+scaleX*4)-strlen(histogramTitle1))/2;
-	int paddingL2 = ((8+scaleX*4)-strlen(histogramTitle2))/2;
+	int paddingL1 = ((8 + scaleX * 4) - strlen(histogramTitle1)) / 2;
+	int paddingL2 = ((8 + scaleX * 4) - strlen(histogramTitle2)) / 2;
 	printf("%-*s%s%*s", paddingL1-1, "---", histogramTitle1, paddingL1, "---");
 	printf("%s", gap);
 	printf("%-*s%s%*s\n", paddingL2, "---", histogramTitle2, paddingL2+1, "---");

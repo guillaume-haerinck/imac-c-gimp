@@ -40,7 +40,7 @@ int lut3x1d_delete(ImacLut3x1d* lut3x1d) {
 }
 
 /* Setters */
-void lut3x1d_set(ImacLut3x1d* lut3x1d, unsigned int index, unsigned int value, enum img_Channel c) {
+void lut3x1d_set(ImacLut3x1d* lut3x1d, unsigned int index, int value, enum img_Channel c) {
     if (index >= lut3x1d->channelSize) {
         printf("Error lut3x1d_getIndex: index superior to lut3x1d channel size\n");
         DEBUG_BREAK;
@@ -49,28 +49,29 @@ void lut3x1d_set(ImacLut3x1d* lut3x1d, unsigned int index, unsigned int value, e
     
     switch(c) {
     	case red:
-            lut3x1d->dataR[index] = (unsigned char) value;
+            lut3x1d->dataR[index] = value;
             break;
 
     	case green:
-            lut3x1d->dataG[index] = (unsigned char) value;
+            lut3x1d->dataG[index] = value;
             break;
 
     	case blue:
-            lut3x1d->dataB[index] = (unsigned char) value;
+            lut3x1d->dataB[index] = value;
             break;
 
         default:
             printf("Error lut3x1d_set: Unknown color\n");
+            DEBUG_BREAK;
             exit(EXIT_FAILURE);
     }
 }
 
 void lut3x1d_apply(ImacLut3x1d* lut3x1d, ImacImg* img) {
     double avgBrightness = 0;
-    unsigned int brightnessR = 0;
-    unsigned int brightnessG = 0;
-    unsigned int brightnessB = 0;
+    int brightnessR = 0;
+    int brightnessG = 0;
+    int brightnessB = 0;
 
     for (unsigned int y = 0; y < img->height; y++) {
         for (unsigned int x = 0; x < img->width; x++) {

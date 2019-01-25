@@ -28,7 +28,7 @@ int lut_delete(ImacLut1d* lut) {
 /* Setters */
 void lut_set(ImacLut1d* lut, unsigned int index, int value) {
     if (index >= lut->size) {
-        printf("Error lut_getIndex: index superior to lut size\n");
+        printf("Error lut_set: index superior to lut size\n");
         DEBUG_BREAK;
         exit(EXIT_FAILURE);
     }
@@ -56,7 +56,7 @@ void lut_applyRgb(ImacLut1d* lut, ImacImg* img) {
 /* Getters */
 int lut_get(ImacLut1d* lut, unsigned int index) {
     if (index >= lut->size) {
-        printf("Error lut_getIndex: index superior to lut size\n");
+        printf("Error lut_get: index superior to lut size\n");
         DEBUG_BREAK;
         return(EXIT_FAILURE);
     }

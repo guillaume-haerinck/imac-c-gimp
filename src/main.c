@@ -100,8 +100,7 @@ int main(int argc, char *argv[]) {
                 bLut1d = true;
             } else if (strcmp(argv[i], "HISTEQ") == 0) {
                 unsigned int imgBrightnessSpectrum[4][256] = {{0},{0},{0},{0}};
-                // TODO intialiser l'histogramme ?
-		hist_buildHistogram(&img, imgBrightnessSpectrum);
+		        hist_buildHistogram(&img, imgBrightnessSpectrum);
                 contrast_equalizeToLut1d(&lut, imgBrightnessSpectrum[rvb]);
                 bLut1d = true;
             } else if (strcmp(argv[i], "BLUR") == 0) {
@@ -110,8 +109,8 @@ int main(int argc, char *argv[]) {
                 printf("Applying %s with %d...\n", argv[i], blurValue);
                 blur_imgRecursive(&img, &convolutedImg, blurValue);
                 bConvolution = true;
-		printf("\n");
-		printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);
+		        printf("\n");
+		        printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);
             } else if (strcmp(argv[i], "EDGE") == 0) {
                 edge_img(&img, &convolutedImg);
                 bConvolution = true;
@@ -123,8 +122,11 @@ int main(int argc, char *argv[]) {
                 printf("Applying %s with %d...\n", argv[i], blurValue);
                 blur_vignette(&img, &convolutedImg, blurValue, posX, posY);
                 bConvolution = true;
-		printf("\n");
-		printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);
+		        printf("\n");
+		        printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);
+            } else if (strcmp(argv[i], "KBLUR") == 0) {
+                blur_imgKernel(&img, &convolutedImg);
+                bConvolution = true;
             }
         }
 

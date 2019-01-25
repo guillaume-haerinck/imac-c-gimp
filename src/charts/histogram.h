@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #define HIST_SIZE 256
 #define HIST_HEIGHT 15
+
 /**
  * @brief Create an average histogram of the image
  *
@@ -24,7 +25,6 @@ void hist_buildHistogram(ImacImg* imgToAnalyse, unsigned int imgBrightnessSpectr
  * @return EXIT_FAILURE or EXIT_SUCCESS
  */
 void hist_getMaxBrightness(unsigned int imgBrightnessSpectrum[rvb+1][HIST_SIZE], unsigned int maxPixelsForBrightness[rvb+1]);
-
 
 /**
  * @brief Get max Brightness for a one dimensional array

@@ -52,7 +52,7 @@ int lut3x1d_delete(ImacLut3x1d* lut3x1d);
  * @param value
  * @param channel
  */
-void lut3x1d_set(ImacLut3x1d* lut3x1d, unsigned int index, unsigned int value, enum img_Channel c);
+void lut3x1d_set(ImacLut3x1d* lut3x1d, unsigned int index, int value, enum img_Channel c);
 
 /**
  * @brief Apply the lut3x1d to the image
