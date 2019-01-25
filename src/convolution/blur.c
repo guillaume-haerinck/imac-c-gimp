@@ -26,7 +26,7 @@ void blur_imgRecursive(ImacImg *img, ImacImg* outputImg, int value) {
 	int averagePixelValue, count;
 	int currentProgress = 0;
 	int const progressBarSize = img->height;
-	if (!(value % 2)) value += 1;
+	if (!(value % 2)) value++;
 	int radius = _recursiveMatrix(value);
 	for (unsigned int height = 0; height < img->height; height++) {
 		for (unsigned int width = 0; width < img->width; width++) {
@@ -41,12 +41,11 @@ void blur_imgRecursive(ImacImg *img, ImacImg* outputImg, int value) {
 						averagePixelValue += img_getPixelChannel(img, matrixX, matrixY, (enum img_Channel) channel);
 					}
 				}
-				if (count == 0) { count = 1; }
+				if (!count) count = 1;
 				averagePixelValue = averagePixelValue / count;
 				img_setPixelChannel(outputImg, width, height, (int) averagePixelValue, (enum img_Channel) channel);
 			}
 		}
-		// FIXME
 		currentProgress++;
 		gui_progressBar(currentProgress, progressBarSize);
 	}
