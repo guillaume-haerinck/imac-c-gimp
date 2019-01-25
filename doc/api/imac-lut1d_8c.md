@@ -1,6 +1,6 @@
 ---
 search:
-    keywords: ['imac-lut1d.c', 'lut_new', 'lut_delete', 'lut_set', 'lut_applyRgb', 'lut_get', 'lut_print']
+    keywords: ['imac-lut1d.c', 'lut_new', 'lut_delete', 'lut_set', 'lut_applyRgb', 'lut_get']
 ---
 
 # file imac-lut1d.c
@@ -12,10 +12,9 @@ search:
 |-----|-----|
 |int|[**lut\_new**](imac-lut1d_8c.md#1a3b8fea7d63250b4bd1a74d9b3fad8716) (**[ImacLut1d](struct_imac_lut1d.md)** \* lut) <br>Constructor for ImacLut. |
 |int|[**lut\_delete**](imac-lut1d_8c.md#1a75b40753aaa4180655818852f580914d) (**[ImacLut1d](struct_imac_lut1d.md)** \* lut) <br>Destructor for ImacLut. |
-|void|[**lut\_set**](imac-lut1d_8c.md#1a5fd22ba0f57c718e25bef5d2f5d75492) (**[ImacLut1d](struct_imac_lut1d.md)** \* lut, unsigned int index, unsigned char value) <br>Set the lut data with security. |
-|int|[**lut\_applyRgb**](imac-lut1d_8c.md#1a8628891c4dce5cffcf34aa7837a87dcd) (**[ImacLut1d](struct_imac_lut1d.md)** \* lut, **[ImacImg](struct_imac_img.md)** \* img) <br>Apply the lut to the all the channels of the image. |
-|unsigned char|[**lut\_get**](imac-lut1d_8c.md#1ad1288e72dda052f149045c00ef4cfae2) (**[ImacLut1d](struct_imac_lut1d.md)** \* lut, unsigned int index) <br>Access the lut data with security. |
-|void|[**lut\_print**](imac-lut1d_8c.md#1a1c9acec44b8ca8c0da6da659918f9086) (**[ImacLut1d](struct_imac_lut1d.md)** \* lut) <br>Print the lut on debug screen. |
+|void|[**lut\_set**](imac-lut1d_8c.md#1af49a317e4a693701994afc1df3011bd5) (**[ImacLut1d](struct_imac_lut1d.md)** \* lut, unsigned int index, int value) <br>Set the lut data with security. |
+|void|[**lut\_applyRgb**](imac-lut1d_8c.md#1a5f5379eca99ef1ab8f5ade07033f9f4c) (**[ImacLut1d](struct_imac_lut1d.md)** \* lut, **[ImacImg](struct_imac_img.md)** \* img) <br>Apply the lut to the all the channels of the image. |
+|int|[**lut\_get**](imac-lut1d_8c.md#1a0f450a96dfc62448d382c6b277152add) (**[ImacLut1d](struct_imac_lut1d.md)** \* lut, unsigned int index) <br>Access the lut data with security. |
 
 
 ## Functions Documentation
@@ -79,13 +78,13 @@ Destructor for ImacLut.
 
 
 
-### function <a id="1a5fd22ba0f57c718e25bef5d2f5d75492" href="#1a5fd22ba0f57c718e25bef5d2f5d75492">lut\_set</a>
+### function <a id="1af49a317e4a693701994afc1df3011bd5" href="#1af49a317e4a693701994afc1df3011bd5">lut\_set</a>
 
 ```cpp
 void imac-lut1d.c::lut_set (
     ImacLut1d * lut,
     unsigned int index,
-    unsigned char value
+    int value
 )
 ```
 
@@ -109,10 +108,10 @@ brightness
 
 
 
-### function <a id="1a8628891c4dce5cffcf34aa7837a87dcd" href="#1a8628891c4dce5cffcf34aa7837a87dcd">lut\_applyRgb</a>
+### function <a id="1a5f5379eca99ef1ab8f5ade07033f9f4c" href="#1a5f5379eca99ef1ab8f5ade07033f9f4c">lut\_applyRgb</a>
 
 ```cpp
-int imac-lut1d.c::lut_applyRgb (
+void imac-lut1d.c::lut_applyRgb (
     ImacLut1d * lut,
     ImacImg * img
 )
@@ -130,17 +129,10 @@ Apply the lut to the all the channels of the image.
 
 
 
-**Returns:**
-
-
-
-
-
-
-### function <a id="1ad1288e72dda052f149045c00ef4cfae2" href="#1ad1288e72dda052f149045c00ef4cfae2">lut\_get</a>
+### function <a id="1a0f450a96dfc62448d382c6b277152add" href="#1a0f450a96dfc62448d382c6b277152add">lut\_get</a>
 
 ```cpp
-unsigned char imac-lut1d.c::lut_get (
+int imac-lut1d.c::lut_get (
     ImacLut1d * lut,
     unsigned int index
 )
@@ -162,25 +154,6 @@ Access the lut data with security.
 
 brightness 
 
-
-
-
-### function <a id="1a1c9acec44b8ca8c0da6da659918f9086" href="#1a1c9acec44b8ca8c0da6da659918f9086">lut\_print</a>
-
-```cpp
-void imac-lut1d.c::lut_print (
-    ImacLut1d * lut
-)
-```
-
-Print the lut on debug screen. 
-
-
-
-**Parameters:**
-
-
-* **lut** 
 
 
 

@@ -33,7 +33,6 @@ Apply sepia effect to 3x1d lut.
 
 
 * **lut** 
-* **value** 
 
 
 

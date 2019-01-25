@@ -12,10 +12,10 @@ search:
 
 |Type|Name|
 |-----|-----|
-|unsigned char|[**channelSize**](struct_imac_lut3x1d.md#1a934641b5cca6e83aee82ca2c90547e42)|
-|unsigned char \*|[**dataR**](struct_imac_lut3x1d.md#1a70b37d650ab9c66ba141566e7906f64a)|
-|unsigned char \*|[**dataG**](struct_imac_lut3x1d.md#1ac583890c2792d5b2228134611db0a862)|
-|unsigned char \*|[**dataB**](struct_imac_lut3x1d.md#1ac99426b3895d8af217515699adb2c88d)|
+|unsigned int|[**channelSize**](struct_imac_lut3x1d.md#1a889e74a33770df22346a55920dfb9fb2)|
+|int \*|[**dataR**](struct_imac_lut3x1d.md#1ab5ee6c86a6b0aabd8d159e1297ff3bdb)|
+|int \*|[**dataG**](struct_imac_lut3x1d.md#1a9f1ac020c260f53248b79cbe90147578)|
+|int \*|[**dataB**](struct_imac_lut3x1d.md#1aae61d885e85b021e36646ddcc5d92967)|
 
 
 ## Detailed Description
@@ -24,40 +24,40 @@ search:
 
 **Note:**
 
-You need to use lut3d\_new to init it 
+You need to use lut3x1d\_new to init it 
 
 
 
 ## Public Attributes Documentation
 
-### variable <a id="1a934641b5cca6e83aee82ca2c90547e42" href="#1a934641b5cca6e83aee82ca2c90547e42">channelSize</a>
+### variable <a id="1a889e74a33770df22346a55920dfb9fb2" href="#1a889e74a33770df22346a55920dfb9fb2">channelSize</a>
 
 ```cpp
-unsigned char channelSize;
+unsigned int channelSize;
 ```
 
 
 
-### variable <a id="1a70b37d650ab9c66ba141566e7906f64a" href="#1a70b37d650ab9c66ba141566e7906f64a">dataR</a>
+### variable <a id="1ab5ee6c86a6b0aabd8d159e1297ff3bdb" href="#1ab5ee6c86a6b0aabd8d159e1297ff3bdb">dataR</a>
 
 ```cpp
-unsigned char* dataR;
+int* dataR;
 ```
 
 
 
-### variable <a id="1ac583890c2792d5b2228134611db0a862" href="#1ac583890c2792d5b2228134611db0a862">dataG</a>
+### variable <a id="1a9f1ac020c260f53248b79cbe90147578" href="#1a9f1ac020c260f53248b79cbe90147578">dataG</a>
 
 ```cpp
-unsigned char* dataG;
+int* dataG;
 ```
 
 
 
-### variable <a id="1ac99426b3895d8af217515699adb2c88d" href="#1ac99426b3895d8af217515699adb2c88d">dataB</a>
+### variable <a id="1aae61d885e85b021e36646ddcc5d92967" href="#1aae61d885e85b021e36646ddcc5d92967">dataB</a>
 
 ```cpp
-unsigned char* dataB;
+int* dataB;
 ```
 
 

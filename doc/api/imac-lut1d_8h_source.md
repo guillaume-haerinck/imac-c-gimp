@@ -33,8 +33,8 @@ Source: `src/core/imac-lut1d.h`
 // --------------------- STRUCT & ENUMS
 
 typedef struct ImacLut1d {
-    unsigned char size;
-    unsigned char* data;
+    unsigned int size;
+    int* data;
 } ImacLut1d;
 
 // --------------------- CONSTRUCTOR & DESTRUCTOR
@@ -45,15 +45,13 @@ int lut_delete(ImacLut1d* lut);
 
 // ---------------------- SETTERS
 
-void lut_set(ImacLut1d* lut, unsigned int index, unsigned char value);
+void lut_set(ImacLut1d* lut, unsigned int index, int value);
 
-int lut_applyRgb(ImacLut1d* lut, ImacImg* img);
+void lut_applyRgb(ImacLut1d* lut, ImacImg* img);
 
 // ----------------------- GETTERS
 
-unsigned char lut_get(ImacLut1d* lut, unsigned int index);
-
-void lut_print(ImacLut1d* lut);
+int lut_get(ImacLut1d* lut, unsigned int index);
 
 #endif //MINIGIMP_IMAC_LUT_H
 ```
