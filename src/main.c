@@ -110,11 +110,21 @@ int main(int argc, char *argv[]) {
                 printf("Applying %s with %d...\n", argv[i], blurValue);
                 blur_imgRecursive(&img, &convolutedImg, blurValue);
                 bConvolution = true;
-		        printf("\n");
-		        printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);
+		printf("\n");
+		printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);
             } else if (strcmp(argv[i], "EDGE") == 0) {
                 edge_img(&img, &convolutedImg);
                 bConvolution = true;
+            } else if (strcmp(argv[i], "VBLUR") == 0) {
+                // TODO handle if convolution already exists
+                blurValue = strtol(argv[i + 1], NULL, 10);
+                int posX = strtol(argv[i + 2], NULL, 10);
+                int posY = strtol(argv[i + 3], NULL, 10);
+                printf("Applying %s with %d...\n", argv[i], blurValue);
+                blur_vignette(&img, &convolutedImg, blurValue, posX, posY);
+                bConvolution = true;
+		printf("\n");
+		printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);
             }
         }
 
