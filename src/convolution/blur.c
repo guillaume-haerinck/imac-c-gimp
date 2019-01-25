@@ -33,16 +33,16 @@ void blur_imgRecursive(ImacImg *img, ImacImg* outputImg, int value) {
 			for (int channel = red; channel <= blue; channel++) {
 				averagePixelValue = 0;
 				count = 0;
-				for (int matrixX = width - radius; matrixX <= width + radius; matrixX++) {
+				for (int matrixX = (signed int)width - radius; matrixX <= (signed int)width + radius; matrixX++) {
 					if (matrixX < 0 || matrixX >= img->width) continue;
-					for (int matrixY = height - radius; matrixY <= height + radius; matrixY++) {
+					for (int matrixY = (signed int)height - radius; matrixY <= (signed int)height + radius; matrixY++) {
 						if (matrixY < 0 || matrixY >= img->height) continue;
 						count++;
 						averagePixelValue += img_getPixelChannel(img, matrixX, matrixY, (enum img_Channel) channel);
 					}
 				}
-				if (!count) count = 1;
-				averagePixelValue = averagePixelValue / count;
+				if (count) averagePixelValue = averagePixelValue / count;
+				else averagePixelValue = img_getPixelChannel(img, width, height, (enum img_Channel) channel);
 				img_setPixelChannel(outputImg, width, height, (int) averagePixelValue, (enum img_Channel) channel);
 			}
 		}
