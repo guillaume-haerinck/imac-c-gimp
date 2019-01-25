@@ -14,6 +14,7 @@
 #include "luts/contrast.h"
 #include "luts/sepia.h"
 #include "convolution/blur.h"
+#include "symmetry/symmetry.h"
 #include "convolution/edge.h"
 
 // minigimp mon_image.ppm [-h] [-histo] [<code_lut>[_<param1>]*]* [-o image_sortie.ppm]
@@ -129,7 +130,12 @@ int main(int argc, char *argv[]) {
             } else if (strcmp(argv[i], "KBLUR") == 0) {
                 blur_imgKernel(&img, &convolutedImg);
                 bConvolution = true;
+            } else if (strcmp(argv[i], "FLIP_V") == 0) {
+                symmetry_flipV(&img);
+            } else if (strcmp(argv[i], "FLIP_H") == 0) {
+                symmetry_flipH(&img);
             }
+
         }
 
         /* Apply filters */
