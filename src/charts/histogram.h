@@ -63,7 +63,7 @@ void hist_fillScaledHistogram(int *inputHist, int *outputHist, int scale);
  * @param[in] histogram2[256]
  * @param[in] scaleX
  */
-void hist_printTerminal(int *histogram1, int *histogram2, int scaleX);
+void hist_printTerminal(unsigned int *histogram1, unsigned int *histogram2, int scaleX);
 
 /**
  * @brief Print histogram data to an image

@@ -96,7 +96,7 @@ void hist_fillScaledHistogram(int *inputHist, int *outputHist, int scale) {
 	}
 }
 
-void hist_printTerminal(int *histogram1, int *histogram2, int scaleX){
+void hist_printTerminal(unsigned int *histogram1, unsigned int *histogram2, int scaleX){
 	int* scaledHist1 = NULL;
 	int* scaledHist2 = NULL;
 	float palier = (float) HIST_SIZE / scaleX;
