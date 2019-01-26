@@ -49,7 +49,7 @@ It can achieve great results on a very deconstrasted image by recovering a huge 
 \fBBLUR\fP \fIvalue\fP
 Blur the image entirely. The higher the \fIvalue\fP the blurrier the image. Please note that \fIvalues\fP over 10 will make the processing time longer.
 .TP
-\fBBLUR\fP \fIvalue\fP \fIcenterX\fP \fIcenterY\fP
+\fBVBLUR\fP \fIvalue\fP \fIcenterX\fP \fIcenterY\fP
 More advanced blurring effect. You specify an anchor point on the image using \fIcenterX\fP and \fIcenterY\fP that will stay crisp (they are expressed in percent but don't add the % sign). Then the father a pixel is from this point the blurrier it will be. This is radial garden blur. The \fIvalue\fP works the same as \fBBLUR\fP.
 .TP
 \fBKBLUR\fP
