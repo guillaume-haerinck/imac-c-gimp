@@ -19,10 +19,16 @@ Same as \fB-h\fP but show both histograms in the terminal, display can go wrong 
 Specify a custom output filename and path default is ./output.ppm
 .TP
 \fBADDLUM\fP \fIvalue\fP
-Increase overall image luminosity, it takes a value between 0 and 255
+Increase overall image luminosity, it takes a \fIvalue\fP between 0 and 255
 .TP
 \fBDIMLUM\fP \fIvalue\fP
-Decrease overall image luminosity, it takes a value between 0 and 255
+Decrease overall image luminosity, it takes a \fIvalue\fP between 0 and 255
+.TP
+\fBADDCON\fP \fIvalue\fP
+Increase overall image contrast, it takes a \fIvalue\fP between 0 and 255
+.TP
+\fBDIMCON\fP \fIvalue\fP
+Decrease overall image contrast, it takes a \fIvalue\fP between 0 and 255
 .TP
 \fBINVERT\fP
 Invert colours of the image, similar to a negative effect.
