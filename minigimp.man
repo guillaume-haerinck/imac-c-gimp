@@ -5,12 +5,12 @@ minigimp /- Easy digital image processing tool using command line
 \fBminigimp\fP [-h | -histo] [-v] [<code_lut>[<param1>]*]* [-o output_filepath.ppm] 
 .SH DESCRIPTION
 \fBminigimp\fP let you add effects on your images in an artistic manner.
-The required file format for both the input and output image is .ppm
-You can use as many effect as you wish at once.
+The required file format for both the input and output image is \fI.ppm\fP
+You can use as many effects as you wish at once.
 .SS Options
 .TP
 \fB-h, -histo\fP
-Save the orignal image histogram alongside the final image's histogram
+Save the original image histogram alongside the final image's histogram
 .TP
 \fB-v\fP
 Same as \fB-h\fP but show both histograms in the terminal, display can go wrong if your window is too small.
@@ -40,17 +40,17 @@ Make the image grayscale.
 Make the image sepia.
 .TP
 \fBSINCON\fP \fIvalue\fP
-This effect is going to apply a conversion curve based on Sinus, you may use a \fIvalue\fP between 1 and 2 for better results.
+This effect is going to apply a conversion curve based on sinus, you may use a \fIvalue\fP between 1 and 2 for better results.
 .TP
 \fBHISTEQ\fP
-This is an automatic constrast adjustment effect. It streches the histogram so that the image luminance is well balanced.
+This is an automatic contrast adjustment effect. It stretches the histogram so that the image luminance is well balanced.
 It can achieve great results on a very deconstrasted image by recovering a huge amount of details that human eyes can't see.
 .TP
 \fBBLUR\fP \fIvalue\fP
 Blur the image entirely. The higher the \fIvalue\fP the blurrier the image. Please note that \fIvalues\fP over 10 will make the processing time longer.
 .TP
 \fBBLUR\fP \fIvalue\fP \fIcenterX\fP \fIcenterY\fP
-More advanced blurring effect. You specify an anchor point on the image using \fIcenterX\fP and \fIcenterY\fP that will stay crisp. Then the farther a pixel is from this point the blurrier it will be. This is radial gradien blur. The \fIvalue\fP wworks the same as \fBBLUR\fP.
+More advanced blurring effect. You specify an anchor point on the image using \fIcenterX\fP and \fIcenterY\fP that will stay crisp. Then the father a pixel is from this point the blurrier it will be. This is radial garden blur. The \fIvalue\fP wworks the same as \fBBLUR\fP.
 .TP
 \fBKBLUR\fP
 Light blur effect that doesn't take any input value.
@@ -64,7 +64,7 @@ This flips the image from a vertical axis. See it as a mirror effect.
 \fBFLIP_H\fP
 Acts the same as \fBFLIP_V\fP but this time it does the flipping horizontally.
 .SH AUTHORS
-This command line tool as been made by two passionate programmers:
+This command line tool has been made by two passionate programmers:
 Guillaume HAERINCK ghaerinck@etud.u-pem.fr
 Nicolas LIENART nlienart@etud.u-pem.f
 
