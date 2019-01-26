@@ -52,6 +52,8 @@ void kernel_applyGrayscale(ImacKernel* kernel, ImacImg* img, ImacImg* outputImg,
 
 void kernel_applyRgb(ImacKernel* kernel, ImacImg* img, ImacImg* outputImg, float matrixMultiplication) {
     if (kernel->matrixSize == 3) {
+	int currentProgress = 0;
+	int progressBarSize = img->width;
         int brightness = 0;
         for (unsigned int x = 1; x < img->width - 1; x++) {
             for (unsigned int y = 1; y < img->height - 1; y++) {
@@ -64,7 +66,11 @@ void kernel_applyRgb(ImacKernel* kernel, ImacImg* img, ImacImg* outputImg, float
                 brightness = _getPixelChannelAvgKernelValue(kernel, img, x, y, blue, matrixMultiplication);
                 img_setPixelChannel(outputImg, x, y, brightness, blue);
             }
+	    currentProgress++;
+	    gui_progressBar(currentProgress, progressBarSize);
         }
+	currentProgress++;
+	gui_progressBar(currentProgress, progressBarSize);
     } else {
         printf("error kernel_apply: Squarred Matrix size must be 3\n");
         DEBUG_BREAK;

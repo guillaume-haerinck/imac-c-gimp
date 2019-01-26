@@ -2,6 +2,7 @@
 #define MINIGIMP_IMAC_KERNEL_H
 
 #include "imac-img.h"
+#include "utils.h"
 
 /**
  * @brief Kernel matrix for convolution operation

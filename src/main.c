@@ -125,16 +125,19 @@ int main(int argc, char *argv[]) {
 		printf("\n");
 		printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);
             } else if (strcmp(argv[i], "EDGE") == 0) {
+                printf("Applying %s...\n", argv[i]);
                 edge_img(ptrOnImage, ptrOnSwap);
                 ImacImg* temp = ptrOnImage;
                 ptrOnImage = ptrOnSwap;
                 ptrOnSwap = temp;
+		printf("\n");
+		printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);
             } else if (strcmp(argv[i], "VBLUR") == 0) {
                 // TODO handle if convolution already exists
+                printf("Applying %s with %d...\n", argv[i], blurValue);
                 blurValue = strtol(argv[i + 1], NULL, 10);
                 int posX = strtol(argv[i + 2], NULL, 10);
                 int posY = strtol(argv[i + 3], NULL, 10);
-                printf("Applying %s with %d...\n", argv[i], blurValue);
                 blur_vignette(ptrOnImage, ptrOnSwap, blurValue, posX, posY);
                 ImacImg* temp = ptrOnImage;
                 ptrOnImage = ptrOnSwap;
@@ -142,15 +145,21 @@ int main(int argc, char *argv[]) {
 		printf("\n");
 		printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);
             } else if (strcmp(argv[i], "KBLUR") == 0) {
+                printf("Applying %s...\n", argv[i]);
                 blur_imgKernel(ptrOnImage, ptrOnSwap);
                 ImacImg* temp = ptrOnImage;
                 ptrOnImage = ptrOnSwap;
                 ptrOnSwap = temp;
+		printf("\n");
+		printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);
             } else if (strcmp(argv[i], "EMBOSS") == 0) {
+                printf("Applying %s...\n", argv[i]);
                 emboss_img(ptrOnImage, ptrOnSwap);
                 ImacImg* temp = ptrOnImage;
                 ptrOnImage = ptrOnSwap;
                 ptrOnSwap = temp;
+		printf("\n");
+		printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);
             } else if (strcmp(argv[i], "FLIP_V") == 0) {
 		    symmetry_flipV(ptrOnImage);
             } else if (strcmp(argv[i], "FLIP_H") == 0) {
