@@ -14,7 +14,7 @@
 #include "luts/contrast.h"
 #include "luts/sepia.h"
 #include "convolution/blur.h"
-#include "symmetry/symmetry.h"
+#include "transform/symmetry.h"
 #include "convolution/emboss.h"
 #include "convolution/edge.h"
 
@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
 
     // Pass activation
     bool bHistogram = false;
-    bool termHistogram = false;
+    bool bTermHistogram = false;
     bool bLut3x1d = false;
     bool bLut1d = false;
 
@@ -61,12 +61,12 @@ int main(int argc, char *argv[]) {
         /* Handle args */
         for (int i = 2; i < argc; i++) {
             if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "-histo") == 0) {
-		    img_new(&histogram, 256, 150);
-		    hist_rgb(ptrOnImage, &histogram);
-		    bHistogram = true;
+                img_new(&histogram, 256, 150);
+                hist_rgb(ptrOnImage, &histogram);
+                bHistogram = true;
             } else if (strcmp(argv[i], "-v") == 0) {
-		    termHistogram = true;
-		    hist_buildHistogram(ptrOnImage, originalHistogram);
+                bTermHistogram = true;
+                hist_buildHistogram(ptrOnImage, originalHistogram);
             }  else if (strcmp(argv[i], "-o") == 0) {
                 if (argc == i + 2) {
                     outputPath = (char*) malloc(sizeof(char) * strlen(argv[i + 1]) + 1);
@@ -110,30 +110,28 @@ int main(int argc, char *argv[]) {
                 contrast_sinToLut1d(&lut, value);
                 bLut1d = true;
             } else if (strcmp(argv[i], "HISTEQ") == 0) {
-		    unsigned int imgBrightnessSpectrum[4][256] = {{0},{0},{0},{0}};
-		    hist_buildHistogram(ptrOnImage, imgBrightnessSpectrum);
-		    contrast_equalizeToLut1d(&lut, imgBrightnessSpectrum[rvb]);
-		    bLut1d = true;
+                unsigned int imgBrightnessSpectrum[4][256] = {{0},{0},{0},{0}};
+                hist_buildHistogram(ptrOnImage, imgBrightnessSpectrum);
+                contrast_equalizeToLut1d(&lut, imgBrightnessSpectrum[rvb]);
+                bLut1d = true;
             } else if (strcmp(argv[i], "BLUR") == 0) {
-                // TODO handle if convolution already exists
                 blurValue = strtol(argv[i + 1], NULL, 10);
                 printf("Applying %s with %d...\n", argv[i], blurValue);
                 blur_imgRecursive(ptrOnImage, ptrOnSwap, blurValue);
                 ImacImg* temp = ptrOnImage;
                 ptrOnImage = ptrOnSwap;
                 ptrOnSwap = temp;
-		printf("\n");
-		printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);
+                printf("\n");
+                printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);
             } else if (strcmp(argv[i], "EDGE") == 0) {
                 printf("Applying %s...\n", argv[i]);
                 edge_img(ptrOnImage, ptrOnSwap);
                 ImacImg* temp = ptrOnImage;
                 ptrOnImage = ptrOnSwap;
                 ptrOnSwap = temp;
-		printf("\n");
-		printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);
+                printf("\n");
+                printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);
             } else if (strcmp(argv[i], "VBLUR") == 0) {
-                // TODO handle if convolution already exists
                 printf("Applying %s with %d...\n", argv[i], blurValue);
                 blurValue = strtol(argv[i + 1], NULL, 10);
                 int posX = strtol(argv[i + 2], NULL, 10);
@@ -142,40 +140,39 @@ int main(int argc, char *argv[]) {
                 ImacImg* temp = ptrOnImage;
                 ptrOnImage = ptrOnSwap;
                 ptrOnSwap = temp;
-		printf("\n");
-		printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);
+                printf("\n");
+                printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);
             } else if (strcmp(argv[i], "KBLUR") == 0) {
                 printf("Applying %s...\n", argv[i]);
                 blur_imgKernel(ptrOnImage, ptrOnSwap);
                 ImacImg* temp = ptrOnImage;
                 ptrOnImage = ptrOnSwap;
                 ptrOnSwap = temp;
-		printf("\n");
-		printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);
+                printf("\n");
+                printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);
             } else if (strcmp(argv[i], "EMBOSS") == 0) {
                 printf("Applying %s...\n", argv[i]);
                 emboss_img(ptrOnImage, ptrOnSwap);
                 ImacImg* temp = ptrOnImage;
                 ptrOnImage = ptrOnSwap;
                 ptrOnSwap = temp;
-		printf("\n");
-		printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);
+                printf("\n");
+                printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);
             } else if (strcmp(argv[i], "FLIP_V") == 0) {
-		    symmetry_flipV(ptrOnImage);
+		        symmetry_flipV(ptrOnImage);
             } else if (strcmp(argv[i], "FLIP_H") == 0) {
-		    symmetry_flipH(ptrOnImage);
+		        symmetry_flipH(ptrOnImage);
             }
-
         }
 
         /* Apply filters */
         if (bLut1d) { lut_applyRgb(&lut, ptrOnImage); }
         if (bLut3x1d) { lut3x1d_apply(&lut3x1d, ptrOnImage); }
-	if (termHistogram) {
-		unsigned int imgBrightnessSpectrum[4][256] = {{0},{0},{0},{0}};
-		hist_buildHistogram(ptrOnImage, imgBrightnessSpectrum);
-		hist_printTerminal(originalHistogram[3], imgBrightnessSpectrum[3], 20);
-	}
+        if (bTermHistogram) {
+            unsigned int imgBrightnessSpectrum[4][256] = {{0},{0},{0},{0}};
+            hist_buildHistogram(ptrOnImage, imgBrightnessSpectrum);
+            hist_printTerminal(originalHistogram[3], imgBrightnessSpectrum[3], 20);
+        }
         if (bHistogram) {
             if (outputPath != NULL) {
                 // Original histogram
@@ -205,7 +202,7 @@ int main(int argc, char *argv[]) {
         }
 
         /* Save image */
-	if (outputPath != NULL) {
+	    if (outputPath != NULL) {
             ppm_save(outputPath, ptrOnImage);
         } else {
             ppm_save("./output.ppm", ptrOnImage);
