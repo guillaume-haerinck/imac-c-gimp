@@ -13,6 +13,20 @@ DEP:=$(wildcard src/*.h) $(wildcard src/*/*.h)
 
 all: 
 	@echo "********************* CHECKING FILES *********************" 
+	@echo "" 
+	@echo "" 
+	@echo " /OO      /OO /OOOOOO /OO   /OO /OOOOOO  /OOOOOO  /OOOOOO /OO      /OO /OOOOOOO " 
+	@echo "| OOO    /OOO|_  OO_/| OOO | OO|_  OO_/ /OO__  OO|_  OO_/| OOO    /OOO| OO__  OO" 
+	@echo "| OOOO  /OOOO  | OO  | OOOO| OO  | OO  | OO  \__/  | OO  | OOOO  /OOOO| OO  \ OO" 
+	@echo "| OO OO/OO OO  | OO  | OO OO OO  | OO  | OO /OOOO  | OO  | OO OO/OO OO| OOOOOOO/" 
+	@echo "| OO  OOO| OO  | OO  | OO  OOOO  | OO  | OO|_  OO  | OO  | OO  OOO| OO| OO____/ " 
+	@echo "| OO\  O | OO  | OO  | OO\  OOO  | OO  | OO  \ OO  | OO  | OO\  O | OO| OO      " 
+	@echo "| OO \/  | OO /OOOOOO| OO \  OO /OOOOOO|  OOOOOO/ /OOOOOO| OO \/  | OO| OO      " 
+	@echo "|__/     |__/|______/|__/  \__/|______/ \______/ |______/|__/     |__/|__/      " 
+	@echo "" 
+	@echo "       »»-------►   By Guillaume HAERINCK & Nicolas LIENART   ◄-------«« " 
+	@echo "" 
+	@echo "" 
 	# Make the same directories in ofiles/ as the architecture in src/
 	@mkdir -vp $(dir $(OBJ))
 	@mkdir -vp bin

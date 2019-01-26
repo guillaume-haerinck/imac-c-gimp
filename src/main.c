@@ -171,7 +171,7 @@ int main(int argc, char *argv[]) {
         if (bTermHistogram) {
             unsigned int imgBrightnessSpectrum[4][256] = {{0},{0},{0},{0}};
             hist_buildHistogram(ptrOnImage, imgBrightnessSpectrum);
-            hist_printTerminal(originalHistogram[3], imgBrightnessSpectrum[3], 20);
+            hist_printTerminal(originalHistogram[3], imgBrightnessSpectrum[3], 10);
         }
         if (bHistogram) {
             if (outputPath != NULL) {
