@@ -53,7 +53,7 @@ void blur_vignette(ImacImg *img, ImacImg* outputImg, int valueMax, int posX, int
 			SideP2 = pow(SideP2, 2.0);
 			beforeRadius = sqrt(SideP1 + SideP2) / radiusSteps + 0.5;
 			radius = (int) beforeRadius;
-			if (width == 0 && height == 0) printf("Radius = %d, SideP1 = %f, SideP2 = %f\n", radius, SideP1, SideP2);
+			//if (width == 0 && height == 0) printf("Radius = %d, SideP1 = %f, SideP2 = %f\n", radius, SideP1, SideP2);
 			//if (radius > 1 ) printf("Radius = %d\n", radius);
 			for (int channel = red; channel <= blue; channel++) {
 				averagePixelValue = 0;

@@ -29,8 +29,14 @@ void gui_printLogo() {
 	}   
 	printf(ANSI_COLOR_RESET);
 	char developpers[] = "By Guillaume HAERINCK & Nicolas LIENART";
+	char manpage[] = "You can see minigimp's man page using the following command";
+	char manpageCMD[] = "man ./minigimp.man";
 	int padding = (103-strlen(developpers))/2;
+	printf("\n");
 	printf("%*s"ANSI_COLOR_YELLOW"%s"ANSI_COLOR_RESET"%-*s\n", padding, "»»-----------►   ", developpers, padding,"   ◄-----------««");
+	printf("\n");
+	printf("\n");
+	printf("%s "ANSI_COLOR_CYAN"%s"ANSI_COLOR_RESET"\n", manpage, manpageCMD);
 	printf("\n");
 }
 
