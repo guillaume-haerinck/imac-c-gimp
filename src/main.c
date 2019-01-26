@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
     
     unsigned int originalHistogram[4][256] ={{0},{0},{0},{0}};
 
-    if (argc > 0) {
+    if (argc > 1) {
         ImacImg img;
         ImacImg histogram;
         ImacImg swapImg;
@@ -122,8 +122,8 @@ int main(int argc, char *argv[]) {
                 ImacImg* temp = ptrOnImage;
                 ptrOnImage = ptrOnSwap;
                 ptrOnSwap = temp;
-		        printf("\n");
-		        printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);
+		printf("\n");
+		printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);
             } else if (strcmp(argv[i], "EDGE") == 0) {
                 edge_img(ptrOnImage, ptrOnSwap);
                 ImacImg* temp = ptrOnImage;
@@ -139,8 +139,8 @@ int main(int argc, char *argv[]) {
                 ImacImg* temp = ptrOnImage;
                 ptrOnImage = ptrOnSwap;
                 ptrOnSwap = temp;
-		        printf("\n");
-		        printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);
+		printf("\n");
+		printf("[""\x1b[32m""%s SUCCESSFULLY APPLIED""\x1b[0m""]\n", argv[i]);
             } else if (strcmp(argv[i], "KBLUR") == 0) {
                 blur_imgKernel(ptrOnImage, ptrOnSwap);
                 ImacImg* temp = ptrOnImage;
@@ -196,7 +196,7 @@ int main(int argc, char *argv[]) {
         }
 
         /* Save image */
-	    if (outputPath != NULL) {
+	if (outputPath != NULL) {
             ppm_save(outputPath, ptrOnImage);
         } else {
             ppm_save("./output.ppm", ptrOnImage);
