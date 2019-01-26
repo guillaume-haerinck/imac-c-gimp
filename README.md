@@ -24,6 +24,10 @@ And here is an example
 ```
 
 For more details, please read the documentation.
+Check out the man page 
+```
+man ./minigimp.man
+```
 
 ### Read documentation
 
